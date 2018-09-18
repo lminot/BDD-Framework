@@ -4,17 +4,12 @@
 .settings
 .idea
 *.iml
-phantomjsdriver.log
-settings.xml
-chromedriver
-geckodriver
 
 # Compiled source #
 ###################
 *.com
 *.class
 *.dll
-*.exe
 *.o
 *.so
 
