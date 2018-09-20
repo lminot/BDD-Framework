@@ -33,9 +33,9 @@ public class DriverConfigs {
 
   public static WebDriver chooseDriver(String driverName) {
 
-    System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-    System.setProperty("webdriver.gecko.driver", "geckodriver.exe");
-    System.setProperty("phantomjs.binary.path", "phantomjs.exe");
+//    System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+//    System.setProperty("webdriver.gecko.driver", "geckodriver.exe");
+//    System.setProperty("phantomjs.binary.path", "phantomjs.exe");
 
     if (driver != null) {
       return driver;
