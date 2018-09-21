@@ -46,6 +46,7 @@ public class DriverConfigs {
     if (driverName.toLowerCase().equals("chrome")) {
 
       ChromeOptions chromeOptions = new ChromeOptions();
+      chromeOptions.setBinary("chromedriver.exe");
       if (headless) {
         chromeOptions.addArguments("--headless");
       }
@@ -77,6 +78,7 @@ public class DriverConfigs {
 
   private static WebDriver defaultDriver() {
     FirefoxOptions options = new FirefoxOptions();
+    options.setBinary("geckodriver.exe");
     if (headless) {
       options.addArguments("-headless", "-safe-mode");
     }
