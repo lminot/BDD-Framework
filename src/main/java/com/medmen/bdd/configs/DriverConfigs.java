@@ -36,6 +36,8 @@ public class DriverConfigs {
 //    System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
 //    System.setProperty("webdriver.gecko.driver", "geckodriver.exe");
 //    System.setProperty("phantomjs.binary.path", "phantomjs.exe");
+//    Capabilities chromeCapabilities = DesiredCapabilities.chrome();
+//    Capabilities firefoxCapabilities = DesiredCapabilities.firefox();
 
     if (driver != null) {
       return driver;

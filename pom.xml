@@ -15,6 +15,7 @@
         <phantomjs.driver.version>1.4.4</phantomjs.driver.version>
         <log4j-api.version>2.11.1</log4j-api.version>
         <log4j2-version>2.11.1</log4j2-version>
+        <mysql.connector.version>8.0.12</mysql.connector.version>
     </properties>
 
     <dependencies>
@@ -90,6 +91,14 @@
             <artifactId>guava</artifactId>
             <version>23.0</version>
         </dependency>
+
+        <!--data base dependency-->
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -103,7 +112,6 @@
                 <source>1.8</source>
                 <target>1.8</target>
                 <compilerArgument>-Werror</compilerArgument>
-
                 <systemPropertyVariables>
                     <property>
                         <name>browser</name>

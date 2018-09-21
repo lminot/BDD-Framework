@@ -1,4 +1,3 @@
-@test
 Feature: Verify various aspects of the MedMen account functionality
 
   Background: Yes I'm 21
