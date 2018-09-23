@@ -114,8 +114,8 @@ public class AccountsStepDefs implements BaseTest {
         throw new PendingException();
     }
 
-  //@After
-  //public final void tearDown() {
-//    DriverConfigs.closeDriver();
-//  }
+  @After
+  public final void tearDown() {
+    DriverConfigs.closeDriver();
+  }
 }
