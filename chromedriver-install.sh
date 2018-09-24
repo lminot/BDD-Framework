@@ -13,7 +13,8 @@ else
     exit 1
 fi
 
-curl -s -L "$url" | unzip chromedriver_linux64.zip
-ls -al
-chmod +x chromedriver_linux64
+wget -N http://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip -P ~/
+unzip ~/chromedriver_linux64.zip -d ~/
+
+chmod +x chromedriver
 echo "Installed chromedriver binary in $PWD"
