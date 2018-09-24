@@ -80,7 +80,6 @@ public class DriverConfigs {
   private static WebDriver defaultDriver() {
 
     FirefoxOptions options = new FirefoxOptions();
-    System.out.println("##############" + OPERATING_SYSTEM);
     if (OPERATING_SYSTEM.contains("linux")) {
       System.setProperty("webdriver.gecko.driver","/opt/atlassian/pipelines/agent/build/geckodriver" );
       options.setBinary("geckodriver");
