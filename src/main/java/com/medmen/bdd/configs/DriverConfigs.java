@@ -24,6 +24,7 @@ public class DriverConfigs {
 
   public static String preferredDriver = System.getProperty("browser", "Firefox");
   public static boolean headless = Boolean.valueOf(System.getProperty("headless"));
+  public static String OPERATING_SYSTEM = System.getProperty("os.name").toLowerCase();
   public static long DEFAULT_WAIT = 20;
   protected static WebDriver driver;
 
@@ -46,7 +47,7 @@ public class DriverConfigs {
     if (driverName.toLowerCase().equals("chrome")) {
 
       ChromeOptions chromeOptions = new ChromeOptions();
-      chromeOptions.setBinary("chromedriver.exe");
+//      chromeOptions.setBinary("chromedriver.exe");
       if (headless) {
         chromeOptions.addArguments("--headless");
       }
@@ -79,8 +80,11 @@ public class DriverConfigs {
   private static WebDriver defaultDriver() {
 
     FirefoxOptions options = new FirefoxOptions();
-//    options.setBinary("geckodriver.exe");
-//    options.setCapability("marionette", false);
+    if (OPERATING_SYSTEM.contains("Linux")) {
+      options.setBinary("geckodriver");
+      //    options.setCapability("marionette", false);
+    }
+
     if (headless) {
       options.addArguments("-headless", "-safe-mode");
     }

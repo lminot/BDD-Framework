@@ -10,12 +10,9 @@ pipelines:
   default:
     - step:
         name: Execute Tests
-        services:
-          - docker
         caches:
           - maven
         script: # Modify the commands below to build your repository.
-          - docker run lminot/medmen-bdd
 #          - chmod +x install-driver.sh
-#          - ./install-driver.sh
+          - ./install-driver.sh
           - mvn -B clean test -Dbrowser=firefox -Dheadless=true # -B batch mode makes Maven less verbose
