@@ -4,7 +4,7 @@
 
 json=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest)
 if [[ $(uname) == "Darwin" ]]; then
-    url=$(echo "$json" | jq -r '.assets[].browser_download_url | select(contains("macos"))')
+    url=https://github.com/mozilla/geckodriver/releases/download/v0.22.0/geckodriver-v0.22.0-macos.tar.gz
 elif [[ $(uname) == "Linux" ]]; then
     url=https://github.com/mozilla/geckodriver/releases/download/v0.22.0/geckodriver-v0.22.0-linux64.tar.gz
 else
@@ -14,4 +14,4 @@ fi
 curl -s -L "$url" | tar -xz
 chmod +x geckodriver
 echo $PWD
-echo "installed geckodriver binary in"
+echo "installed geckodriver binary in $PWD"
