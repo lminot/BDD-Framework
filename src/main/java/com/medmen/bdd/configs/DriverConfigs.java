@@ -46,7 +46,7 @@ public class DriverConfigs {
     if (driverName.toLowerCase().equals("chrome")) {
 
       ChromeOptions chromeOptions = new ChromeOptions();
-      chromeOptions.setBinary("chromedriver");
+      chromeOptions.setBinary("chromedriver.exe");
       if (headless) {
         chromeOptions.addArguments("--headless");
       }
