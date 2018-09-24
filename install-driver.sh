@@ -15,4 +15,4 @@ fi
 curl -s -L "$url" | tar -xz
 chmod +x geckodriver
 echo $PWD
-echo "installed geckodriver binary in $PWD"
+echo "Installed geckodriver binary in $PWD"
