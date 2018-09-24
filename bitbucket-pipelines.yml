@@ -15,4 +15,5 @@ pipelines:
         script: # Modify the commands below to build your repository.
           - chmod +x install-driver.sh
           - ./install-driver.sh
+          - ls -al
           - mvn -B clean test -Dbrowser=firefox -Dheadless=true # -B batch mode makes Maven less verbose
