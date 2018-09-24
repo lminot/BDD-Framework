@@ -48,7 +48,7 @@ public class DriverConfigs {
 
       ChromeOptions chromeOptions = new ChromeOptions();
       if (OPERATING_SYSTEM.contains("linux")) {
-        System.setProperty("webdriver.chrome.driver", "/opt/atlassian/pipelines/agent/build/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "chromedriver");
         chromeOptions.setBinary("--no-sandbox");
         chromeOptions.setBinary("chromedriver");
       }
