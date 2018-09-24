@@ -34,7 +34,7 @@ public class DriverConfigs {
   public static WebDriver chooseDriver(String driverName) {
 
 //    System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-    System.setProperty("webdriver.gecko.driver", "geckodriver.exe");
+//    System.setProperty("webdriver.gecko.driver", "geckodriver.exe");
 //    System.setProperty("phantomjs.binary.path", "phantomjs.exe");
 //    Capabilities chromeCapabilities = DesiredCapabilities.chrome();
 //    Capabilities firefoxCapabilities = DesiredCapabilities.firefox();
@@ -80,7 +80,7 @@ public class DriverConfigs {
 
     FirefoxOptions options = new FirefoxOptions();
 //    options.setBinary("geckodriver.exe");
-    options.setCapability("marionette", false);
+//    options.setCapability("marionette", false);
     if (headless) {
       options.addArguments("-headless", "-safe-mode");
     }
