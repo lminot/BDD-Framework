@@ -49,7 +49,9 @@ public class DriverConfigs {
       ChromeOptions chromeOptions = new ChromeOptions();
       if (OPERATING_SYSTEM.contains("linux")) {
         System.setProperty("webdriver.chrome.driver", "/root/chromedriver");
+        chromeOptions.setExperimentalOption("useAutomationExtension", false);
         chromeOptions.addArguments("--no-sandbox");
+        chromeOptions.addArguments("--disable-dev-shm-usage");
         chromeOptions.setBinary("chromedriver");
       }
       if (headless) {
