@@ -13,6 +13,8 @@ else
     exit 1
 fi
 curl -s -L "$url" | tar -xz
+
+wget -qO- xvfb-chrome https://bitbucket.org/atlassian/docker-node-chrome-firefox/raw/ff180e2f16ea8639d4ca4a3abb0017ee23c2836c/scripts/xvfb-firefox
 chmod +x geckodriver
 echo $PWD
 echo "Installed geckodriver binary in $PWD"
