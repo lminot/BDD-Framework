@@ -90,7 +90,7 @@ public class DriverConfigs {
     if (OPERATING_SYSTEM.contains("linux")) {
       System.setProperty("webdriver.gecko.driver","geckodriver" );
       options.setBinary("geckodriver");
-      options.setCapability("marionette", false);
+//      options.setCapability("marionette", false);
     }
 
     if (headless) {
