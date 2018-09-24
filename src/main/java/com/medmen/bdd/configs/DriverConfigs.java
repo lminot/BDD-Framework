@@ -81,7 +81,7 @@ public class DriverConfigs {
 
     FirefoxOptions options = new FirefoxOptions();
     System.out.println("##############" + OPERATING_SYSTEM);
-    if (OPERATING_SYSTEM.contains("Linux")) {
+    if (OPERATING_SYSTEM.contains("linux")) {
       options.setBinary("geckodriver");
       //    options.setCapability("marionette", false);
     }
