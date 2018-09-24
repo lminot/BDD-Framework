@@ -2,9 +2,6 @@
 # download and install latest geckodriver for linux or mac.
 # required for selenium to drive a firefox browser.
 
-apt-get install jq
-chmod +x jq
-
 json=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest)
 if [[ $(uname) == "Darwin" ]]; then
     url=$(echo "$json" | jq -r '.assets[].browser_download_url | select(contains("macos"))')
@@ -16,4 +13,5 @@ else
 fi
 curl -s -L "$url" | tar -xz
 chmod +x geckodriver
+echo $PWD
 echo "installed geckodriver binary in"
