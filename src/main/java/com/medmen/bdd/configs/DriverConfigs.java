@@ -82,8 +82,9 @@ public class DriverConfigs {
     FirefoxOptions options = new FirefoxOptions();
     System.out.println("##############" + OPERATING_SYSTEM);
     if (OPERATING_SYSTEM.contains("linux")) {
+      System.setProperty("webdriver.firefox.marionette","/opt/atlassian/pipelines/agent/build/geckodriver" );
       options.setBinary("geckodriver");
-      //    options.setCapability("marionette", false);
+      options.setCapability("marionette", true);
     }
 
     if (headless) {
