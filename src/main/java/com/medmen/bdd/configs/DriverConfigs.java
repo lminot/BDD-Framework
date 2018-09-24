@@ -49,7 +49,7 @@ public class DriverConfigs {
       ChromeOptions chromeOptions = new ChromeOptions();
       if (OPERATING_SYSTEM.contains("linux")) {
         System.setProperty("webdriver.chrome.driver", "chromedriver");
-        chromeOptions.setBinary("--no-sandbox");
+        chromeOptions.addArguments("--no-sandbox");
         chromeOptions.setBinary("chromedriver");
       }
       if (headless) {
