@@ -12,6 +12,7 @@ else
     echo "Can't determine OS."
     exit 1
 fi
-curl -s -L "$url" | tar -xz
+
+unzip "$url"
 chmod +x chromedriver
 echo "Installed chromedriver binary in $PWD"
