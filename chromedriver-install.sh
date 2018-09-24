@@ -13,7 +13,7 @@ else
     exit 1
 fi
 
-wget -N http://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip -P ~/
+wget -N http://chromedriver.storage.googleapis.com/$version/chromedriver_linux64.zip -P ~/
 unzip ~/chromedriver_linux64.zip -d ~/
 
 chmod +x chromedriver
