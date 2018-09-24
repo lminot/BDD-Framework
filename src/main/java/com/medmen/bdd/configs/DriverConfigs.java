@@ -79,7 +79,7 @@ public class DriverConfigs {
   private static WebDriver defaultDriver() {
 
     FirefoxOptions options = new FirefoxOptions();
-//    options.setBinary("geckodriver.exe");
+    options.setBinary("geckodriver.exe");
     options.setCapability("marionette", false);
     if (headless) {
       options.addArguments("-headless", "-safe-mode");
