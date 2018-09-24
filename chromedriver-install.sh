@@ -13,7 +13,7 @@ else
     exit 1
 fi
 
-unzip "$url"
+curl -s -L "$url" | unzip
 ls -al
 chmod +x chromedriver
 echo "Installed chromedriver binary in $PWD"

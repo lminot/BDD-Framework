@@ -15,5 +15,4 @@ pipelines:
         script: # Modify the commands below to build your repository.
           - chmod +x chromedriver-install.sh
           - ./chromedriver-install.sh
-          - ls -al
           - mvn -B clean test -Dbrowser=chrome -Dheadless=true # -B batch mode makes Maven less verbose
