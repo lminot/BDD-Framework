@@ -47,7 +47,10 @@ public class DriverConfigs {
     if (driverName.toLowerCase().equals("chrome")) {
 
       ChromeOptions chromeOptions = new ChromeOptions();
-//      chromeOptions.setBinary("chromedriver.exe");
+      if (OPERATING_SYSTEM.contains("linux")) {
+        System.setProperty("webdriver.chrome.driver", "/opt/atlassian/pipelines/agent/build/chromedriver");
+        chromeOptions.setBinary("chromedriver");
+      }
       if (headless) {
         chromeOptions.addArguments("--headless");
       }
