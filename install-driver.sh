@@ -2,7 +2,7 @@
 # download and install latest geckodriver for linux or mac.
 # required for selenium to drive a firefox browser.
 
-sudo apt-get install jq
+apt-get install jq
 chmod +x jq
 
 json=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest)
