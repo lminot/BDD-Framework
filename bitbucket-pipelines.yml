@@ -13,6 +13,6 @@ pipelines:
         caches:
           - maven
         script: # Modify the commands below to build your repository.
-#          - chmod +x install-driver.sh
+          - chmod +x install-driver.sh
           - ./install-driver.sh
           - mvn -B clean test -Dbrowser=firefox -Dheadless=true # -B batch mode makes Maven less verbose
