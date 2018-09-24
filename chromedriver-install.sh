@@ -13,8 +13,8 @@ else
     exit 1
 fi
 
-wget -N http://chromedriver.storage.googleapis.com/$version/chromedriver_linux64.zip -P ~/
-unzip ~/chromedriver_linux64.zip -d ~/
+wget -N $url -P ~/
+unzip ~/chromedriver_linux64.zip
 
 chmod +x chromedriver
 echo "Installed chromedriver binary in $PWD"
