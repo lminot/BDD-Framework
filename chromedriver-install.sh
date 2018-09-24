@@ -16,5 +16,8 @@ fi
 wget -N $url -P ~/
 unzip ~/chromedriver_linux64.zip
 
+set -x && apt-get update && apt-get install -y xvfb google-chrome-stable
+wget -q -O /usr/bin/xvfb-chrome https://bitbucket.org/atlassian/docker-node-chrome-firefox/raw/ff180e2f16ea8639d4ca4a3abb0017ee23c2836c/scripts/xvfb-chrome
+
 chmod +x chromedriver
 echo "Installed chromedriver binary in $PWD"
