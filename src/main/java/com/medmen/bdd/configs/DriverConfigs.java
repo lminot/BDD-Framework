@@ -50,8 +50,9 @@ public class DriverConfigs {
       if (OPERATING_SYSTEM.contains("linux")) {
         System.setProperty("webdriver.chrome.driver", "/root/chromedriver");
         chromeOptions.setExperimentalOption("useAutomationExtension", false);
+        chromeOptions.addArguments("--disable-extensions");
         chromeOptions.addArguments("--no-sandbox");
-        chromeOptions.addArguments("--disable-dev-shm-usage");
+        chromeOptions.addArguments("--disable-gpu");
         chromeOptions.setBinary("chromedriver");
       }
       if (headless) {
