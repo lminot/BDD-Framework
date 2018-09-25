@@ -2,6 +2,8 @@
 # download and install latest geckodriver for linux or mac.
 # required for selenium to drive a firefox browser.
 
+
+install_dir="/usr/local/bin"
 json=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest)
 if [[ $(uname) == "Darwin" ]]; then
     url=https://github.com/mozilla/geckodriver/releases/download/v0.22.0/geckodriver-v0.22.0-macos.tar.gz
@@ -16,5 +18,7 @@ curl -s -L "$url" | tar -xz
 
 wget -qO- xvfb-chrome https://bitbucket.org/atlassian/docker-node-chrome-firefox/raw/ff180e2f16ea8639d4ca4a3abb0017ee23c2836c/scripts/xvfb-firefox
 chmod +x geckodriver
+
 echo $PWD
-echo "Installed geckodriver binary in $PWD"
+mv chromedriver "$install_dir"
+echo "Installed geckodriver binary in $install_dir""
