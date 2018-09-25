@@ -1,6 +1,6 @@
 package com.medmen.bdd.helperMethods;
 
-import com.medmen.bdd.configs.DriverConfigs;
+import com.medmen.bdd.configs.DriverUtil;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -13,7 +13,7 @@ public class ConfigurationMethods implements BaseTest
 {	  
 	protected WebDriver driver;
 	public ConfigurationMethods() {
-		driver = DriverConfigs.getDriver();
+		driver = DriverUtil.getDefaultDriver();
 	}
 	/** Method to print desktop configuration	 */
 	public void printDesktopConfiguration()

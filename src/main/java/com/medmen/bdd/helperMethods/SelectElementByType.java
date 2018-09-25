@@ -1,6 +1,6 @@
 package com.medmen.bdd.helperMethods;
 
-import com.medmen.bdd.configs.DriverConfigs;
+import com.medmen.bdd.configs.DriverUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,7 +10,7 @@ public class SelectElementByType
 	protected WebDriver driver;
 	protected WebDriverWait wait;
 	public SelectElementByType() {
-		driver = DriverConfigs.getDriver();
+		driver = DriverUtil.getDefaultDriver();
 		wait = new WebDriverWait(driver, 30);
 	}
 	/**Method to select element 'by' type

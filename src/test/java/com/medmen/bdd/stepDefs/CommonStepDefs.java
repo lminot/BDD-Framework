@@ -1,6 +1,6 @@
 package com.medmen.bdd.stepDefs;
 
-import com.medmen.bdd.configs.DriverConfigs;
+import com.medmen.bdd.configs.DriverUtil;
 import com.medmen.bdd.pages.MedMenHomePageOverlay;
 import cucumber.api.java.en.Given;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 public class CommonStepDefs {
 
-    private WebDriver driver = DriverConfigs.getDriver();
+    private WebDriver driver = DriverUtil.getDefaultDriver();
 
 
     @Given("^I navigate to the \"([^\"]*)\" homepage$")
