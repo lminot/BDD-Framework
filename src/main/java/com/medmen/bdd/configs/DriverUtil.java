@@ -28,13 +28,16 @@ public class DriverUtil {
 
   public static long DEFAULT_WAIT = 20;
   public static String GRID_URL = "http://localhost:4444/wd/hub";
-  protected static WebDriver driver = null;
+  public static String driverName = System.getProperty("browser", "Firefox");
+  protected static WebDriver driver;
   static String currentPath = System.getProperty("user.dir");
   static Properties prop = new Properties();
-  static DesiredCapabilities capability = null;
+  public static DesiredCapabilities capability;
+
 
   public static DesiredCapabilities getCapability(InputStream input) {
     DesiredCapabilities capability = new DesiredCapabilities();
+
     try {
       prop.load(input);
       // set capabilities
@@ -88,8 +91,7 @@ public class DriverUtil {
 
       case "remote":
         try {
-          DesiredCapabilities cap = DesiredCapabilities.chrome();
-          driver = new RemoteWebDriver(new URL(GRID_URL), cap);
+          driver = new RemoteWebDriver(new URL(GRID_URL), setDesiredCapabilities(capability));
         } catch (MalformedURLException e) {
           e.printStackTrace();
         }
@@ -104,8 +106,7 @@ public class DriverUtil {
         break;
 
       case "desktop":
-        DesiredCapabilities capabilities = getDesiredCapabilities();
-        manageDriver(capabilities);
+        manageDriver(setDesiredCapabilities(capability));
         break;
 
       default:
@@ -120,9 +121,13 @@ public class DriverUtil {
     driver.manage().window().maximize();
   }
 
-  private static DesiredCapabilities getDesiredCapabilities() {
-    DesiredCapabilities capabilities;
-    capabilities = DesiredCapabilities.firefox();
+  private static DesiredCapabilities setDesiredCapabilities(DesiredCapabilities capabilities) {
+    if (driverName.toLowerCase().contains("firefox")) {
+      capabilities = DesiredCapabilities.firefox();
+    } else if (driverName.toLowerCase().contains("chrome")) {
+      capabilities = DesiredCapabilities.chrome();
+    }
+
     capabilities.setJavascriptEnabled(true);
     capabilities.setCapability("takesScreenshot", true);
     return capabilities;
@@ -201,7 +206,7 @@ public class DriverUtil {
   }
 
   private static WebDriver chooseDriver(DesiredCapabilities capabilities) {
-    String driverName = System.getProperty("browser", "Firefox");
+//    String driverName = System.getProperty("browser", "Firefox");
     boolean headless = Boolean.valueOf(System.getProperty("headless"));
 //    Boolean.valueOf(System.getProperty("headless"));
 
@@ -213,13 +218,6 @@ public class DriverUtil {
           logger.error(e.getMessage());
         }
         return driver;
-//      case "edge":
-//        try {
-//          driver = new EdgeDriver();
-//        } catch (Exception e) {
-//          logger.error(e.getMessage());
-//        }
-//        return driver;
       case "chrome":
         ChromeOptions chromeOptions = new ChromeOptions();
         if (headless) {
