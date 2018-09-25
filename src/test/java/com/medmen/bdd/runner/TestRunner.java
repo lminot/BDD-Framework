@@ -1,6 +1,6 @@
 package com.medmen.bdd.runner;
 
-import com.medmen.bdd.configs.DriverUtil;
+import com.medmen.bdd.configs.DriverConfig;
 import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 
@@ -23,6 +23,6 @@ public class TestRunner {
 
   @AfterClass
   public static void tearDown() {
-    DriverUtil.closeDriver();
+    DriverConfig.closeDriver();
   }
 }

@@ -1,6 +1,6 @@
 package com.medmen.bdd.helperMethods;
 
-import com.medmen.bdd.configs.DriverUtil;
+import com.medmen.bdd.configs.DriverConfig;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class ScreenShotMethods implements BaseTest {
-	protected WebDriver driver = DriverUtil.getDefaultDriver();
+	protected WebDriver driver = DriverConfig.getDriver();
 	/** Method to take screen shot and save in ./Screenshots folder*/
 	public void takeScreenShot() throws IOException
 	{

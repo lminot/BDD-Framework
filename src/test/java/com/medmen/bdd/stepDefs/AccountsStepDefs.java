@@ -1,12 +1,11 @@
 package com.medmen.bdd.stepDefs;
 
-import com.medmen.bdd.configs.DriverUtil;
+import com.medmen.bdd.configs.DriverConfig;
 import com.medmen.bdd.helperMethods.BaseTest;
 import com.medmen.bdd.pages.Cart;
 import com.medmen.bdd.pages.CreateAccountPage;
 import com.medmen.bdd.pages.StorePage;
 import cucumber.api.PendingException;
-import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -17,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 public class AccountsStepDefs implements BaseTest {
 
-  private WebDriver driver = DriverUtil.getDefaultDriver();
+  private WebDriver driver = DriverConfig.getDriver();
 
   @Given("^I navigate to the \"([^\"]*)\" create account page$")
   public void i_navigate_to_create_account_page(String env) {
