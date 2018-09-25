@@ -91,7 +91,7 @@ public class DriverUtil {
 
       case "remote":
         try {
-          driver = new RemoteWebDriver(new URL(GRID_URL), setDesiredCapabilities(capability));
+          driver = new RemoteWebDriver(new URL(GRID_URL), setDesiredCapabilities());
         } catch (MalformedURLException e) {
           e.printStackTrace();
         }
@@ -106,7 +106,7 @@ public class DriverUtil {
         break;
 
       case "desktop":
-        manageDriver(setDesiredCapabilities(capability));
+        manageDriver(setDesiredCapabilities());
         break;
 
       default:
@@ -121,10 +121,9 @@ public class DriverUtil {
     driver.manage().window().maximize();
   }
 
-  private static DesiredCapabilities setDesiredCapabilities(DesiredCapabilities capabilities) {
-    if (driverName.toLowerCase().contains("firefox")) {
-      capabilities = DesiredCapabilities.firefox();
-    } else if (driverName.toLowerCase().contains("chrome")) {
+  private static DesiredCapabilities setDesiredCapabilities() {
+    DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+    if (driverName.toLowerCase().contains("chrome")) {
       capabilities = DesiredCapabilities.chrome();
     }
 
