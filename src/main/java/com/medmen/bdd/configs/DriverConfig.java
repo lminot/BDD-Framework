@@ -12,6 +12,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.springframework.util.ObjectUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -29,7 +30,7 @@ public class DriverConfig {
   private static WebDriver driver;
 
   public static WebDriver getDriver() {
-    if (driver != null) {
+    if (!ObjectUtils.isEmpty(driver)) {
       return driver;
     }
 
@@ -49,7 +50,6 @@ public class DriverConfig {
       default:
         logger.error("Exception: Invalid environment " + environment);
     }
-
     return manageDriver(driver);
   }
 
@@ -106,7 +106,7 @@ public class DriverConfig {
   }
 
   public static void closeDriver() {
-    if (driver != null) {
+    if (!ObjectUtils.isEmpty(driver)) {
       try {
         driver.manage().deleteAllCookies();
         driver.close();
@@ -127,32 +127,4 @@ public class DriverConfig {
       logger.warn("DriverConfigs.closeDriver Driver already closed...");
     }
   }
-  // TODO fix below when/if needed
-  //  public static WebElement waitAndGetElementByCssSelector(
-  //      WebDriver driver, String selector, int seconds) {
-  //    By selection = By.cssSelector(selector);
-  //    return (new WebDriverWait(driver, seconds))
-  //        .until( // ensure element is visible!
-  //            ExpectedConditions.visibilityOfElementLocated(selection));
-  //  }
-  //
-  //  private static WebDriver androidDriver(DesiredCapabilities capabilities) {
-  //    String port = "4723";
-  //    try {
-  //      driver = new AndroidDriver(new URL("http://127.0.0.1:" + port + "/wd/hub"), capabilities);
-  //    } catch (MalformedURLException e) {
-  //      e.printStackTrace();
-  //    }
-  //    return driver;
-  //  }
-  //
-  //  private static WebDriver iosDriver(DesiredCapabilities capabilities) {
-  //    String port = "4723";
-  //    try {
-  //      driver = new IOSDriver(new URL("http://127.0.0.1:" + port + "/wd/hub"), capabilities);
-  //    } catch (MalformedURLException e) {
-  //      e.printStackTrace();
-  //    }
-  //    return driver;
-  //  }
 }
