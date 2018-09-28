@@ -18,7 +18,7 @@ public class SelectElementByType
 	 * @param access_name : String : Locator value
 	 * @return By
 	 */
-	public By getelementbytype(String type,String access_name)
+	public By getElementByType(String type, String access_name)
 	{
 		switch(type)
 		{

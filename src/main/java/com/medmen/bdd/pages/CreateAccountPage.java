@@ -91,7 +91,7 @@ public class CreateAccountPage extends PageObject {
   @FindBy(xpath = "//div[@class='o-form-field-flex']//div//span[@class='c-form-group__checkmark']")
   private WebElement mmPrivacyPolicyCheckbox;
 
-  @FindBy(xpath = "//button[@type='submit']")
+  @FindBy(css = ".c-button--primary")
   private WebElement createAccount;
 
   @FindBy(xpath = "//a[@class='c-button c-button--hollow']")
@@ -189,6 +189,6 @@ public class CreateAccountPage extends PageObject {
   }
 
   public void clickCreateAccount() {
-    this.createAccount.clear();
+    this.createAccount.click();
   }
 }

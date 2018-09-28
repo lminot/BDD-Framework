@@ -18,7 +18,7 @@ public class ClickElementsMethods extends SelectElementByType implements BaseTes
 	*/
 	public void click(String accessType, String accessName)
 	{
-		element = wait.until(presenceOfElementLocated(getelementbytype(accessType, accessName)));
+		element = wait.until(presenceOfElementLocated(getElementByType(accessType, accessName)));
 		element.click();
 	}
 	
@@ -28,7 +28,7 @@ public class ClickElementsMethods extends SelectElementByType implements BaseTes
 	*/
 	public void clickForcefully(String accessType, String accessName)
 	{
-		element = wait.until(presenceOfElementLocated(getelementbytype(accessType, accessName)));
+		element = wait.until(presenceOfElementLocated(getElementByType(accessType, accessName)));
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
 		executor.executeScript("arguments[0].click();",element);
 	}
@@ -39,7 +39,7 @@ public class ClickElementsMethods extends SelectElementByType implements BaseTes
 	*/
 	public void doubleClick(String accessType, String accessValue)
 	{
-		element = wait.until(presenceOfElementLocated(getelementbytype(accessType, accessValue)));
+		element = wait.until(presenceOfElementLocated(getElementByType(accessType, accessValue)));
 
 		Actions action = new Actions(driver);
 		action.moveToElement(element).doubleClick().perform();

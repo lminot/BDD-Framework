@@ -69,7 +69,7 @@ public class AssertionMethods extends SelectElementByType implements BaseTest
 	 */
 	public String getElementText(String accessType, String accessName)
 	{
-		element = wait.until(presenceOfElementLocated(getelementbytype(accessType, accessName)));
+		element = wait.until(presenceOfElementLocated(getElementByType(accessType, accessName)));
 		return element.getText();
 		
 	}
@@ -125,7 +125,7 @@ public class AssertionMethods extends SelectElementByType implements BaseTest
 	*/
 	public boolean isElementEnabled(String accessType, String accessName)
 	{
-		element = wait.until(presenceOfElementLocated(getelementbytype(accessType, accessName)));
+		element = wait.until(presenceOfElementLocated(getElementByType(accessType, accessName)));
 		return element.isEnabled();
 	}
 	
@@ -157,7 +157,7 @@ public class AssertionMethods extends SelectElementByType implements BaseTest
 	*/
 	public String getElementAttribute(String accessType,String accessName,String attributeName)
 	{
-		element = wait.until(presenceOfElementLocated(getelementbytype(accessType, accessName)));
+		element = wait.until(presenceOfElementLocated(getElementByType(accessType, accessName)));
 		return element.getAttribute(attributeName);
 	}
 	
@@ -190,7 +190,7 @@ public class AssertionMethods extends SelectElementByType implements BaseTest
 	*/
 	public boolean isElementDisplayed(String accessType,String accessName)
 	{
-		element = wait.until(presenceOfElementLocated(getelementbytype(accessType, accessName)));
+		element = wait.until(presenceOfElementLocated(getElementByType(accessType, accessName)));
 		return element.isDisplayed();
 	}
 	
@@ -228,7 +228,7 @@ public class AssertionMethods extends SelectElementByType implements BaseTest
 	*/
 	public void isCheckboxChecked(String accessType,String accessName,boolean shouldBeChecked) throws TestCaseFailed
 	{
-		WebElement checkbox = wait.until(presenceOfElementLocated(getelementbytype(accessType, accessName)));
+		WebElement checkbox = wait.until(presenceOfElementLocated(getElementByType(accessType, accessName)));
 		if((!checkbox.isSelected()) && shouldBeChecked)
 			throw new TestCaseFailed("Checkbox is not checked");
 		else if(checkbox.isSelected() && !shouldBeChecked)
@@ -242,7 +242,7 @@ public class AssertionMethods extends SelectElementByType implements BaseTest
 	*/
 	public void isRadioButtonSelected(String accessType,String accessName,boolean shouldBeSelected) throws TestCaseFailed
 	{
-		WebElement radioButton = wait.until(presenceOfElementLocated(getelementbytype(accessType, accessName)));
+		WebElement radioButton = wait.until(presenceOfElementLocated(getElementByType(accessType, accessName)));
 		if((!radioButton.isSelected()) && shouldBeSelected)
 			throw new TestCaseFailed("Radio Button not selected");
 		else if(radioButton.isSelected() && !shouldBeSelected)
@@ -252,7 +252,7 @@ public class AssertionMethods extends SelectElementByType implements BaseTest
 	//method to assert option from radio button group is selected/unselected
 	public void isOptionFromRadioButtonGroupSelected(String accessType,String by,String option,String accessName,boolean shouldBeSelected) throws TestCaseFailed
 	{
-		List<WebElement> radioButtonGroup = wait.until(presenceOfAllElementsLocatedBy(getelementbytype(accessType, accessName)));
+		List<WebElement> radioButtonGroup = wait.until(presenceOfAllElementsLocatedBy(getElementByType(accessType, accessName)));
 		
 		for (WebElement rb : radioButtonGroup) {
 			if(by.equals("value"))
@@ -304,7 +304,7 @@ public class AssertionMethods extends SelectElementByType implements BaseTest
 	public void isOptionFromDropdownSelected(String accessType,String by,String option,String accessName,boolean shouldBeSelected) throws TestCaseFailed
 	{
 		Select selectList=null;
-		WebElement dropdown = wait.until(presenceOfElementLocated(getelementbytype(accessType, accessName)));
+		WebElement dropdown = wait.until(presenceOfElementLocated(getElementByType(accessType, accessName)));
 		selectList = new Select(dropdown);
 		
 		String actualValue="";

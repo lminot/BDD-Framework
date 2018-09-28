@@ -52,6 +52,24 @@ public class AccountsStepDefs implements BaseTest {
 
   @When("^I click the Create Account button$")
   public void i_click_the_Create_Account_button() {
+//    driver.switchTo().frame(driver.findElement(By.cssSelector(".o-checkout-grid__row-captcha > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > iframe:nth-child(1)")));
+//    System.out.println("Switched");
+//    driver.findElement(By.cssSelector(".recaptcha-checkbox-checkmark")).click();
+    CreateAccountPage createAccountPage = new CreateAccountPage(driver);
+    createAccountPage.clickCreateAccount();
+  }
+
+  @When("^leave all required fields empty$")
+  public void leave_all_required_fields_empty() throws Throwable {
+
+//    JavascriptExecutor jse = (JavascriptExecutor) driver;
+//    jse.executeScript("window.scrollBy(0,250)", "");
+    //.c-button--primary
+    navigationObj.hoverOverElement("css", ".c-button--primary");
+  }
+
+  @Then("^I should see validation error text on all mandatory fields$")
+  public void i_should_see_validation_error_text_on_all_mandatory_fields() throws Throwable {
     // Write code here that turns the phrase above into concrete actions
     throw new PendingException();
   }
