@@ -16,6 +16,7 @@
         <log4j-api.version>2.11.1</log4j-api.version>
         <log4j2-version>2.11.1</log4j2-version>
         <mysql.connector.version>8.0.12</mysql.connector.version>
+        <appium-client-version>6.1.0</appium-client-version>
     </properties>
 
     <dependencies>
@@ -67,11 +68,11 @@
             <version>${phantomjs.driver.version}</version>
         </dependency>
 
-        <!--Webdriver tests-->
+        <!-- These are the Appium dependencies -->
         <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-            <version>3.0.0</version>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>${appium-client-version}</version>
         </dependency>
 
         <!--Logging stuff-->

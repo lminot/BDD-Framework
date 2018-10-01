@@ -62,7 +62,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
 	 */
 	public void zoomInOut(String inOut)
 	{
-		WebElement Sel= driver.findElement(getelementbytype("tagName","html"));
+		WebElement Sel= driver.findElement(getElementByType("tagName","html"));
 		if(inOut.equals("ADD"))
 			Sel.sendKeys(Keys.chord(getKey(), Keys.ADD));
 		else if(inOut.equals("SUBTRACT"))
@@ -79,7 +79,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
 	public void zoomInOutTillElementDisplay(String accessType,String inOut,String accessName)
 	{
 		Actions action = new Actions(driver);
-		element = wait.until(presenceOfElementLocated(getelementbytype(accessType, accessName)));
+		element = wait.until(presenceOfElementLocated(getElementByType(accessType, accessName)));
 		while(true)
 		{
 			if (element.isDisplayed())
@@ -111,7 +111,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
 	public void hoverOverElement(String accessType, String accessName)
 	{
 		Actions action = new Actions(driver);
-		element = wait.until(presenceOfElementLocated(getelementbytype(accessType, accessName)));
+		element = wait.until(presenceOfElementLocated(getElementByType(accessType, accessName)));
 		action.moveToElement(element).perform();
 	}
 	
@@ -121,7 +121,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
 	 */
 	public void scrollToElement(String accessType, String accessName)
 	{
-		element = wait.until(presenceOfElementLocated(getelementbytype(accessType, accessName)));
+		element = wait.until(presenceOfElementLocated(getElementByType(accessType, accessName)));
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
 		executor.executeScript("arguments[0].scrollIntoView();", element);
 	}
@@ -194,7 +194,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
     		driver.switchTo().frame(accessName);
     	else
     	{
-    		element = wait.until(presenceOfElementLocated(getelementbytype(accessType, accessName)));
+    		element = wait.until(presenceOfElementLocated(getElementByType(accessType, accessName)));
     		driver.switchTo().frame(element);
     	}
     }

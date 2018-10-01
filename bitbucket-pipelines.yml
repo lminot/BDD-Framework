@@ -3,14 +3,30 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
+
 image: maven:3.3.9
 
 pipelines:
   default:
-    - step:
-        caches:
-          - maven
-        script: # Modify the commands below to build your repository.
-          - chmod +x install-driver.sh
-          - ./install-driver.sh
-          - mvn -B clean test -Dbrowser=firefox -Dheadless=true # -B batch mode makes Maven less verbose
+  - step:
+      name: Dummy Start Step
+      script:
+      - echo "We out here testing!"
+  - step:
+      name: Execute Tests FireFox
+      trigger: manual
+      services:
+      - docker
+      script: # Modify the commands below to build your repository.
+      - docker run -d --name ff_browser -p 5900:5900 -p 4444:4444 -e JAVA_OPTS=-Xmx512m selenium/standalone-firefox
+      - docker inspect ff_browser
+      - mvn clean install -B -Dbrowser=firefox -Denv=remote -Dheadless=true # -B batch mode makes Maven less verbose
+  - step:
+      name: Execute Tests Chrome
+      trigger: manual
+      services:
+      - docker
+      script: # Modify the commands below to build your repository.
+      - docker run -d --name chrome_browser -p 5900:5900 -p 4444:4444 -e JAVA_OPTS=-Xmx512m selenium/standalone-chrome
+      - docker inspect chrome_browser
+      - mvn clean install -B -Dbrowser=chrome -Denv=remote -Dheadless=true # -B batch mode makes Maven less verbose

@@ -1,8 +1,8 @@
 # Medmen BDD Automation
 
-selenium-cucumber : Automation Testing Using Java
+Selenium-cucumber: Automation Testing Using Java
 
-selenium-cucumber is a behavior driven development (BDD) approach to write automation test script to test Web.
+Selenium-cucumber is a behavior driven development (BDD) approach to write automation test script to test Web.
 It enables you to write and execute automated acceptance/unit tests.
 
 Writing a test
@@ -22,11 +22,10 @@ The predefined steps are located [here](doc/canned_steps.md)
 Running test
 --------------
 
-Go to your project directory from terminal and hit following commands
-* `mvn test (defualt will run on local firefox browser)`
-* `mvn test "-Dbrowser=chrome" (to use any other browser)`
-* `mvn test "-Dcloud_config=saucelab_windows_chrome52" (to run test on cloud test platforms)`
-
-Using canned tests in your project
-----------------------------------
+Go to your project directory from terminal and hit following commands:  
+* ```mvn test``` (defualt will run on local firefox browser)  
+* ```mvn test -Dbrowser=chrome``` (to use any other browser, current options: chrome, firefox, phantomjs)     
+* ```mvn test -Denv=remote``` (to run test on a remote grid, default is set to local)
+* ```mvn test -Dheadless=true``` (to run test browser in headless mode, default is set to false)  
+Example: ```mvn clean install -Dbrowser=firefox -Dheadless=true```
 

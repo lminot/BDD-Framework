@@ -76,7 +76,7 @@ public class CreateAccountPage extends PageObject {
   @FindBy(xpath = "//select[@id='country']")
   private WebElement country;
 
-  @FindBy(xpath = "//select[@id='preferred_store']")
+  @FindBy(xpath = "//select[@id='preferred_store_id']")
   private WebElement perfStore;
 
   @FindBy(xpath = "//input[@id='phone_number']")
@@ -85,13 +85,13 @@ public class CreateAccountPage extends PageObject {
   @FindBy(xpath = "//form//div[12]//label[1]//span[1]")
   private WebElement smsCheckbox;
 
-  @FindBy(xpath = "//form//div[14]//label[1]//span[1]")
+  @FindBy(xpath = "//form//div[12]//label[1]//span[1]")
   private WebElement mmDataPolicyCheckbox;
 
-  @FindBy(xpath = "//form//div[15]//label[1]//span[1]")
+  @FindBy(xpath = "//div[@class='o-form-field-flex']//div//span[@class='c-form-group__checkmark']")
   private WebElement mmPrivacyPolicyCheckbox;
 
-  @FindBy(xpath = "//button[@type='submit']")
+  @FindBy(css = ".c-button--primary")
   private WebElement createAccount;
 
   @FindBy(xpath = "//a[@class='c-button c-button--hollow']")
@@ -170,7 +170,7 @@ public class CreateAccountPage extends PageObject {
     dropdown.selectByIndex(country);
   }
 
-  public void selectPerStore(int index) {
+  public void selectPerfStore(int index) {
     Select dropdown = new Select(this.perfStore);
     dropdown.selectByIndex(index);
   }
@@ -189,6 +189,6 @@ public class CreateAccountPage extends PageObject {
   }
 
   public void clickCreateAccount() {
-    this.createAccount.clear();
+    this.createAccount.click();
   }
 }

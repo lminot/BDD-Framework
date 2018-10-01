@@ -1,8 +1,7 @@
 package com.medmen.bdd.stepDefs;
 
-import com.medmen.bdd.configs.DriverConfigs;
+import com.medmen.bdd.configs.DriverConfig;
 import com.medmen.bdd.helperMethods.TestCaseFailed;
-import cucumber.api.java.After;
 import cucumber.api.java.en.Then;
 import com.medmen.bdd.helperMethods.BaseTest;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 import java.io.IOException;
 
 public class PredefinedStepDefinitions implements BaseTest {
-	protected WebDriver driver = DriverConfigs.getDriver();
+	protected WebDriver driver = DriverConfig.getDriver();
 	//Navigation Steps
 	
 	//Step to navigate to specified URL
@@ -539,9 +538,5 @@ public class PredefinedStepDefinitions implements BaseTest {
 	// 		}
 	// 	}
 	// }
-	
-	 @After
-	 public final void tearDown() {
-	 	DriverConfigs.closeDriver();
-	 }
+
 }

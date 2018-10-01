@@ -1,6 +1,6 @@
 package com.medmen.bdd.helperMethods;
 
-import com.medmen.bdd.configs.DriverConfigs;
+import com.medmen.bdd.configs.DriverConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,7 +10,7 @@ public class SelectElementByType
 	protected WebDriver driver;
 	protected WebDriverWait wait;
 	public SelectElementByType() {
-		driver = DriverConfigs.getDriver();
+		driver = DriverConfig.getDriver();
 		wait = new WebDriverWait(driver, 30);
 	}
 	/**Method to select element 'by' type
@@ -18,7 +18,7 @@ public class SelectElementByType
 	 * @param access_name : String : Locator value
 	 * @return By
 	 */
-	public By getelementbytype(String type,String access_name)
+	public By getElementByType(String type, String access_name)
 	{
 		switch(type)
 		{

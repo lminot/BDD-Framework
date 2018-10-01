@@ -1,10 +1,10 @@
 package com.medmen.bdd.helperMethods;
 
-import com.medmen.bdd.configs.DriverConfigs;
+import com.medmen.bdd.configs.DriverConfig;
 import org.openqa.selenium.WebDriver;
 
 public class JavascriptHandlingMethods implements BaseTest {
-	protected WebDriver driver = DriverConfigs.getDriver();
+	protected WebDriver driver = DriverConfig.getDriver();
 	/**Method to handle alert
 	 * @param decision : String : Accept or dismiss alert
 	 */
