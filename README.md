@@ -25,7 +25,8 @@ Running test
 Go to your project directory from terminal and hit following commands:  
 * ```mvn test``` (defualt will run on local firefox browser)  
 * ```mvn test -Dbrowser=chrome``` (to use any other browser, current options: chrome, firefox, phantomjs)     
-* ```mvn test -Denv=remote``` (to run test on a remote grid, default is set to local)
+* ```mvn test -Denv=remote``` (to run test on a remote grid, default is set to local)  
 * ```mvn test -Dheadless=true``` (to run test browser in headless mode, default is set to false)  
-Example: ```mvn clean install -Dbrowser=firefox -Dheadless=true```
+Example:  
+ ```mvn clean install -Dbrowser=firefox -Dheadless=true```
 
