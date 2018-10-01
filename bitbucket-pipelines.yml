@@ -9,13 +9,13 @@ image: maven:3.3.9
 pipelines:
   default:
   - step:
-      name: Dummy Step
+      name: Manual Trigger Step
+      trigger: manual
       script:
       - echo "We out here testing"
   - parallel:
       - step:
           name: Execute Tests FireFox
-          trigger: manual
           services:
           - docker
           script: # Modify the commands below to build your repository.
@@ -24,7 +24,6 @@ pipelines:
           - mvn clean install -B -Dbrowser=firefox -Denv=remote -Dheadless=true # -B batch mode makes Maven less verbose
       - step:
           name: Execute Tests Chrome
-          trigger: manual
           services:
           - docker
           script: # Modify the commands below to build your repository.
