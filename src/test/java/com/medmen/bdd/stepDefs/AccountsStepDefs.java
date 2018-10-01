@@ -5,6 +5,7 @@ import com.medmen.bdd.helperMethods.BaseTest;
 import com.medmen.bdd.pages.Cart;
 import com.medmen.bdd.pages.CreateAccountPage;
 import com.medmen.bdd.pages.StorePage;
+import com.medmen.bdd.utils.FileLoaderUtils;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -31,8 +32,11 @@ public class AccountsStepDefs implements BaseTest {
 
   @Given("^I enter valid information in all required fields$")
   public void i_enter_valid_information_in_all_required_fields() {
+    FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
+    String email = fileLoaderUtils.getValueFromPropertyFile("stage.properties", "user.password");
+
     CreateAccountPage createAccountPage = new CreateAccountPage(driver);
-    createAccountPage.enterEmailAddress("lucien.minot@medmen.com");
+    createAccountPage.enterEmailAddress(email);
     createAccountPage.enterPassword("popeye123");
     createAccountPage.genderSet("male");
     createAccountPage.enterFirstName("Testing");
@@ -50,11 +54,8 @@ public class AccountsStepDefs implements BaseTest {
     createAccountPage.checkTermsOfService();
   }
 
-  @When("^I click the Create Account button$")
-  public void i_click_the_Create_Account_button() {
-//    driver.switchTo().frame(driver.findElement(By.cssSelector(".o-checkout-grid__row-captcha > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > iframe:nth-child(1)")));
-//    System.out.println("Switched");
-//    driver.findElement(By.cssSelector(".recaptcha-checkbox-checkmark")).click();
+  @When("^I click the create account button$")
+  public void i_click_the_create_account_button() {
     CreateAccountPage createAccountPage = new CreateAccountPage(driver);
     createAccountPage.clickCreateAccount();
   }
@@ -90,11 +91,6 @@ public class AccountsStepDefs implements BaseTest {
   public void i_select_items_to_add_to_cart(int itemNum) {
     StorePage storePage = new StorePage(driver);
     assertTrue(storePage.isInitialized());
-    int expectedNum = itemNum;
-    System.out.println("!!!!!!!!!");
-
-    //System.out.println(driver.findElement(By.xpath("//div[@class='o-product-grid']//div[2]//div[1]//div[1]//div[2]//button[1]")).getText());
-    ///html/body/div[1]/div/div[3]/div
 
     for (int i = 1; itemNum > 0; i++) {
       if (driver
@@ -123,11 +119,4 @@ public class AccountsStepDefs implements BaseTest {
     assertTrue(cart.isInitialized());
     cart.clickCheckout();
   }
-
-    @Then("^I am taken to the Sign In page$")
-    public void iAmTakenToTheSignInPage() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
 }
