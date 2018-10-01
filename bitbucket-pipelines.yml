@@ -12,8 +12,15 @@ pipelines:
         name: Execute Tests
         services:
           - docker
+#        script: # Modify the commands below to build your repository.
+#          - docker pull selenium/standalone-firefox
+#          - docker run -d --name ff_browser -p 5900:5900 -p 4444:4444 -e JAVA_OPTS=-Xmx512m selenium/standalone-firefox
+#          - docker inspect ff_browser
+#          - mvn clean install -Dbrowser=firefox -Denv=remote -Dheadless=true # -B batch mode makes Maven less verbose
         script: # Modify the commands below to build your repository.
-          - docker pull selenium/standalone-firefox
-          - docker run -d --name ff_browser -p 5900:5900 -p 4444:4444 -e JAVA_OPTS=-Xmx512m selenium/standalone-firefox
-          - docker inspect ff_browser
+          - docker network create grid
+          - docker run -d -p 4444:4444 --net grid --name selenium-hub selenium/hub:3.14.0-europium
+          - mkdir $BITBUCKET_CLONE_DIR/dev/shm
+          - docker run -d --net grid -e HUB_HOST=selenium-hub -v $BITBUCKET_CLONE_DIR/dev/shm:/dev/shm selenium/node-chrome:3.14.0-europium
+          - docker run -d --net grid -e HUB_HOST=selenium-hub -v $BITBUCKET_CLONE_DIR/dev/shm:/dev/shm selenium/node-firefox:3.14.0-europium
           - mvn clean install -Dbrowser=firefox -Denv=remote -Dheadless=true # -B batch mode makes Maven less verbose
