@@ -9,14 +9,18 @@ image: maven:3.3.9
 pipelines:
   default:
   - step:
-        name: Execute Tests FireFox
-        trigger: manual
-        services:
-        - docker
-        script: # Modify the commands below to build your repository.
-        - docker run -d --name ff_browser -p 5900:5900 -p 4444:4444 -e JAVA_OPTS=-Xmx512m selenium/standalone-firefox
-        - docker inspect ff_browser
-        - mvn clean install -B -Dbrowser=firefox -Denv=remote -Dheadless=true # -B batch mode makes Maven less verbose
+      name: Dummy Step
+      script:
+      - echo "We out here testing"
+  - step:
+      name: Execute Tests FireFox
+      trigger: manual
+      services:
+      - docker
+      script: # Modify the commands below to build your repository.
+      - docker run -d --name ff_browser -p 5900:5900 -p 4444:4444 -e JAVA_OPTS=-Xmx512m selenium/standalone-firefox
+      - docker inspect ff_browser
+      - mvn clean install -B -Dbrowser=firefox -Denv=remote -Dheadless=true # -B batch mode makes Maven less verbose
   - step:
       name: Execute Tests Chrome
       trigger: manual
