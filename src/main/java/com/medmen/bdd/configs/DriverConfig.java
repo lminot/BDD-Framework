@@ -55,7 +55,9 @@ public class DriverConfig {
 
   private static WebDriver manageDriver(WebDriver driver) {
     driver.manage().timeouts().setScriptTimeout(DEFAULT_WAIT, TimeUnit.SECONDS);
-    driver.manage().window().maximize();
+    if (environment.equals("local")) {
+      driver.manage().window().maximize();
+    }
     return driver;
   }
 
