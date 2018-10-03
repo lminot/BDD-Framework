@@ -25,7 +25,7 @@ public class DriverConfig {
   private static long DEFAULT_WAIT = 20;
   private static String GRID_URL = "http://localhost:4444/wd/hub";
   private static String driverName = System.getProperty("browser", "Firefox");
-  private static String environment = System.getProperty("env", "local");
+  private static String browserLocation = System.getProperty("browserLocation", "local");
 
   private static WebDriver driver;
 
@@ -34,7 +34,7 @@ public class DriverConfig {
       return driver;
     }
 
-    switch (environment) {
+    switch (browserLocation) {
       case "remote":
         try {
           driver = new RemoteWebDriver(new URL(GRID_URL), setDesiredCapabilities());
@@ -48,14 +48,14 @@ public class DriverConfig {
         break;
 
       default:
-        logger.error("Exception: Invalid environment " + environment);
+        logger.error("Exception: Invalid environment " + browserLocation);
     }
     return manageDriver(driver);
   }
 
   private static WebDriver manageDriver(WebDriver driver) {
     driver.manage().timeouts().setScriptTimeout(DEFAULT_WAIT, TimeUnit.SECONDS);
-    if (environment.equals("local")) {
+    if (browserLocation.equals("local")) {
       driver.manage().window().maximize();
     }
     return driver;

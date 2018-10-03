@@ -1,8 +1,10 @@
 package com.medmen.bdd.stepDefs;
 
 import com.medmen.bdd.configs.DriverConfig;
+import com.medmen.bdd.pages.MedMenHomePage;
 import com.medmen.bdd.pages.MedMenHomePageOverlay;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
 
 import static com.medmen.bdd.helperMethods.BaseTest.navigationObj;
@@ -17,9 +19,9 @@ public class CommonStepDefs {
     public void i_navigate_to_homepage(String env) {
         String url;
         if (env.toLowerCase().contains("stage")) {
-            url = "https://menu-staging.medmen.com";
+            url = "https://medmen:AXPqt3EURBVBGATb@staging.medmen.com";
         } else {
-            url = "https://menu.medmen.com";
+            url = "https://medmen.com";
         }
         navigationObj.navigateTo(url);
     }
@@ -40,5 +42,14 @@ public class CommonStepDefs {
         MedMenHomePageOverlay medmenHomePageOverlay = new MedMenHomePageOverlay(driver);
         assertTrue(medmenHomePageOverlay.isInitialized());
         medmenHomePageOverlay.clickEnter();
+    }
+
+    @When("^I select the statemade option from the top nav$")
+    public void i_select_the_statemade_option_from_the_top_nav() {
+        //todo fix me for teh basic auth
+//        MedMenHomePage medMenHomePage = new MedMenHomePage(driver);
+//        assertTrue(medMenHomePage.isInitialized());
+//        medMenHomePage.selectStatemade();
+        navigationObj.navigateTo("https://medmen:AXPqt3EURBVBGATb@staging.medmen.com/statemade/");
     }
 }
