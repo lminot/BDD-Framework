@@ -2,6 +2,7 @@ package com.medmen.bdd.runner;
 
 import com.medmen.bdd.configs.DriverConfig;
 import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
 import cucumber.api.CucumberOptions;
@@ -17,9 +18,14 @@ import cucumber.api.junit.Cucumber;
       "json:target/cucumber-reports/CucumberTestReport.json",
       "rerun:target/cucumber-reports/rerun.txt"
     },
-    tags = {"@statemade"})
-
+    tags = {"@test"})
 public class TestRunner {
+
+  @BeforeClass
+  public static void setEnvironment() {
+    String environment = System.getProperty("env", "stage");
+    System.out.println("Running tests against: " + environment);
+  }
 
   @AfterClass
   public static void tearDown() {

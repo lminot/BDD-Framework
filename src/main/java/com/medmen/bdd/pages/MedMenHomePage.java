@@ -33,6 +33,8 @@ public class MedMenHomePage extends PageObject {
   }
 
   public void selectStatemade() {
-    topStatemade.click();
+    if (topStatemade.isDisplayed()) {
+      topStatemade.click();
+    }
   }
 }

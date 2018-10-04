@@ -1,13 +1,13 @@
 Feature: Verify various aspects of the MedMen account functionality
 
   Background: Click past 'Yes I'm 21'
-    Given I navigate to the "Stage" homepage
+    Given I navigate to the Medmen homepage
     And I click "YES" on the age verification prompt
     And I click the enter button
 
-  @test
+  @test1
   Scenario: Create account - add new account via in-line credentials
-    When I navigate to the "Stage" create account page
+    When I navigate to the create account page
     And I enter valid information in all required fields
 #    And I click the create account button
 #    Then I am directed to my store page

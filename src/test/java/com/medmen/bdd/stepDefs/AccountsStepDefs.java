@@ -18,16 +18,17 @@ import static org.junit.Assert.assertTrue;
 public class AccountsStepDefs implements BaseTest {
 
   private WebDriver driver = DriverConfig.getDriver();
+  public String menuBaseUrl = "https://menu-staging.medmen.com";
 
-  @Given("^I navigate to the \"([^\"]*)\" create account page$")
-  public void i_navigate_to_create_account_page(String env) {
-    String url;
-    if (env.toLowerCase().contains("stage")) {
-      url = "https://menu-staging.medmen.com/register";
-    } else {
-      url = "https://menu.medmen.com/register";
-    }
-    navigationObj.navigateTo(url);
+  //  @Before
+  //  public void setMenuBaseUrl() {
+  //    //todo fix me
+  //    menuBaseUrl = "https://menu-staging.medmen.com";
+  //  }
+
+  @Given("^I navigate to the create account page$")
+  public void i_navigate_to_the_create_account_page() {
+    navigationObj.navigateTo(menuBaseUrl + "/register");
   }
 
   @Given("^I enter valid information in all required fields$")
@@ -61,16 +62,12 @@ public class AccountsStepDefs implements BaseTest {
   }
 
   @When("^leave all required fields empty$")
-  public void leave_all_required_fields_empty() throws Throwable {
-
-//    JavascriptExecutor jse = (JavascriptExecutor) driver;
-//    jse.executeScript("window.scrollBy(0,250)", "");
-    //.c-button--primary
+  public void leave_all_required_fields_empty() {
     navigationObj.hoverOverElement("css", ".c-button--primary");
   }
 
   @Then("^I should see validation error text on all mandatory fields$")
-  public void i_should_see_validation_error_text_on_all_mandatory_fields() throws Throwable {
+  public void i_should_see_validation_error_text_on_all_mandatory_fields() {
     // Write code here that turns the phrase above into concrete actions
     throw new PendingException();
   }
@@ -95,14 +92,19 @@ public class AccountsStepDefs implements BaseTest {
     for (int i = 1; itemNum > 0; i++) {
       if (driver
           .findElement(
-              By.xpath("//div[@class='o-product-grid']//div[" + i + "]//div[1]//div[1]//div[2]//button[1]"))
+              By.xpath(
+                  "//div[@class='o-product-grid']//div["
+                      + i
+                      + "]//div[1]//div[1]//div[2]//button[1]"))
           .getText()
           .contains("Add")) {
         System.out.println(
             driver
                 .findElement(
                     By.xpath(
-                        "//div[@class='o-product-grid']//div[" + i + "]//div[1]//div[1]//div[2]//button[1]"))
+                        "//div[@class='o-product-grid']//div["
+                            + i
+                            + "]//div[1]//div[1]//div[2]//button[1]"))
                 .getText());
         clickObj.clickForcefully(
             "xpath",

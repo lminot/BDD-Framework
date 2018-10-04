@@ -19,6 +19,7 @@ public class StatemadeStepDefs implements BaseTest {
   private WebDriver driver = DriverConfig.getDriver();
   private StateMadeLandingPage stateMadePage = new StateMadeLandingPage(driver);
   private EffectsPage effectsPage = new EffectsPage(driver);
+  private String baseUrl = CommonStepDefs.getBaseUrl();
 
   @Then("^I am taken to the statemade landing page$")
   public void i_am_taken_to_the_statemade_landing_page() {
@@ -38,34 +39,34 @@ public class StatemadeStepDefs implements BaseTest {
 
   @When("^I am on the statemade page$")
   public void i_am_on_the_statemade_page() {
-    navigationObj.navigateTo("https://medmen:AXPqt3EURBVBGATb@staging.medmen.com/statemade/");
+    navigationObj.navigateTo(baseUrl + "/statemade/");
   }
 
   @When("^I select the effect button$")
   public void i_select_the_effect_button() {
-    navigationObj.navigateTo(
-        "https://medmen:AXPqt3EURBVBGATb@staging.medmen.com/statemade/effects/");
-//todo fix this
-//     stateMadePage.clickEffectButton();
-
+    //    navigationObj.navigateTo(
+    //        "https://medmen:AXPqt3EURBVBGATb@staging.medmen.com/statemade/effects/");
+    // todo fix this
+    stateMadePage.clickEffectButton();
   }
 
   @When("^I am taken to the effects page$")
   public void i_am_taken_to_the_effects_page() {
-    //EffectsPage effectsPage = new EffectsPage(driver);
+    // EffectsPage effectsPage = new EffectsPage(driver);
     assertTrue(effectsPage.isInitialized());
   }
 
   @Then("^all the various effects are displayed$")
   public void all_the_various_effects_are_displayed() {
-    //EffectsPage effectsPage = new EffectsPage(driver);
+    // EffectsPage effectsPage = new EffectsPage(driver);
     assertTrue(effectsPage.linksArePresent());
   }
 
   @When("^I select the product type button$")
   public void i_select_the_product_type_button() throws Throwable {
-    navigationObj.navigateTo(
-        "https://medmen:AXPqt3EURBVBGATb@staging.medmen.com/statemade/products/");
+    stateMadePage.clickEffectButton();
+    //    navigationObj.navigateTo(
+    //        "https://medmen:AXPqt3EURBVBGATb@staging.medmen.com/statemade/products/");
   }
 
   @When("^I am taken to the product type  page$")
@@ -85,7 +86,7 @@ public class StatemadeStepDefs implements BaseTest {
 
   @And("^I select the \"([^\"]*)\" product$")
   public void iSelectTheProduct(String productType) throws Throwable {
-    if(productType.equals("Max")){
+    if (productType.equals("Max")) {
       effectsPage.selectMax();
     }
   }

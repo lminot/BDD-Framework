@@ -41,4 +41,8 @@ public class StateMadeLandingPage extends PageObject {
       effectButton.click();
   }
 
+  public void clickProductTypeButton() {
+    productTypeButton.click();
+  }
+
 }
