@@ -1,15 +1,12 @@
 Feature: Verify various aspects of the MedMen Statemade functionality
 
-#  Background: Click past 'Yes I'm 21'
-#    Given I navigate to the Medmen homepage
-#    And I click "YES" on the age verification prompt
-#    And I click the enter button
-
-  @test
-  Scenario: Statemade - verify landing page & navigation functionality
+  Background: Click past 'Yes I'm 21'
     Given I navigate to the Medmen homepage
     And I click "YES" on the age verification prompt
     And I click the enter button
+
+  @test
+  Scenario: Statemade - verify landing experience & navigation functionality
     When I select the statemade option from the top nav
     Then I am taken to the statemade landing page
     And the page has valid buttons
@@ -22,7 +19,7 @@ Feature: Verify various aspects of the MedMen Statemade functionality
     And I am taken to the effects page
     Then all the various effects are displayed
 
-#  @statemade1
+  @test
   Scenario: Statemade - verify products page
     When I am on the statemade page
     And I select the product type button
