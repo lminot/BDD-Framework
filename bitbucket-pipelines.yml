@@ -18,7 +18,7 @@ pipelines:
       services:
       - docker
       script: # Modify the commands below to build your repository.
-      - docker run -d --name ff_browser -p 5900:5900 -p 4444:4444 -e JAVA_OPTS=-Xmx512m selenium/standalone-firefox
+      - docker run -d --name ff_browser -p 5900:5900 -p 4444:4444 selenium/standalone-firefox
       - docker inspect ff_browser
       - mvn clean install -B -Denv=prod -Dbrowser=firefox -DbrowserLocation=remote -Dheadless=true # -B batch mode makes Maven less verbose
   - step:
