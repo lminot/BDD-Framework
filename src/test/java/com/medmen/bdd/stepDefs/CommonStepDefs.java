@@ -3,6 +3,7 @@ package com.medmen.bdd.stepDefs;
 import com.medmen.bdd.configs.DriverConfig;
 import com.medmen.bdd.pages.MedMenHomePage;
 import com.medmen.bdd.pages.MedMenHomePageOverlay;
+import com.medmen.bdd.utils.FileLoaderUtils;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
@@ -15,17 +16,20 @@ public class CommonStepDefs {
 
   private WebDriver driver = DriverConfig.getDriver();
   private static String environment;
+  private static String port ;
   public static String baseUrl;
 
   @Before
   public void setBaseUrl() {
+    FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
     environment = System.getProperty("env", "stage");
 
     if (environment.toLowerCase().contains("localhost")) {
-      baseUrl = "http://localhost:8000";
+      port = fileLoaderUtils.getValueFromPropertyFile("local.properties", "host.port");
+      baseUrl = "http://localhost:" + port;
     } else if (environment.toLowerCase().contains("stage")) {
       baseUrl = "https://medmen:AXPqt3EURBVBGATb@staging.medmen.com";
-    } else {
+    } else if (environment.toLowerCase().contains("prod")){
       baseUrl = "https://medmen.com";
     }
   }

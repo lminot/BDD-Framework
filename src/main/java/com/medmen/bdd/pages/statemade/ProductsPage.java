@@ -13,17 +13,32 @@ public class ProductsPage extends PageObject {
   @FindBy(xpath = "//div[@class='statemade-products-note']")
   private WebElement productsDescTxt;
 
+  @FindBy(xpath = "//img[@class='statemade-products-pens']")
+  private WebElement pensPhoto;
+
   @FindBy(xpath = "//div[contains(text(),'pens')]")
   private WebElement pensBtn;
+
+  @FindBy(xpath = "//img[@class='statemade-products-drops']")
+  private WebElement dropsPhoto;
 
   @FindBy(xpath = "//div[contains(text(),'drops')]")
   private WebElement dropsBtn;
 
+  @FindBy(xpath = "//img[@class='statemade-products-flower']")
+  private WebElement flowerPhoto;
+
   @FindBy(xpath = "//div[contains(text(),'flower')]")
   private WebElement flowerBtn;
 
-  @FindBy(xpath = "//div[contains(text(),'prerolls')]")
+  @FindBy(xpath = "//img[@class='statemade-products-preroll']")
+  private WebElement prerollsPhoto;
+
+  @FindBy(xpath = "//div[contains(text(),'pre-rolls')]")
   private WebElement prerollsBtn;
+
+  @FindBy(xpath = "//*[@id=\"hero\"]/div[33]")
+  private WebElement effectsList;
 
   public ProductsPage(WebDriver driver) {
     super(driver);
@@ -38,6 +53,13 @@ public class ProductsPage extends PageObject {
         && dropsBtn.isDisplayed()
         && flowerBtn.isDisplayed()
         && prerollsBtn.isDisplayed());
+  }
+
+  public boolean productsPhotosArePresent() {
+    return (pensPhoto.isDisplayed()
+            && dropsPhoto.isDisplayed()
+            && flowerPhoto.isDisplayed()
+            && prerollsPhoto.isDisplayed());
   }
 
   public String getProductsDescText() {
