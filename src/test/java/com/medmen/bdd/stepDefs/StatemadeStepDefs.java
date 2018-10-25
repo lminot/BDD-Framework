@@ -6,6 +6,7 @@ import com.medmen.bdd.pages.statemade.EffectsPage;
 import com.medmen.bdd.pages.statemade.ProductsPage;
 import com.medmen.bdd.pages.statemade.StateMadeLandingPage;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
@@ -32,6 +33,7 @@ public class StatemadeStepDefs implements BaseTest {
 
   @Then("^I am taken to the statemade landing page$")
   public void i_am_taken_to_the_statemade_landing_page() {
+    // todo fix headless error here
     assertTrue(stateMadePage.isInitialized());
   }
 
@@ -48,7 +50,7 @@ public class StatemadeStepDefs implements BaseTest {
 
   @When("^I am on the statemade page$")
   public void i_am_on_the_statemade_page() {
-    navigationObj.navigateTo(baseUrl + "/statemade/");
+    navigationObj.navigateTo(CommonStepDefs.getBaseUrl() + "/statemade/");
   }
 
   @When("^I select the effect button$")
@@ -96,7 +98,7 @@ public class StatemadeStepDefs implements BaseTest {
 
   @When("^I am on the statemade menu page$")
   public void i_am_on_the_statemade_menu_page() {
-    navigationObj.navigateTo(baseUrl + "/statemade/menu/");
+    navigationObj.navigateTo(CommonStepDefs.getBaseUrl() + "/statemade/menu/");
   }
 
   @Then("^the bottom nav is fully functional$")
@@ -116,8 +118,8 @@ public class StatemadeStepDefs implements BaseTest {
     }
   }
 
-  @Then("^each effect description is properly displayed$")
-  public void each_effect_description_is_properly_displayed() {
+  @Then("^the all products effect description is properly displayed$")
+  public void the_all_products_effect_description_is_properly_displayed() {
 
     String productHeaderText =
         "//*[@id=\"hero\"]//*[contains(@class, 'statemade-products-all-%s')]/div[@class='statemade-products-all-header']";
@@ -207,6 +209,79 @@ public class StatemadeStepDefs implements BaseTest {
     }
   }
 
+  @When("^I select the \"([^\"]*)\" product$")
+  public void i_select_the_product(String productType) {
+    String productXpathLoc = "//*[@id=\"hero\"]/div[32]//a[contains(@data-product, '%s')]";
+
+    if (productType.equals("pens")) {
+      assertTrue(
+          assertionObj.isElementDisplayed("xpath", String.format(productXpathLoc, productType)));
+      clickObj.click("xpath", String.format(productXpathLoc, productType));
+    } else if (productType.equals("drops")) {
+      assertTrue(
+          assertionObj.isElementDisplayed("xpath", String.format(productXpathLoc, productType)));
+      clickObj.click("xpath", String.format(productXpathLoc, productType));
+
+    } else if (productType.equals("flowers")) {
+      assertTrue(
+          assertionObj.isElementDisplayed("xpath", String.format(productXpathLoc, productType)));
+      clickObj.click("xpath", String.format(productXpathLoc, productType));
+
+    } else if (productType.equals("pre-rolls")) {
+      assertTrue(
+          assertionObj.isElementDisplayed("xpath", String.format(productXpathLoc, productType)));
+      clickObj.click("xpath", String.format(productXpathLoc, productType));
+    }
+  }
+
+  @And("^I select each effect and verify their descriptions$")
+  public void i_select_each_effect_and_verify_their_descriptions() {
+    for (String effect : effectsList) {
+      String effectXpathLoc =
+          "//*[@id=\"hero\"]/div[33]//a[contains(@data-effect, '" + effect + "')]";
+
+      assertTrue(assertionObj.isElementDisplayed("xpath", effectXpathLoc));
+      clickObj.click("xpath", effectXpathLoc);
+      checkPenDescription(effect);
+    }
+  }
+
+  private void checkPenDescription(String effect) {
+    String penEffectName =
+        "//div[@class='statemade-products-wrapper products-type-default products-%s-pens toggle-js']//h1[contains(text(),'%s')]";
+    String vaporizerPen =
+        "//div[@class='statemade-products-wrapper products-type-default products-%s-pens toggle-js']//h4[contains(text(),'vaporizer pen')]";
+    String penInfo1 =
+        "//div[@class='statemade-products-wrapper products-type-default products-%s-pens toggle-js']//div//div[@class='products-info']";
+    String penInfo2 =
+        "//div[@class='statemade-products-wrapper products-type-default products-"
+            + effect
+            + "-pens toggle-js']//div//div[@class='products-info'][2]";
+
+    assertTrue(
+        assertionObj.isElementDisplayed("xpath", String.format(penEffectName, effect, effect)));
+    assertEquals(
+        assertionObj.getElementText("xpath", String.format(penEffectName, effect, effect)), effect);
+
+    assertTrue(assertionObj.isElementDisplayed("xpath", String.format(vaporizerPen, effect)));
+    assertEquals(
+        assertionObj.getElementText("xpath", String.format(vaporizerPen, effect)), "vaporizer pen");
+
+    assertEquals(
+        assertionObj.getElementText("xpath", String.format(penInfo1, effect)),
+        "[statemade] "
+            + effect
+            + " pens are the perfect combination of innovation and design. each vaporizer pen contains a state\u00AD-of-\u00ADthe-art battery designed to last the life of the pen and a modern exterior metal casing worthy of display.");
+    assertEquals(
+        assertionObj.getElementText("xpath", String.format(penInfo2, effect)),
+        "+ calibrated for "
+            + effect
+            + "\n"
+            + "+ square end prevents roll-away\n"
+            + "+ light ports activate upon inhale\n"
+            + "+ reservoir displays fill level");
+  }
+
   private void checkEffectType(String productHeaderText, String effect) {
     productHeaderText = String.format(productHeaderText, effect);
     String effectXpathLoc =
@@ -214,5 +289,10 @@ public class StatemadeStepDefs implements BaseTest {
     assertTrue(assertionObj.isElementDisplayed("xpath", effectXpathLoc));
     clickObj.click("xpath", effectXpathLoc);
     assertEquals(assertionObj.getElementText("xpath", productHeaderText), effect);
+  }
+
+  @And("^I navigate through the various effects$")
+  public void iNavigateThroughTheVariousEffects() {
+    // this is a pass through step
   }
 }

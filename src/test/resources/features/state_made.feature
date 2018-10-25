@@ -28,7 +28,32 @@ Feature: Verify various aspects of the MedMen Statemade functionality
     When I am on the statemade menu page
     Then the bottom nav is fully functional
 
-  Scenario: Statemade - verify different product pages descriptions
+  Scenario: Statemade - verify all products & effect descriptions
     When I am on the statemade menu page
-    Then each effect description is properly displayed
+    And I navigate through the various effects
+    Then the all products effect description is properly displayed
+
+  Scenario: Statemade - verify pen products & effect descriptions
+    When I am on the statemade menu page
+    Then I select the "pens" product
+    And I select each effect and verify their descriptions
+
+#  Scenario: Statemade - verify drops products & effect descriptions
+#    When I am on the statemade menu page
+#    And I select the "drops" product
+#    And I select each effect
+#    Then each "drops" effect description is properly displayed
+#
+#  Scenario: Statemade - verify flower products & effect descriptions
+#    When I am on the statemade menu page
+#    And I select the "flower" product
+#    And I select each effect
+#    Then each "flower" effect description is properly displayed
+#
+#  Scenario: Statemade - verify pre-rolls products & effect descriptions
+#    When I am on the statemade menu page
+#    And I select the "pre-rolls" product
+#    And I select each effect
+#    Then each "pre-rolls" effect description is properly displayed
+
 

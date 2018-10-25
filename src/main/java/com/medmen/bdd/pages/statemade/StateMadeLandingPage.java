@@ -7,12 +7,10 @@ import org.openqa.selenium.support.FindBy;
 
 public class StateMadeLandingPage extends PageObject {
 
-  @FindBy(xpath = "//img[@class='logo-statemade']")
+  @FindBy(css = "#hero > div.o-container > img")
   private WebElement logo;
 
-  @FindBy(
-      css =
-          "#hero > div.o-container > h1")
+  @FindBy(css = "#hero > div.o-container > h1")
   private WebElement fadeInTitle;
 
   @FindBy(xpath = "//*[@id=\"hero\"]/div[3]/div/a[1]")
@@ -30,19 +28,18 @@ public class StateMadeLandingPage extends PageObject {
   }
 
   public boolean linksArePresent() {
-      return (effectButton.isDisplayed() && productTypeButton.isDisplayed());
+    return (effectButton.isDisplayed() && productTypeButton.isDisplayed());
   }
 
   public String getTitleText() {
-      return fadeInTitle.getText();
+    return fadeInTitle.getText();
   }
 
   public void clickEffectButton() {
-      effectButton.click();
+    effectButton.click();
   }
 
   public void clickProductTypeButton() {
     productTypeButton.click();
   }
-
 }

@@ -17,6 +17,7 @@
         <log4j2-version>2.11.1</log4j2-version>
         <mysql.connector.version>8.0.12</mysql.connector.version>
         <appium-client-version>6.1.0</appium-client-version>
+        <jersey.version>2.27</jersey.version>
     </properties>
 
     <dependencies>
@@ -86,7 +87,6 @@
             <artifactId>log4j-core</artifactId>
             <version>${log4j2-version}</version>
         </dependency>
-
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -100,6 +100,24 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.connector.version}</version>
         </dependency>
+
+        <!--  rest client dependencies -->
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.inject</groupId>
+            <artifactId>jersey-hk2</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
