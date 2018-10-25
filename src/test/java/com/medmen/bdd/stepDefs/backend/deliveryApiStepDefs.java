@@ -11,7 +11,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class deliveryApi {
+public class deliveryApiStepDefs {
 
   public Response requestResponse;
   public int responseCode;
@@ -21,7 +21,11 @@ public class deliveryApi {
   @Given("^I have a valid getNearbyPickupStores payload$")
   public void i_have_a_valid_getNearbyPickupStores_payload() {
     getNearbyPickupStoresPayload =
-        "{\n" + "  \"lat\": \"34.195804\",\n" + "  \"lng\": \"-119.174093\"\n" + "}";
+        "{\n"
+            + "\t\"address\": \"10115 Jefferson Blvd, Culver City, CA 90232\",\n"
+            + "\t\"lat\": \"34.0117964\",\n"
+            + "\t\"lng\":\"-118.3905927\"\n"
+            + "}";
   }
 
   @When("^I execute a POST to the getNearbyPickupStores endpoint$")

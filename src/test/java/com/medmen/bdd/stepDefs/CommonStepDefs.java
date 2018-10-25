@@ -19,7 +19,7 @@ public class CommonStepDefs {
   private static String port ;
   public static String baseUrl;
 
-  @Before
+//  @Before
   public void setBaseUrl() {
     FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
     environment = System.getProperty("env", "stage");
