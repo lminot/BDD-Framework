@@ -10,6 +10,8 @@ import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -17,14 +19,16 @@ import static org.junit.Assert.assertTrue;
 
 public class AccountsStepDefs implements BaseTest {
 
-  private WebDriver driver = DriverConfig.getDriver();
+  private WebDriver driver;
   public String menuBaseUrl = "https://menu-staging.medmen.com";
 
-  //  @Before
-  //  public void setMenuBaseUrl() {
-  //    //todo fix me
-  //    menuBaseUrl = "https://menu-staging.medmen.com";
-  //  }
+  @BeforeClass
+    public void setMenuBaseUrl() {
+      //todo fix me
+      //menuBaseUrl = "https://menu-staging.medmen.com";
+
+      driver = DriverConfig.getDriver();
+    }
 
   @Given("^I navigate to the create account page$")
   public void i_navigate_to_the_create_account_page() {
@@ -36,7 +40,7 @@ public class AccountsStepDefs implements BaseTest {
     FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
     String email = fileLoaderUtils.getValueFromPropertyFile("stage.properties", "user.password");
 
-    CreateAccountPage createAccountPage = new CreateAccountPage(driver);
+    CreateAccountPage createAccountPage = new CreateAccountPage(DriverConfig.getDriver());
     createAccountPage.enterEmailAddress(email);
     createAccountPage.enterPassword("popeye123");
     createAccountPage.genderSet("male");

@@ -2,15 +2,22 @@ package com.medmen.bdd.stepDefs;
 
 import com.medmen.bdd.configs.DriverConfig;
 import com.medmen.bdd.helperMethods.TestCaseFailed;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import com.medmen.bdd.helperMethods.BaseTest;
+import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
 
 public class PredefinedStepDefinitions implements BaseTest {
-	protected WebDriver driver = DriverConfig.getDriver();
+	protected WebDriver driver;
 	//Navigation Steps
+
+	@BeforeClass
+	public void setUp() {
+		driver = DriverConfig.getDriver();
+	}
 	
 	//Step to navigate to specified URL
 	@Then("^I navigate to \"([^\"]*)\"$")

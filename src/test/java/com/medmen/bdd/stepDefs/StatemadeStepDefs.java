@@ -9,6 +9,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 
 import java.util.Arrays;
@@ -19,16 +20,22 @@ import static org.junit.Assert.assertTrue;
 
 public class StatemadeStepDefs implements BaseTest {
 
-  private WebDriver driver = DriverConfig.getDriver();
-  private StateMadeLandingPage stateMadePage = new StateMadeLandingPage(driver);
-  private EffectsPage effectsPage = new EffectsPage(driver);
-  private String baseUrl = CommonStepDefs.getBaseUrl();
+  private WebDriver driver;
+  private StateMadeLandingPage stateMadePage;
+  private EffectsPage effectsPage;
+//  private String baseUrl = CommonStepDefs.getBaseUrl();
   private List<String> effectsList = Arrays.asList("max", "joy", "zen", "ebb", "zzz", "one", "cbd");
   private List<String> productsList = Arrays.asList("all", "pens", "drops", "flower", "prerolls");
 
-  @Before
+  @BeforeClass
   public void clearCookies() {
-    driver.manage().deleteAllCookies();
+    if (driver != null) {
+      driver.manage().deleteAllCookies();
+
+      driver = DriverConfig.getDriver();
+      stateMadePage = new StateMadeLandingPage(driver);
+      effectsPage = new EffectsPage(driver);
+    }
   }
 
   @Then("^I am taken to the statemade landing page$")

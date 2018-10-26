@@ -7,6 +7,7 @@ import com.medmen.bdd.utils.FileLoaderUtils;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
+import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 
 import static com.medmen.bdd.helperMethods.BaseTest.navigationObj;
@@ -14,13 +15,14 @@ import static org.junit.Assert.assertTrue;
 
 public class CommonStepDefs {
 
-  private WebDriver driver = DriverConfig.getDriver();
+  private WebDriver driver;
   private static String environment;
   private static String port ;
   public static String baseUrl;
 
-//  @Before
+  @BeforeClass
   public void setBaseUrl() {
+    driver = DriverConfig.getDriver();
     FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
     environment = System.getProperty("env", "stage");
 
