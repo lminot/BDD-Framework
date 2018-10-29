@@ -5,11 +5,11 @@ import com.medmen.bdd.helperMethods.BaseTest;
 import com.medmen.bdd.pages.statemade.EffectsPage;
 import com.medmen.bdd.pages.statemade.ProductsPage;
 import com.medmen.bdd.pages.statemade.StateMadeLandingPage;
-import cucumber.api.java.Before;
+import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.junit.BeforeClass;
+
 import org.openqa.selenium.WebDriver;
 
 import java.util.Arrays;
@@ -23,34 +23,27 @@ public class StatemadeStepDefs implements BaseTest {
   private WebDriver driver;
   private StateMadeLandingPage stateMadePage;
   private EffectsPage effectsPage;
-//  private String baseUrl = CommonStepDefs.getBaseUrl();
   private List<String> effectsList = Arrays.asList("max", "joy", "zen", "ebb", "zzz", "one", "cbd");
   private List<String> productsList = Arrays.asList("all", "pens", "drops", "flower", "prerolls");
 
-  @BeforeClass
-  public void clearCookies() {
-    if (driver != null) {
-      driver.manage().deleteAllCookies();
-
-      driver = DriverConfig.getDriver();
-      stateMadePage = new StateMadeLandingPage(driver);
-      effectsPage = new EffectsPage(driver);
-    }
-  }
-
   @Then("^I am taken to the statemade landing page$")
   public void i_am_taken_to_the_statemade_landing_page() {
-    // todo fix headless error here
+    driver = DriverConfig.getDriver();
+    stateMadePage = new StateMadeLandingPage(driver);
     assertTrue(stateMadePage.isInitialized());
   }
 
   @Then("^the page has valid buttons")
   public void the_page_has_valid_links() {
+    driver = DriverConfig.getDriver();
+    stateMadePage = new StateMadeLandingPage(driver);
     assertTrue(stateMadePage.linksArePresent());
   }
 
   @Then("^the page is displayed correctly$")
   public void the_page_is_displayed_correctly() {
+    driver = DriverConfig.getDriver();
+    stateMadePage = new StateMadeLandingPage(driver);
     assertEquals(
         "cannabis made in your state—for your desired state.", stateMadePage.getTitleText());
   }
@@ -62,23 +55,31 @@ public class StatemadeStepDefs implements BaseTest {
 
   @When("^I select the effect button$")
   public void i_select_the_effect_button() {
+    driver = DriverConfig.getDriver();
+    stateMadePage = new StateMadeLandingPage(driver);
     // todo fix this for stage auth
     stateMadePage.clickEffectButton();
   }
 
   @When("^I am taken to the effects page$")
   public void i_am_taken_to_the_effects_page() {
+    driver = DriverConfig.getDriver();
+    effectsPage = new EffectsPage(driver);
     assertTrue(effectsPage.isInitialized());
   }
 
   @Then("^all the various effects are displayed$")
   public void all_the_various_effects_are_displayed() {
+    driver = DriverConfig.getDriver();
+    effectsPage = new EffectsPage(driver);
     assertTrue(effectsPage.linksArePresent());
   }
 
   @When("^I select the product type button$")
   public void i_select_the_product_type_button() {
     // todo fix this for stage auth
+    driver = DriverConfig.getDriver();
+    stateMadePage = new StateMadeLandingPage(driver);
     stateMadePage.clickProductTypeButton();
   }
 
@@ -86,8 +87,6 @@ public class StatemadeStepDefs implements BaseTest {
   public void i_am_taken_to_the_product_type_page() {
     ProductsPage productsPage = new ProductsPage(driver);
     assertTrue(productsPage.isInitialized());
-    System.out.println("check me !!!" + productsPage.getProductsDescText());
-
     // todo investigate if the strange text below is a bug
     assertEquals(
         "Our expertly designed, industry\u00AD-leading products"

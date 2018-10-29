@@ -6,6 +6,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.logging.LoggingFeature;
@@ -42,6 +44,9 @@ public class RestClient {
     try {
 
       WebTarget webTarget = client.target(url);
+      // logging is working huzza!
+      webTarget.register(new LoggingFeature(Logger.getLogger(getClass().getName()), Level.OFF, LoggingFeature.Verbosity.PAYLOAD_TEXT, 8192));
+
       Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 
       if (headers != null && !headers.isEmpty()) {

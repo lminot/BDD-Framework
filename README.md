@@ -27,14 +27,16 @@ By using predefined steps you can automate your test cases more quickly, more ef
 The predefined steps are located [here](dhttps://bitbucket.org/lucienminot/medmen-bdd-automation/src/master/src/test/java/com/medmen/bdd/stepDefs)
 
 
-Running test
+Running tests
 --------------
 
-Go to your project directory from terminal and hit following commands:  
-* ```mvn test``` (defualt will run on local firefox browser)  
-* ```mvn test -Dbrowser=chrome``` (to use any other browser, current options: chrome, firefox, phantomjs)     
-* ```mvn test -DbrowserLocation=remote``` (to run test on a remote grid, default is set to local)  
-* ```mvn test -Dheadless=true``` (to run test browser in headless mode, default is set to false)  
+Go to your project directory from terminal and use the following commands / arguments:  
+* ```mvn clean install``` (defualt will run on a local firefox browser)  
+* ```-Dbrowser=chrome``` (to use any other browser, current options: chrome, firefox, phantomjs)     
+* ```-DbrowserLocation=remote``` (to run test on a remote grid, default is set to local)  
+* ```-Dheadless=true``` (to run test browser in headless mode, default is set to false)
+* ```-Denv=stage``` (to run tests against different environments current options: localhost, stage, prod; default is stage)  
+* ```-Dcucumber.options="--tags @tests"``` (to override the default tags set in the TestRunner class)    
 Example:  
- ```mvn clean install -Dbrowser=firefox -Dheadless=true```
+ ``` mvn clean install -Denv=prod -Dbrowser=firefox -Dheadless=true -Dcucumber.options="--tags @tests"```
 

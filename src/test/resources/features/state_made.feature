@@ -24,10 +24,11 @@ Feature: Verify various aspects of the MedMen Statemade functionality
     And I am taken to the product type page
     Then all the various product types are displayed
 
+  @tests
   Scenario: Statemade - verify products page bottom nav options
     When I am on the statemade menu page
     Then the bottom nav is fully functional
-
+  @tests
   Scenario: Statemade - verify all products & effect descriptions
     When I am on the statemade menu page
     And I navigate through the various effects

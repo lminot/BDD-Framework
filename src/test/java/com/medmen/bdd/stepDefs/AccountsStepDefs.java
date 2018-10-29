@@ -10,8 +10,6 @@ import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -22,13 +20,6 @@ public class AccountsStepDefs implements BaseTest {
   private WebDriver driver;
   public String menuBaseUrl = "https://menu-staging.medmen.com";
 
-  @BeforeClass
-    public void setMenuBaseUrl() {
-      //todo fix me
-      //menuBaseUrl = "https://menu-staging.medmen.com";
-
-      driver = DriverConfig.getDriver();
-    }
 
   @Given("^I navigate to the create account page$")
   public void i_navigate_to_the_create_account_page() {
@@ -37,10 +28,11 @@ public class AccountsStepDefs implements BaseTest {
 
   @Given("^I enter valid information in all required fields$")
   public void i_enter_valid_information_in_all_required_fields() {
+    driver = DriverConfig.getDriver();
     FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
     String email = fileLoaderUtils.getValueFromPropertyFile("stage.properties", "user.password");
 
-    CreateAccountPage createAccountPage = new CreateAccountPage(DriverConfig.getDriver());
+    CreateAccountPage createAccountPage = new CreateAccountPage(driver);
     createAccountPage.enterEmailAddress(email);
     createAccountPage.enterPassword("popeye123");
     createAccountPage.genderSet("male");
@@ -61,6 +53,7 @@ public class AccountsStepDefs implements BaseTest {
 
   @When("^I click the create account button$")
   public void i_click_the_create_account_button() {
+    driver = DriverConfig.getDriver();
     CreateAccountPage createAccountPage = new CreateAccountPage(driver);
     createAccountPage.clickCreateAccount();
   }
@@ -90,6 +83,7 @@ public class AccountsStepDefs implements BaseTest {
 
   @When("^I select \"([^\"]*)\" items to add to cart$")
   public void i_select_items_to_add_to_cart(int itemNum) {
+    driver = DriverConfig.getDriver();
     StorePage storePage = new StorePage(driver);
     assertTrue(storePage.isInitialized());
 
@@ -121,6 +115,7 @@ public class AccountsStepDefs implements BaseTest {
 
   @When("^I click checkout$")
   public void i_click_checkout() {
+    driver = DriverConfig.getDriver();
     Cart cart = new Cart(driver);
     assertTrue(cart.isInitialized());
     cart.clickCheckout();

@@ -24,7 +24,7 @@ public class DriverConfig {
 
   private static long DEFAULT_WAIT = 20;
   private static String GRID_URL = "http://localhost:4444/wd/hub";
-  private static String driverName = System.getProperty("browser", "Firefox");
+  private static String driverName = System.getProperty("browser", "firefox");
   private static String browserLocation = System.getProperty("browserLocation", "local");
 
   private static WebDriver driver;
