@@ -40,7 +40,7 @@ public class Env
 				
 			}catch (Exception e) {
 				e.printStackTrace();
-				System.exit(0);
+				//System.exit(0);
 			}
 		}else if(browserName == null)
 			browserName = "ff";
@@ -89,7 +89,7 @@ public class Env
 	        
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.exit(0);
+			//System.exit(0);
 		}
 		
 		return driver;
@@ -127,7 +127,7 @@ public class Env
 				break;
 			 default:
 				 System.out.println("Invalid browser name "+browser);
-				 System.exit(0);
+				 //System.exit(0);
 					break;	
 			}//switch
 				
