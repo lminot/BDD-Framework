@@ -27,7 +27,6 @@ public class ErrorHandlingMethods
 		System.out.println("\nUsage : cucumber BROWSER=browser_name");
 		System.out.println("\nBrowser Supported  :\n");
 		System.out.println("\n1.ie\n2.chrome\n3.ff\n4.safari\n5.opera");
-		System.exit(0);
 	}
 	 
 	//print error for android
@@ -52,6 +51,5 @@ public class ErrorHandlingMethods
 		System.out.println("\nOops... Invalid Platform");
 		System.out.println("\nSupported platform are \"android\" and \"iOS\".");
 		System.out.println("\nTo run on Desktop no need to mention platform.");
-		System.exit(0);
 	}
 }
