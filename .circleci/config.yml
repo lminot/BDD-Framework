@@ -7,6 +7,7 @@ jobs:
   build:
     docker:
     # specify the version you desire here
+      # issue with the image version TODO create custom image
     - image: circleci/openjdk
 
     # Specify service dependencies here if necessary
