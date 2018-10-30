@@ -11,10 +11,10 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class deliveryApiStepDefs {
+public class CommonApiStepDefs {
 
   public Response requestResponse;
-  public int responseCode;
+  public static int responseCode;
 
   public String getNearbyPickupStoresPayload;
 
@@ -39,11 +39,19 @@ public class deliveryApiStepDefs {
         "http://medmen-api-staging.havenagencyapps.com/api/stores/getNearbyPickupStores";
 
     requestResponse = restClient.executePost(baseUrl, reqHeaders, getNearbyPickupStoresPayload);
-    responseCode = requestResponse.getStatus();
+    setStatusCode(requestResponse);
   }
 
   @Then("^I will expect a (\\d+) response$")
   public void i_will_expect_a_response(int expectedResponseCode) {
-    assertEquals(expectedResponseCode, responseCode);
+    assertEquals(expectedResponseCode, getStatusCode());
+  }
+
+  public static void setStatusCode(Response requestResponse){
+    responseCode = requestResponse.getStatus();
+  }
+
+  public int getStatusCode(){
+    return this.responseCode;
   }
 }

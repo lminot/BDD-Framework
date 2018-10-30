@@ -3,12 +3,13 @@
 Selenium-cucumber: Automation Testing Using Java
 
 Selenium-cucumber is a behavior driven development (BDD) approach to write automation test script to test Web.
-It enables you to write and execute automated acceptance/unit tests.
+It enables you to write and execute automated acceptance/regression tests.
 
 Writing a test
 --------------
+[Cucumber Ref Docs](https://docs.cucumber.io/cucumber/)
 
-The cucumber features goes in the `features` library and should have the ".feature" extension.
+The cucumber features go in the `features` library and should have the ".feature" extension.
 
 You can start out by looking at `features/my_first.feature`. You can extend this feature or make your own features using some of the [predefined steps](doc/canned_steps.md) that comes with selenium-cucumber.
 

@@ -16,7 +16,7 @@ public class RestClient {
 
   private Client client = ClientBuilder.newClient();
 
-  public Response executeGet(String url, Map headers) {
+  public Response executeGet(String url, Map<String, String> headers) {
     Response response = null;
     try {
 
@@ -24,11 +24,8 @@ public class RestClient {
       Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 
       if (headers != null && !headers.isEmpty()) {
-        Iterator it = headers.entrySet().iterator();
-        while (it.hasNext()) {
-          Map.Entry pairs = (Map.Entry) it.next();
-          invocationBuilder.header(pairs.getKey().toString(), pairs.getValue());
-        }
+        for (Map.Entry<String, String> entry : headers.entrySet())
+          webTarget = webTarget.queryParam(entry.getKey(), entry.getValue());
       }
 
       response = invocationBuilder.get();
@@ -39,22 +36,24 @@ public class RestClient {
     return response;
   }
 
-  public Response executePost(String url, Map headers, String payload) {
+  public Response executePost(String url, Map<String, String> headers, String payload) {
     Response response = null;
     try {
 
       WebTarget webTarget = client.target(url);
       // logging is working huzza!
-      webTarget.register(new LoggingFeature(Logger.getLogger(getClass().getName()), Level.OFF, LoggingFeature.Verbosity.PAYLOAD_TEXT, 8192));
+      webTarget.register(
+          new LoggingFeature(
+              Logger.getLogger(getClass().getName()),
+              Level.OFF,
+              LoggingFeature.Verbosity.PAYLOAD_TEXT,
+              8192));
 
       Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 
       if (headers != null && !headers.isEmpty()) {
-        Iterator it = headers.entrySet().iterator();
-        while (it.hasNext()) {
-          Map.Entry pairs = (Map.Entry) it.next();
-          invocationBuilder.header(pairs.getKey().toString(), pairs.getValue());
-        }
+        for (Map.Entry<String, String> entry : headers.entrySet())
+          webTarget = webTarget.queryParam(entry.getKey(), entry.getValue());
       }
 
       response = invocationBuilder.post(Entity.entity(payload, MediaType.APPLICATION_JSON));
@@ -65,7 +64,40 @@ public class RestClient {
     return response;
   }
 
-  public Response executePut(String url, Map headers, String payload) {
+  public Response executePostWithParams(
+      String url, Map<String, String> queryParams, Map<String, String> headers, String payload) {
+    Response response = null;
+    try {
+
+      WebTarget webTarget = client.target(url);
+      if (queryParams != null && !queryParams.isEmpty()) {
+        for (Map.Entry<String, String> entry : queryParams.entrySet())
+          webTarget = webTarget.queryParam(entry.getKey(), entry.getValue());
+      }
+      // logging is working huzza!
+      webTarget.register(
+          new LoggingFeature(
+              Logger.getLogger(getClass().getName()),
+              Level.OFF,
+              LoggingFeature.Verbosity.PAYLOAD_TEXT,
+              8192));
+
+      Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+
+      if (headers != null && !headers.isEmpty()) {
+        for (Map.Entry<String, String> entry : headers.entrySet())
+          webTarget = webTarget.queryParam(entry.getKey(), entry.getValue());
+      }
+
+      response = invocationBuilder.post(Entity.entity(payload, MediaType.APPLICATION_JSON));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return response;
+  }
+
+  public Response executePut(String url, Map<String, String> headers, String payload) {
     Response response = null;
     try {
 
@@ -73,11 +105,8 @@ public class RestClient {
       Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 
       if (headers != null && !headers.isEmpty()) {
-        Iterator it = headers.entrySet().iterator();
-        while (it.hasNext()) {
-          Map.Entry pairs = (Map.Entry) it.next();
-          invocationBuilder.header(pairs.getKey().toString(), pairs.getValue());
-        }
+        for (Map.Entry<String, String> entry : headers.entrySet())
+          webTarget = webTarget.queryParam(entry.getKey(), entry.getValue());
       }
 
       response = invocationBuilder.put(Entity.entity(payload, MediaType.APPLICATION_JSON));
