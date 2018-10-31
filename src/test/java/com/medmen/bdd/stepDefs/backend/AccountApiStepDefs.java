@@ -2,7 +2,6 @@ package com.medmen.bdd.stepDefs.backend;
 
 import com.medmen.bdd.utils.FileLoaderUtils;
 import com.medmen.bdd.utils.RestClient;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -12,12 +11,13 @@ import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CreateAccountApiStepDefs {
+public class AccountApiStepDefs {
   private RestClient restClient;
+  private FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
   public Response requestResponse;
   private Map<String, String> reqHeaders;
   private Map<String, String> queryParams;
-  private String environment;
+  private String environment = System.getProperty("env", "stage");
   private String email;
   private String baseUrl;
   private String requestPayload;
@@ -25,18 +25,8 @@ public class CreateAccountApiStepDefs {
   @Given("^I have valid credentials$")
   public void i_have_valid_credentials() {
 
-    FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
-    environment = System.getProperty("env", "stage");
-    if (environment.toLowerCase().contains("localhost")) {
-      baseUrl = "http://localhost/api/";
-      email = fileLoaderUtils.getValueFromPropertyFile("local.properties", "email");
-    } else if (environment.toLowerCase().contains("stage")) {
-      baseUrl = "http://medmen-api-staging.havenagencyapps.com/api/";
-      email = fileLoaderUtils.getValueFromPropertyFile("stage.properties", "email");
-    } else if (environment.toLowerCase().contains("prod")) {
-      baseUrl = "http://menu-api.medmen.com/api";
-      email = fileLoaderUtils.getValueFromPropertyFile("prod.properties", "email");
-    }
+    setBaseUrl(environment);
+    setUserEmail(environment);
 
     requestPayload = fileLoaderUtils.getPayloadWrapper("createAccount.json");
 
@@ -72,6 +62,26 @@ public class CreateAccountApiStepDefs {
             password);
   }
 
+  private void setUserEmail(String environment) {
+    if (environment.toLowerCase().contains("localhost")) {
+      email = fileLoaderUtils.getValueFromPropertyFile("local.properties", "email");
+    } else if (environment.toLowerCase().contains("stage")) {
+      email = fileLoaderUtils.getValueFromPropertyFile("stage.properties", "email");
+    } else if (environment.toLowerCase().contains("prod")) {
+      email = fileLoaderUtils.getValueFromPropertyFile("prod.properties", "email");
+    }
+  }
+
+  private void setBaseUrl(String environment) {
+    if (environment.toLowerCase().contains("localhost")) {
+      baseUrl = "http://localhost/api/";
+    } else if (environment.toLowerCase().contains("stage")) {
+      baseUrl = "http://medmen-api-staging.havenagencyapps.com/api/";
+    } else if (environment.toLowerCase().contains("prod")) {
+      baseUrl = "http://menu-api.medmen.com/api";
+    }
+  }
+
   @When("^I execute a POST to the register endpoint$")
   public void i_execute_a_POST_to_the_register_endpoint() {
     restClient = new RestClient();
@@ -96,4 +106,26 @@ public class CreateAccountApiStepDefs {
 //    // todo implement this after captcha issue is fixed
 //    throw new PendingException();
 //  }
+
+  @Given("^I have a valid account$")
+  public void i_have_a_valid_account() throws Throwable {
+    setBaseUrl(environment);
+    setUserEmail(environment);
+
+    requestPayload = fileLoaderUtils.getPayloadWrapper("signIn.json");
+    String password = "foo99bar";
+    requestPayload = String.format(requestPayload, email, password);
+  }
+
+  @When("^I execute a POST to the login endpoint$")
+  public void i_execute_a_POST_to_the_login_endpoint() throws Throwable {
+    restClient = new RestClient();
+    reqHeaders = new HashMap<>();
+    reqHeaders.put("Content-Type", "application/json");
+    reqHeaders.put("Accept", "application/json");
+    requestResponse = restClient.executePost(baseUrl + "login", reqHeaders, requestPayload);
+
+    CommonApiStepDefs.setStatusCode(requestResponse);
+  }
+
 }
