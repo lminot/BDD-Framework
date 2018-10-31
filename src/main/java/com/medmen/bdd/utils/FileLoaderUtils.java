@@ -1,7 +1,6 @@
 package com.medmen.bdd.utils;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Properties;
 
 public class FileLoaderUtils {
@@ -18,7 +17,37 @@ public class FileLoaderUtils {
       value = prop.getProperty(key);
     } catch (IOException e) {
       e.printStackTrace();
+    } finally {
+      if (input != null) {
+        try {
+          input.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+      return value.trim();
     }
-    return value.trim();
+  }
+
+  public static String getPayloadWrapper(String propertyFilePath) {
+    StringBuilder resultStringBuilder = new StringBuilder();
+    String payloadLocation = "requestPayloads/";
+    input = FileLoaderUtils.class.getClassLoader().getResourceAsStream(payloadLocation + propertyFilePath);
+
+    try (BufferedReader br = new BufferedReader(new InputStreamReader(input))) {
+      String line;
+      while ((line = br.readLine()) != null) {
+        resultStringBuilder.append(line).append("\n");
+      }
+    } finally {
+      if (input != null) {
+        try {
+          input.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+      return resultStringBuilder.toString();
+    }
   }
 }

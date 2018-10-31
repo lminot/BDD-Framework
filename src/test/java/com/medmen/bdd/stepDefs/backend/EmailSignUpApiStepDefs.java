@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EmailSignUpStepDefs {
+public class EmailSignUpApiStepDefs {
 
   private RestClient restClient;
   public Response requestResponse;

@@ -1,5 +1,5 @@
-Feature: API testing
-  As a user I should able to execute API calls for the Delivery API project
+Feature: Medmen API testing
+  As a user I should be able to execute API requests against the medmen services
 
   @activeMonitor
   Scenario: Validate the Newsletter Email Signup API functionality with a valid email
@@ -8,6 +8,7 @@ Feature: API testing
     Then I will expect a 200 response
     And a valid response payload
 
+  @activeMonitor
   Scenario: Validate the Newsletter Email Signup API functionality with a valid email & clutch event
     Given I have a valid email
     When I execute a POST to the sign up endpoint with a clutch event parameter

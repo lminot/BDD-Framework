@@ -1,5 +1,5 @@
 Feature: Delivery API testing
-  As a user I should able to execute API calls for the Delivery API project
+  As a user I should be able to execute API calls for the Delivery API project
 
   @apiTest
   Scenario: Validate the get near by pickup stores endpoint
