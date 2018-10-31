@@ -8,7 +8,7 @@ public class FileLoaderUtils {
   private static InputStream input = null;
   private static Properties prop = new Properties();
 
-  public static String getValueFromPropertyFile(String propertyFilePath, String key) {
+  public String getValueFromPropertyFile(String propertyFilePath, String key) {
 
     String value = null;
     input = FileLoaderUtils.class.getClassLoader().getResourceAsStream(propertyFilePath);
@@ -29,7 +29,7 @@ public class FileLoaderUtils {
     }
   }
 
-  public static String getPayloadWrapper(String propertyFilePath) {
+  public String getPayloadWrapper(String propertyFilePath) {
     StringBuilder resultStringBuilder = new StringBuilder();
     String payloadLocation = "requestPayloads/";
     input = FileLoaderUtils.class.getClassLoader().getResourceAsStream(payloadLocation + propertyFilePath);
