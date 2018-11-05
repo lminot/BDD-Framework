@@ -1,5 +1,6 @@
 package com.medmen.bdd.stepDefs.backend;
 
+import com.jayway.jsonpath.JsonPath;
 import com.medmen.bdd.utils.FileLoaderUtils;
 import com.medmen.bdd.utils.RestClient;
 import cucumber.api.java.en.Given;
@@ -100,15 +101,15 @@ public class AccountApiStepDefs {
     Assert.assertEquals(validResponse, requestResponse.readEntity(String.class));
   }
 
-//  @Then("^the new account will be present in the database$")
-//  public void the_new_account_will_be_present_in_the_database() {
-//    // Write code here that turns the phrase above into concrete actions
-//    // todo implement this after captcha issue is fixed
-//    throw new PendingException();
-//  }
+  //  @Then("^the new account will be present in the database$")
+  //  public void the_new_account_will_be_present_in_the_database() {
+  //    // Write code here that turns the phrase above into concrete actions
+  //    // todo implement this after captcha issue is fixed
+  //    throw new PendingException();
+  //  }
 
   @Given("^I have a valid account$")
-  public void i_have_a_valid_account() throws Throwable {
+  public void i_have_a_valid_account() {
     setBaseUrl(environment);
     setUserEmail(environment);
 
@@ -118,7 +119,7 @@ public class AccountApiStepDefs {
   }
 
   @When("^I execute a POST to the login endpoint$")
-  public void i_execute_a_POST_to_the_login_endpoint() throws Throwable {
+  public void i_execute_a_POST_to_the_login_endpoint() {
     restClient = new RestClient();
     reqHeaders = new HashMap<>();
     reqHeaders.put("Content-Type", "application/json");
@@ -128,4 +129,11 @@ public class AccountApiStepDefs {
     CommonApiStepDefs.setStatusCode(requestResponse);
   }
 
+  @Then("^a valid response payload for login$")
+  public void a_valid_response_payload_for_login() {
+
+    String successTrue = JsonPath.parse(requestResponse.readEntity(String.class)).read("$.success").toString();
+
+    Assert.assertTrue(Boolean.valueOf(successTrue));
+  }
 }
