@@ -1,7 +1,9 @@
 package com.medmen.bdd.stepDefs.backend;
 
 import com.jayway.jsonpath.JsonPath;
+import com.medmen.bdd.configs.DataBaseConfig;
 import com.medmen.bdd.utils.FileLoaderUtils;
+import com.medmen.bdd.utils.JdbcUtils;
 import com.medmen.bdd.utils.RestClient;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -9,6 +11,8 @@ import cucumber.api.java.en.When;
 import org.junit.Assert;
 
 import javax.ws.rs.core.Response;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -101,12 +105,21 @@ public class AccountApiStepDefs {
     Assert.assertEquals(validResponse, requestResponse.readEntity(String.class));
   }
 
-  //  @Then("^the new account will be present in the database$")
-  //  public void the_new_account_will_be_present_in_the_database() {
-  //    // Write code here that turns the phrase above into concrete actions
-  //    // todo implement this after captcha issue is fixed
-  //    throw new PendingException();
-  //  }
+  @Then("^the new account will be present in the database$")
+  public void the_new_account_will_be_present_in_the_database() throws SQLException {
+    JdbcUtils jdbcUtils = new JdbcUtils();
+    ResultSet resultSet =
+        jdbcUtils.executeSelectQuery("SELECT * FROM users WHERE email = 'medmentest420@gmail.com'");
+
+    while (resultSet.next()) {
+      System.out.println("********");
+      System.out.println(resultSet.getString("created_at"));
+      System.out.println("********");
+    }
+    // Write code here that turns the phrase above into concrete actions
+    // todo if the account is "new" delete it from DB for clean up after test runs
+
+  }
 
   @Given("^I have a valid account$")
   public void i_have_a_valid_account() {
@@ -132,7 +145,8 @@ public class AccountApiStepDefs {
   @Then("^a valid response payload for login$")
   public void a_valid_response_payload_for_login() {
 
-    String successTrue = JsonPath.parse(requestResponse.readEntity(String.class)).read("$.success").toString();
+    String successTrue =
+        JsonPath.parse(requestResponse.readEntity(String.class)).read("$.success").toString();
 
     Assert.assertTrue(Boolean.valueOf(successTrue));
   }

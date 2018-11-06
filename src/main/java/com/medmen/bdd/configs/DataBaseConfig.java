@@ -2,36 +2,35 @@ package com.medmen.bdd.configs;
 
 import org.openqa.selenium.safari.SafariOptions;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DataBaseConfig {
 
-    final static String CONNECTION_URL = "medmen.cf4ubqfpjaby.us-west-2.rds.amazonaws.com";
+    final static String CONNECTION_URL = "jdbc:mysql://medmen.cf4ubqfpjaby.us-west-2.rds.amazonaws.com?autoReconnect=true&useSSL=false";
     final static String DB_USER = "medmen";
     final static String DB_PASSWORD = "AnJXHCUDHqkL349Z";
-    private Connection connection = null;
+    final static String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
+    public Connection connection = null;
 
-    public void setJdbcDriver(){
+    public void registerJdbcDriver(){
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(DB_DRIVER);
         } catch (ClassNotFoundException e) {
             System.out.println("Where is the MySQL JDBC Driver?");
             e.printStackTrace();
-            return;
         }
     }
 
-    public void jdbcConnection() {
+    public Connection getJdbcConnection() {
         try {
             connection = DriverManager
                     .getConnection(CONNECTION_URL,DB_USER, DB_PASSWORD);
+            //todo control db flow here
+            connection.setCatalog("medmen_development");
 
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
-            return;
         }
 
         if (connection != null) {
@@ -39,6 +38,8 @@ public class DataBaseConfig {
         } else {
             System.out.println("Failed to make connection!");
         }
+
+        return connection;
     }
 
     public void closeConnection() throws SQLException {
