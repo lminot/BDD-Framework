@@ -18,13 +18,34 @@ import cucumber.api.junit.Cucumber;
       "json:target/cucumber-reports/CucumberTestReport.json",
       "rerun:target/cucumber-reports/rerun.txt"
     },
-    tags = {"@activeMonitorApi"})
+    tags = {"@activeMonitor1"})
 public class TestRunner {
 
+  public static String getEnvironment() {
+    return System.getProperty("env", "stage");
+  }
+
+  public static String getBrowser() {
+    return System.getProperty("browser", "firefox");
+  }
+
+  public static String getHeadless() {
+    return System.getProperty("headless", "true");
+  }
+
+  public static String getBrowserLocation() {
+    return System.getProperty("browserLocation", "local");
+  }
+
   @BeforeClass
-  public static void setEnvironment() {
-    String environment = System.getProperty("env", "stage");
-    System.out.println("Running tests against: " + environment);
+  public static void printRunSettings() {
+    System.out.println("Test Environment: " + getEnvironment());
+    if (System.getProperty("browser") != null) {
+      System.out.println("Browser: " + getBrowser());
+      System.out.println("Browser Location: " + getBrowserLocation());
+      System.out.println("Headless Browser: " + getHeadless());
+    }
+    System.out.println("\n");
   }
 
   @AfterClass

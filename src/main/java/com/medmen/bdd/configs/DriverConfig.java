@@ -26,6 +26,7 @@ public class DriverConfig {
   private static String GRID_URL = "http://localhost:4444/wd/hub";
   private static String driverName = System.getProperty("browser", "firefox");
   private static String browserLocation = System.getProperty("browserLocation", "local");
+  private static String isHeadless = System.getProperty("headless", "true");
 
   private static WebDriver driver;
 
@@ -62,7 +63,6 @@ public class DriverConfig {
   }
 
   private static WebDriver chooseDriver(DesiredCapabilities capabilities) {
-    boolean headless = Boolean.valueOf(System.getProperty("headless"));
     switch (driverName.toLowerCase()) {
       case "phantomjs":
         try {
@@ -73,7 +73,7 @@ public class DriverConfig {
         return driver;
       case "chrome":
         ChromeOptions chromeOptions = new ChromeOptions();
-        if (headless) {
+        if (Boolean.valueOf(isHeadless)) {
           chromeOptions.addArguments("--headless");
         }
         try {
@@ -84,7 +84,7 @@ public class DriverConfig {
         return driver;
       default:
         FirefoxOptions options = new FirefoxOptions();
-        if (headless) {
+        if (Boolean.valueOf(isHeadless)) {
           options.addArguments("-headless", "-safe-mode");
         }
         try {
@@ -97,9 +97,11 @@ public class DriverConfig {
   }
 
   private static DesiredCapabilities setDesiredCapabilities() {
-    DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+    DesiredCapabilities capabilities;
     if (driverName.toLowerCase().contains("chrome")) {
       capabilities = DesiredCapabilities.chrome();
+    } else {
+      capabilities = DesiredCapabilities.firefox();
     }
 
     capabilities.setJavascriptEnabled(true);
