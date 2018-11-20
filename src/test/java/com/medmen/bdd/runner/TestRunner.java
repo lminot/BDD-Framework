@@ -18,7 +18,7 @@ import cucumber.api.junit.Cucumber;
       "json:target/cucumber-reports/CucumberTestReport.json",
       "rerun:target/cucumber-reports/rerun.txt"
     },
-    tags = {"@activeMonitor1"})
+    tags = {"@statemade"})
 public class TestRunner {
 
   public static String getEnvironment() {
@@ -52,4 +52,26 @@ public class TestRunner {
   public static void tearDown() {
     DriverConfig.closeDriver();
   }
+
+
+    public String fizzString(String str) {
+
+      String answer = "";
+
+      if( str.substring(0,1).equals("f") && str.substring(str.length() - 1).equals("b")){
+        answer = "FizzBuzz";
+      }
+
+      else if(str.substring(str.length() - 1).equals("b")){
+        answer = "Buzz";
+      }
+
+      else if(str.substring(0,1).equals("f")) {
+        answer =  "Fizz";
+      }
+
+      return answer;
+    }
+
+
 }

@@ -32,7 +32,7 @@ public class CommonStepDefs {
     } else if (environment.toLowerCase().contains("stage")) {
       baseUrl = "https://medmen:AXPqt3EURBVBGATb@staging.medmen.com";
     } else if (environment.toLowerCase().contains("prod")) {
-      baseUrl = "https://medmen.com";
+      baseUrl = "https://prod.medmen.com";
     }
   }
 
