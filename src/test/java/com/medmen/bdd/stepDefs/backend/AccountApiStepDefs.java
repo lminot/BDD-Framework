@@ -1,7 +1,6 @@
 package com.medmen.bdd.stepDefs.backend;
 
 import com.jayway.jsonpath.JsonPath;
-import com.medmen.bdd.configs.DataBaseConfig;
 import com.medmen.bdd.utils.FileLoaderUtils;
 import com.medmen.bdd.utils.JdbcUtils;
 import com.medmen.bdd.utils.RestClient;
@@ -26,12 +25,13 @@ public class AccountApiStepDefs {
   private String email;
   private String baseUrl;
   private String requestPayload;
+  private String emailWithTimeStamp;
 
   @Given("^I have valid credentials$")
   public void i_have_valid_credentials() {
 
-    setBaseUrl(environment);
-    setUserEmail(environment);
+    CommonApiStepDefs.setBaseUrl(environment);
+    CommonApiStepDefs.setUserEmail(environment);
 
     requestPayload = fileLoaderUtils.getPayloadWrapper("createAccount.json");
 
@@ -46,7 +46,7 @@ public class AccountApiStepDefs {
     String city = "Culver City";
     String firstName = "automationFirstName";
     String lastName = "automationLastName";
-    long emailTimeStamp = System.currentTimeMillis();
+    emailWithTimeStamp = String.format("medmentest420+%d@gmail.com", System.currentTimeMillis());
     String password = "popeye123";
 
     requestPayload =
@@ -63,28 +63,8 @@ public class AccountApiStepDefs {
             city,
             firstName,
             lastName,
-            emailTimeStamp,
+            emailWithTimeStamp,
             password);
-  }
-
-  private void setUserEmail(String environment) {
-    if (environment.toLowerCase().contains("localhost")) {
-      email = fileLoaderUtils.getValueFromPropertyFile("local.properties", "email");
-    } else if (environment.toLowerCase().contains("stage")) {
-      email = fileLoaderUtils.getValueFromPropertyFile("stage.properties", "email");
-    } else if (environment.toLowerCase().contains("prod")) {
-      email = fileLoaderUtils.getValueFromPropertyFile("prod.properties", "email");
-    }
-  }
-
-  private void setBaseUrl(String environment) {
-    if (environment.toLowerCase().contains("localhost")) {
-      baseUrl = "http://localhost/api/";
-    } else if (environment.toLowerCase().contains("stage")) {
-      baseUrl = "http://medmen-api-staging.havenagencyapps.com/api/";
-    } else if (environment.toLowerCase().contains("prod")) {
-      baseUrl = "http://menu-api.medmen.com/api";
-    }
   }
 
   @When("^I execute a POST to the register endpoint$")
@@ -93,6 +73,7 @@ public class AccountApiStepDefs {
     reqHeaders = new HashMap<>();
     reqHeaders.put("Content-Type", "application/json");
     reqHeaders.put("Accept", "application/json");
+    baseUrl = CommonApiStepDefs.getBaseUrl();
     requestResponse = restClient.executePost(baseUrl + "register", reqHeaders, requestPayload);
 
     CommonApiStepDefs.setStatusCode(requestResponse);
@@ -100,31 +81,34 @@ public class AccountApiStepDefs {
 
   @Then("^a valid response payload for create account$")
   public void a_valid_response_payload_for_create_account() {
-    String validResponse =
-        "{\"success\":false,\"errors\":{\"validCaptcha\":[\"Please prove you are not a robot.\"]}}";
-    Assert.assertEquals(validResponse, requestResponse.readEntity(String.class));
+    String successTrue =
+        JsonPath.parse(requestResponse.readEntity(String.class)).read("$.success").toString();
+
+    Assert.assertTrue(Boolean.valueOf(successTrue));
   }
 
   @Then("^the new account will be present in the database$")
   public void the_new_account_will_be_present_in_the_database() throws SQLException {
     JdbcUtils jdbcUtils = new JdbcUtils();
     ResultSet resultSet =
-        jdbcUtils.executeSelectQuery("SELECT * FROM users WHERE email = 'medmentest420@gmail.com'");
+        jdbcUtils.executeSelectQuery(
+            "SELECT * FROM users WHERE email = '" + emailWithTimeStamp + "'");
 
     while (resultSet.next()) {
       System.out.println("********");
       System.out.println(resultSet.getString("created_at"));
       System.out.println("********");
     }
-    // Write code here that turns the phrase above into concrete actions
     // todo if the account is "new" delete it from DB for clean up after test runs
 
   }
 
   @Given("^I have a valid account$")
   public void i_have_a_valid_account() {
-    setBaseUrl(environment);
-    setUserEmail(environment);
+    CommonApiStepDefs.setBaseUrl(environment);
+    CommonApiStepDefs.setUserEmail(environment);
+
+    email = CommonApiStepDefs.getUserEmail();
 
     requestPayload = fileLoaderUtils.getPayloadWrapper("signIn.json");
     String password = "foo99bar";
@@ -137,6 +121,7 @@ public class AccountApiStepDefs {
     reqHeaders = new HashMap<>();
     reqHeaders.put("Content-Type", "application/json");
     reqHeaders.put("Accept", "application/json");
+    baseUrl = CommonApiStepDefs.getBaseUrl();
     requestResponse = restClient.executePost(baseUrl + "login", reqHeaders, requestPayload);
 
     CommonApiStepDefs.setStatusCode(requestResponse);
@@ -149,5 +134,28 @@ public class AccountApiStepDefs {
         JsonPath.parse(requestResponse.readEntity(String.class)).read("$.success").toString();
 
     Assert.assertTrue(Boolean.valueOf(successTrue));
+  }
+
+  @When("^I execute a POST to the forgot password endpoint$")
+  public void i_execute_a_POST_to_the_forgot_password_endpoint() {
+    restClient = new RestClient();
+    reqHeaders = new HashMap<>();
+    reqHeaders.put("Content-Type", "application/json");
+    reqHeaders.put("Accept", "application/json");
+    email = CommonApiStepDefs.getUserEmail();
+    baseUrl = CommonApiStepDefs.getBaseUrl();
+
+    requestPayload = fileLoaderUtils.getPayloadWrapper("forgetPassword.json");
+    requestPayload = String.format(requestPayload, email);
+    requestResponse = restClient.executePost(baseUrl + "recover", reqHeaders, requestPayload);
+
+    CommonApiStepDefs.setStatusCode(requestResponse);
+  }
+
+  @Then("^a valid response payload for reset password$")
+  public void a_valid_response_payload_for_reset_password() {
+    String emailMessage =
+        JsonPath.parse(requestResponse.readEntity(String.class)).read("$.data.message").toString();
+    Assert.assertEquals(emailMessage, "A reset email has been sent! Please check your email.");
   }
 }

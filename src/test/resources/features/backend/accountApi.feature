@@ -8,7 +8,7 @@ Feature: Medmen Account API testing
     When I execute a POST to the register endpoint
     Then I will expect a 200 response
     And a valid response payload for create account
-#    And the new account will be present in the database
+    And the new account will be present in the database
 
   Scenario: Validate create account via Facebook functionality
     Given I have a valid Facebook account
@@ -42,5 +42,11 @@ Feature: Medmen Account API testing
     Then I will expect a 200 response
     And a valid response payload for login
 
+  @activeMonitorApi1
+  Scenario: Validate reset password functionality
+    Given I have a valid account
+    When I execute a POST to the forgot password endpoint
+    Then I will expect a 200 response
+    And a valid response payload for reset password
 
     # todo add error cases

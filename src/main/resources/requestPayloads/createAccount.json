@@ -12,7 +12,7 @@
   "city": "%s",
   "first_name": "%s",
   "last_name": "%s",
-  "email": "medmentest420+%d@gmail.com",
+  "email": "%s",
   "password": "%s",
   "optin_data_storage": 1,
   "optin_terms_and_privacy": 1,
