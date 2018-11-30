@@ -41,6 +41,7 @@ jobs:
     - run: mvn clean install -B
 
 workflows:
+  version: 2
   active_monitor:
     triggers:
     - schedule:
