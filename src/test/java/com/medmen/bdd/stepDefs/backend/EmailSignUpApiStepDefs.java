@@ -26,13 +26,13 @@ public class EmailSignUpApiStepDefs {
     FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
     environment = System.getProperty("env", "stage");
     if (environment.toLowerCase().contains("localhost")) {
-      baseUrl = "https://medmen.com/";
+      baseUrl = "https://menu-api.medmen.com/api/";
       email = fileLoaderUtils.getValueFromPropertyFile("local.properties", "email");
     } else if (environment.toLowerCase().contains("stage")) {
-      baseUrl = "https://medmen.com/";
+      baseUrl = "https://menu-api.medmen.com/api/";
       email = fileLoaderUtils.getValueFromPropertyFile("stage.properties", "email");
     } else if (environment.toLowerCase().contains("prod")) {
-      baseUrl = "https://medmen.com/";
+      baseUrl = "https://menu-api.medmen.com/api/";
       email = fileLoaderUtils.getValueFromPropertyFile("prod.properties", "email");
     }
   }
@@ -45,7 +45,6 @@ public class EmailSignUpApiStepDefs {
     queryParams = new HashMap<>();
     queryParams.put("email", email);
     String endpoint = "signup";
-    //baseUrl = "https://medmen.com/";
 
     requestResponse =
         restClient.executePostWithParams(baseUrl + endpoint, queryParams, reqHeaders, "");
@@ -61,7 +60,6 @@ public class EmailSignUpApiStepDefs {
     queryParams.put("email", email);
     queryParams.put("event", "statemadeEmailOptIn");
     String endpoint = "signup";
-    //baseUrl = "https://medmen.com/";
 
     requestResponse =
         restClient.executePostWithParams(baseUrl + endpoint, queryParams, reqHeaders, "");
@@ -77,11 +75,12 @@ public class EmailSignUpApiStepDefs {
   @Given("^I have a invalid email$")
   public void i_have_a_invalid_email() {
     email = "badString";
+    baseUrl = "https://menu-api.medmen.com/api/";
   }
 
   @Then("^an invalid response payload$")
   public void an_invalid_response_payload() {
-    String invalidResponse = "{\"status\":400,\"message\":\"Invalid Email Address.\"}";
+    String invalidResponse = "{\"message\":\"Invalid Email Address.\"}";
     Assert.assertEquals(invalidResponse, requestResponse.readEntity(String.class));
   }
 }
