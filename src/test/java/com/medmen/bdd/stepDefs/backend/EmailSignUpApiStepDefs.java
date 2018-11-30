@@ -44,8 +44,8 @@ public class EmailSignUpApiStepDefs {
     reqHeaders.put("Content-Type", "application/x-www-form-urlencoded");
     queryParams = new HashMap<>();
     queryParams.put("email", email);
-    String endpoint = "signup.php";
-    baseUrl = "https://medmen.com/";
+    String endpoint = "signup";
+    //baseUrl = "https://medmen.com/";
 
     requestResponse =
         restClient.executePostWithParams(baseUrl + endpoint, queryParams, reqHeaders, "");
@@ -60,8 +60,8 @@ public class EmailSignUpApiStepDefs {
     queryParams = new HashMap<>();
     queryParams.put("email", email);
     queryParams.put("event", "statemadeEmailOptIn");
-    String endpoint = "signup.php";
-    baseUrl = "https://medmen.com/";
+    String endpoint = "signup";
+    //baseUrl = "https://medmen.com/";
 
     requestResponse =
         restClient.executePostWithParams(baseUrl + endpoint, queryParams, reqHeaders, "");
