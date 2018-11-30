@@ -1,8 +1,8 @@
-@activeMonitorApi
+#@activeMonitorApi
 Feature: Medmen Account API testing
   As a user I should be able to execute API requests against the medmen API services
 
-  @activeMonitorApi1
+#  @activeMonitorApi1
   Scenario: Validate create account API functionality
     Given I have valid credentials
     When I execute a POST to the register endpoint
@@ -42,7 +42,7 @@ Feature: Medmen Account API testing
     Then I will expect a 200 response
     And a valid response payload for login
 
-  @activeMonitorApi1
+#  @activeMonitorApi1
   Scenario: Validate reset password functionality
     Given I have a valid account
     When I execute a POST to the forgot password endpoint
