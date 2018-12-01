@@ -43,6 +43,7 @@ jobs:
 #        mvn clean install -B -Denv=prod -Dbrowser=firefox -DbrowserLocation=remote -Dcucumber.options="--tags @activeMonitorApi,@activeMonitor"
 #
 
+#cron job for every 2 hours
 workflows:
   version: 2
   active_monitor:
