@@ -44,11 +44,11 @@ workflows:
   version: 2
   active_monitor:
     triggers:
-    - schedule:
-      cron: "0 */2 * * *"
-      filters:
-        branches:
-          only:
-          - master
+      - schedule:
+        cron: "0 */2 * * *"
+        filters:
+          branches:
+            only:
+            - master
     jobs:
       - build
