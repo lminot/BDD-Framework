@@ -1,29 +1,21 @@
-# Java Maven CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-java/ for more details
-#
-version: 2
-jobs:
-  build:
+references:
+
+  container_config: &container_config
     docker:
     # specify the version you desire here
     - image: circleci/openjdk:8-jdk-browsers
-    #    - image: selenium/standalone-firefox
-
-    # Specify service dependencies here if necessary
-    # CircleCI maintains a library of pre-built images
-    # documented at https://circleci.com/docs/2.0/circleci-images/
-    # - image: circleci/postgres:9.4
-
     working_directory: ~/medmen-bdd-automation
 
+version: 2
+jobs:
+  build:
+    <<: *container_config
     environment:
       # Customize the JVM maximum heap limit
       MAVEN_OPTS: -Xmx3200m
 
     steps:
     - checkout
-
     # Download and cache dependencies
     - restore_cache:
         keys:
@@ -38,27 +30,35 @@ jobs:
         - ~/.m2
         key: v1-dependencies-{{ checksum "pom.xml" }}
 
-    # run tests!
+  # run tests!
+  api-tests:
+    <<: *container_config
+    steps:
+    - checkout
     - run:
         name: Execute API tests
         command: mvn clean test -B -Dcucumber.options="--tags @activeMonitorApi"
+
+  chrome-ui-tests:
+    <<: *container_config
+    steps:
+    - checkout
     - run:
         name: Execute Chrome UI test
         command: mvn clean test -B -Denv=prod -Dbrowser=chrome -Dcucumber.options="--tags @activeMonitor"
+
+  firefox-ui-tests:
+    <<: *container_config
+    steps:
+    - checkout
     - run:
         name: Execute Firefox UI test
         command: mvn clean test -B -Denv=prod -Dbrowser=firefox -Dcucumber.options="--tags @activeMonitor"
 
-#cron job for every 2 hours
 workflows:
   version: 2
-  active_monitor:
-    triggers:
-    - schedule:
-        cron: "0 0,2,4,6,8,10,12,14,16,18,20,22 * * *"
-        filters:
-          branches:
-            only:
-            - master
+  run-tests:
     jobs:
-      - build
+    - api-tests
+    - chrome-ui-tests
+    - firefox-ui-tests
