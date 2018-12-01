@@ -7,15 +7,15 @@ jobs:
   build:
     docker:
     # specify the version you desire here
-    - image: maven:3.3-jdk-8
-#    - image: selenium/standalone-firefox
+    - image: circleci/openjdk:8-jdk-browsers
+    #    - image: selenium/standalone-firefox
 
     # Specify service dependencies here if necessary
     # CircleCI maintains a library of pre-built images
     # documented at https://circleci.com/docs/2.0/circleci-images/
     # - image: circleci/postgres:9.4
 
-    working_directory: ~/medmen-bdd-automation
+    working_directory: ~/traphouse-bdd
 
     environment:
       # Customize the JVM maximum heap limit
@@ -38,22 +38,16 @@ jobs:
         - ~/.m2
         key: v1-dependencies-{{ checksum "pom.xml" }}
 
-
     # run tests!
-#    - setup_remote_docker
-#    - run:
-#        name: Install Docker client
-#        command: |
-#          set -x
-#          VER="17.03.0-ce"
-#          curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
-#          tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-#          mv /tmp/docker/* /usr/bin
-
-#    - run: docker run -d --name ff_browser -p 5900:5900 -p 4444:4444 -e JAVA_OPTS=-Xmx512m selenium/standalone-firefox
- #   - run: mvn clean install -B -Denv=prod -Dbrowser=firefox -DbrowserLocation=remote -Dcucumber.options="--tags @activeMonitorApi,@activeMonitor"
-    - run: mvn clean install -B
-#    mvn clean install -B -Denv=prod -Dbrowser=chrome -Dcucumber.options="--tags @activeMonitorApi,@activeMonitor"
+    - run:
+        name: Execute API tests
+        command: mvn clean test -B -Dcucumber.options="--tags @activeMonitorApi"
+    - run:
+        name: Execute Chrome UI test
+        command: mvn clean test -B -Denv=prod -Dbrowser=chrome -Dcucumber.options="--tags @activeMonitor"
+    - run:
+        name: Execute Firefox UI test
+        command: mvn clean test -B -Denv=prod -Dbrowser=firefox -Dcucumber.options="--tags @activeMonitor"
 
 #cron job for every 2 hours
 workflows:
