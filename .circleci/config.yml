@@ -50,12 +50,10 @@ jobs:
 #          tar -xz -C /tmp -f /tmp/docker-$VER.tgz
 #          mv /tmp/docker/* /usr/bin
 
-    - run: |
+    - run: docker run -d --name ff_browser -p 5900:5900 -p 4444:4444 -e JAVA_OPTS=-Xmx512m selenium/standalone-firefox
+    - run: mvn clean install -B -Denv=prod -Dbrowser=firefox -DbrowserLocation=remote -Dcucumber.options="--tags @activeMonitorApi,@activeMonitor"
 #    mvn clean install -B
 #    mvn clean install -B -Denv=prod -Dbrowser=chrome -Dcucumber.options="--tags @activeMonitorApi,@activeMonitor"
-        docker run -d --name ff_browser -p 5900:5900 -p 4444:4444 -e JAVA_OPTS=-Xmx512m selenium/standalone-firefox
-        mvn clean install -B -Denv=prod -Dbrowser=firefox -DbrowserLocation=remote -Dcucumber.options="--tags @activeMonitorApi,@activeMonitor"
-#
 
 #cron job for every 2 hours
 workflows:
