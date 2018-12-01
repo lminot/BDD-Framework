@@ -38,7 +38,10 @@ jobs:
         key: v1-dependencies-{{ checksum "pom.xml" }}
 
     # run tests!
-    - run: mvn clean install -B
+    - run: |
+        docker run -d --name chrome_browser -p 5900:5900 -p 4444:4444 -e JAVA_OPTS=-Xmx512m selenium/standalone-firefox
+        mvn clean install -B -Denv=prod -Dbrowser=firefox -DbrowserLocation=remote -Dcucumber.options="--tags @activeMonitorApi,@activeMonitor"
+#        mvn clean install -B
 
 #workflows:
 #  version: 2
