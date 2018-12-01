@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
     # specify the version you desire here
-    - image: maven:3.3-jdk-8
+#    - image: maven:3.3-jdk-8
     - image: circleci/openjdk:8-jdk-browsers
 
     # Specify service dependencies here if necessary
@@ -38,6 +38,31 @@ jobs:
         - ~/.m2
         key: v1-dependencies-{{ checksum "pom.xml" }}
 
+    - run:
+        name: Install latest version of ChromeDriver Sample
+        command: |
+          sudo wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+          sudo apt-get update
+          sudo apt-get install google-chrome-unstable
+    - run:
+        name: Install latest version of ChromeDriver Sample
+        command: |
+          sudo wget https://chromedriver.storage.googleapis.com/2.31/chromedriver_linux64.zip
+          sudo unzip chromedriver_linux64.zip
+          sudo rm chromedriver_linux64.zip
+          sudo mv chromedriver /usr/bin/
+          sudo chmod 777 /usr/bin/chromedriver
+          sudo apt-get install libxi6 libgconf-2-4
+          sudo apt-get -y install xvfb gtk2-engines-pixbuf
+          sudo apt-get -y install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable
+          sudo apt-get install xvfb
+          sudo apt-get -y install imagemagick x11-apps
+    - run:
+        name: Running X virtual framebuffer
+        command: Xvfb :0 -ac &
+
+
     # run tests!
 #    - setup_remote_docker
 #    - run:
@@ -49,7 +74,7 @@ jobs:
 #          tar -xz -C /tmp -f /tmp/docker-$VER.tgz
 #          mv /tmp/docker/* /usr/bin
 #    - run: docker run -d --name chrome_browser -p 5900:5900 -p 4444:4444 -e JAVA_OPTS=-Xmx512m selenium/standalone-firefox
-    - run: mvn clean install -B -Denv=prod -Dbrowser=firefox -Dcucumber.options="--tags @activeMonitorApi,@activeMonitor"
+    - run: mvn clean install -B -Denv=prod -Dbrowser=chrome -Dcucumber.options="--tags @activeMonitorApi,@activeMonitor"
 #    mvn clean install -B
 #        docker run -d --name chrome_browser -p 5900:5900 -p 4444:4444 -e JAVA_OPTS=-Xmx512m selenium/standalone-firefox
 #        mvn clean install -B -Denv=prod -Dbrowser=firefox -DbrowserLocation=remote -Dcucumber.options="--tags @activeMonitorApi,@activeMonitor"
