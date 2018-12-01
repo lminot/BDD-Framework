@@ -6,6 +6,7 @@ version: 2
 jobs:
   build:
     docker:
+    machine: true
     # specify the version you desire here
     - image: maven:3.3-jdk-8
 
@@ -22,7 +23,6 @@ jobs:
 
     steps:
     - checkout
-    - setup_remote_docker
 
     # Download and cache dependencies
     - restore_cache:
