@@ -18,7 +18,7 @@ import cucumber.api.junit.Cucumber;
       "json:target/cucumber-reports/CucumberTestReport.json",
       "rerun:target/cucumber-reports/rerun.txt"
     },
-    tags = {"@activeMonitorApi"})
+    tags = {"@activeMonitorApi,@activeMonitor"})
 public class TestRunner {
 
   public static String getEnvironment() {
