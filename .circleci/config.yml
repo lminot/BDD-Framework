@@ -56,15 +56,15 @@ jobs:
 #    mvn clean install -B -Denv=prod -Dbrowser=chrome -Dcucumber.options="--tags @activeMonitorApi,@activeMonitor"
 
 #cron job for every 2 hours
-workflows:
-  version: 2
-  active_monitor:
-    triggers:
-    - schedule:
-        cron: "0 0,2 * * *"
-        filters:
-          branches:
-            only:
-            - master
-    jobs:
-      - build
+#workflows:
+#  version: 2
+#  active_monitor:
+#    triggers:
+#    - schedule:
+#        cron: "0 0,2 * * *"
+#        filters:
+#          branches:
+#            only:
+#            - master
+#    jobs:
+#      - build
