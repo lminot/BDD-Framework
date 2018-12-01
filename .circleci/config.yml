@@ -45,7 +45,7 @@ workflows:
   active_monitor:
     triggers:
     - schedule:
-        cron: "0 2 * * *"
+        cron: "0 0,2 * * *"
         filters:
           branches:
             only:
