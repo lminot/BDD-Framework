@@ -55,9 +55,17 @@ jobs:
         name: Execute Firefox UI test
         command: mvn clean test -B -Denv=prod -Dbrowser=firefox -Dcucumber.options="--tags @activeMonitor"
 
+#cron job for every 2 hours
 workflows:
   version: 2
-  run-tests:
+  active_monitor:
+    triggers:
+    - schedule:
+        cron: "0 0,2,4,6,8,10,12,14,16,18,20,22 * * *"
+        filters:
+          branches:
+            only:
+            - master
     jobs:
     - api-tests
     - chrome-ui-tests
