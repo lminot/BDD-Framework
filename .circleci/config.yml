@@ -4,7 +4,7 @@ references:
     docker:
     # specify the version you desire here
     - image: circleci/openjdk:8-jdk-browsers
-    working_directory: chmod -R 777  ~/medmen-bdd-automation
+    working_directory: ~/medmen-bdd-automation
 
 version: 2
 jobs:
