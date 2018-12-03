@@ -27,7 +27,7 @@ jobs:
 
     - save_cache:
         paths:
-        - ~/.m2
+        - chmod -R 777  ~/.m2
         key: v1-dependencies-{{ checksum "pom.xml" }}
 
   # run tests!
