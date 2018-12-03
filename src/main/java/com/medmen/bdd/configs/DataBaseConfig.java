@@ -6,10 +6,10 @@ import java.sql.*;
 
 public class DataBaseConfig {
 
-    final static String CONNECTION_URL = "jdbc:mysql://medmen.cf4ubqfpjaby.us-west-2.rds.amazonaws.com?autoReconnect=true&useSSL=false";
-    final static String DB_USER = "medmen";
-    final static String DB_PASSWORD = "AnJXHCUDHqkL349Z";
-    final static String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
+    final static String CONNECTION_URL = "";
+    final static String DB_USER = "";
+    final static String DB_PASSWORD = "";
+    final static String DB_DRIVER = "";
     public Connection connection = null;
 
     public void registerJdbcDriver(){
