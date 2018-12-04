@@ -3,7 +3,7 @@ references:
   container_config: &container_config
     docker:
     # specify the version you desire here
-    - image: circleci/openjdk:8-jdk
+    - image: circleci/openjdk:8-jdk-browsers
     working_directory: ~/medmen-bdd-automation
 
 version: 2
