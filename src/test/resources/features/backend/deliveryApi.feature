@@ -1,4 +1,4 @@
-#@apiTest
+@apiTest
 Feature: Delivery API testing
   As a user I should be able to execute API calls for the Delivery API project
 
