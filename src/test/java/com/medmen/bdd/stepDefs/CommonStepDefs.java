@@ -2,7 +2,7 @@ package com.medmen.bdd.stepDefs;
 
 import com.medmen.bdd.configs.DriverConfig;
 import com.medmen.bdd.pages.MedMenHomePage;
-import com.medmen.bdd.pages.MedMenHomePageOverlay;
+import com.medmen.bdd.pages.AgeGatePage;
 import com.medmen.bdd.utils.FileLoaderUtils;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 public class CommonStepDefs {
 
-  private MedMenHomePageOverlay medmenHomePageOverlay;
+  private AgeGatePage medmenHomePage;
   private WebDriver driver;
   private static String environment;
   private static String port;
@@ -51,21 +51,21 @@ public class CommonStepDefs {
   @Given("^I click \"([^\"]*)\" on the age verification prompt$")
   public void i_click_on_the_age_verification_prompt(String ageCheck) {
     driver = DriverConfig.getDriver();
-    medmenHomePageOverlay = new MedMenHomePageOverlay(driver);
-    assertTrue(medmenHomePageOverlay.isInitialized());
+    medmenHomePage = new AgeGatePage(driver);
+    assertTrue(medmenHomePage.isInitialized());
     if (ageCheck.contains("YES")) {
-      medmenHomePageOverlay.selectYesImTwentyOne();
+      medmenHomePage.selectYesImTwentyOne();
     } else {
-      medmenHomePageOverlay.selectNoImTwentyOne();
+      medmenHomePage.selectNoImTwentyOne();
     }
   }
 
   @Given("^I click the enter button$")
   public void i_click_the_enter_button() {
     driver = DriverConfig.getDriver();
-    medmenHomePageOverlay = new MedMenHomePageOverlay(driver);
-    assertTrue(medmenHomePageOverlay.isInitialized());
-    medmenHomePageOverlay.clickEnter();
+    medmenHomePage = new AgeGatePage(driver);
+    assertTrue(medmenHomePage.isInitialized());
+    medmenHomePage.clickEnter();
   }
 
   @When("^I select the statemade option from the top nav$")

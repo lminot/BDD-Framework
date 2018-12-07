@@ -1,0 +1,14 @@
+{
+  "filters": {
+    "email": "%s"
+  },
+  "returnFields": {
+    "balances": true,
+    "customer": true,
+    "alternateCustomer": true,
+    "giverCustomer": true,
+    "isEnrolled": true,
+    "customData": true,
+    "customCardNumber": true
+  }
+}

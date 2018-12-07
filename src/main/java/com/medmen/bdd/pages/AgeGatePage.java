@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class MedMenHomePageOverlay extends PageObject {
+public class AgeGatePage extends PageObject {
 
   @FindBy(xpath = "//img[@class='c-age-gate__logo u-img-respond']")
   private WebElement logo;
@@ -24,7 +24,7 @@ public class MedMenHomePageOverlay extends PageObject {
   @FindBy(xpath = "//button[@class='c-signup__submit c-signup__submit--420']")
   private WebElement enterButton;
 
-  public MedMenHomePageOverlay(WebDriver driver) {
+  public AgeGatePage(WebDriver driver) {
     super(driver);
   }
 

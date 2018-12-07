@@ -7,12 +7,14 @@ Feature: Medmen API testing
     When I execute a POST to the sign up endpoint
     Then I will expect a 200 response
     And a valid response payload
+    And now my email is searchable in Clutch
 
   Scenario: Validate the Newsletter Email Signup API functionality with a valid email & clutch event
     Given I have a valid email
     When I execute a POST to the sign up endpoint with a clutch event parameter
     Then I will expect a 200 response
     And a valid response payload
+    And now my email is searchable in Clutch
 
   Scenario: Validate the Newsletter Email Signup API functionality with invalid email
     Given I have a invalid email

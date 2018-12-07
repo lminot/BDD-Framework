@@ -37,7 +37,7 @@ jobs:
     - checkout
     - run:
         name: Execute API tests
-        command: mvn install test -B -Dcucumber.options="--tags @activeMonitorApi"
+        command: mvn install test -B -Denv=prod -Dcucumber.options="--tags @activeMonitorApi"
 
   chrome-ui-tests:
     <<: *container_config

@@ -1,31 +1,26 @@
 package com.medmen.bdd.stepDefs;
 
 import com.medmen.bdd.configs.DriverConfig;
-import com.medmen.bdd.pages.MedMenHomePage;
-import com.medmen.bdd.pages.MedMenHomePageOverlay;
+import com.medmen.bdd.pages.AgeGatePage;
 import com.medmen.bdd.utils.FileLoaderUtils;
 import cucumber.api.PendingException;
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
 
-import static com.medmen.bdd.helperMethods.BaseTest.navigationObj;
 import static org.junit.Assert.assertTrue;
 
 public class EmailSignUpStepDefs {
 
-  private MedMenHomePageOverlay medmenHomePageOverlay;
+  private AgeGatePage ageGatePage;
   private WebDriver driver;
   private static String email;
   private static String environment;
 
-  @And("^I enter a valid email address into the Newsletter sign up box$")
-  public void iEnterAValidEmailAddressIntoTheNewsletterSignUpBox() {
+  @When("^I enter a valid email address into the \"([^\"]*)\" sign up box$")
+  public void i_enter_a_valid_email_address_into_the_sign_up_box(String newsletterKey) {
     driver = DriverConfig.getDriver();
-    medmenHomePageOverlay = new MedMenHomePageOverlay(driver);
+    ageGatePage = new AgeGatePage(driver);
 
     FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
     environment = System.getProperty("env", "stage");
@@ -36,6 +31,32 @@ public class EmailSignUpStepDefs {
     } else if (environment.toLowerCase().contains("prod")) {
       email = fileLoaderUtils.getValueFromPropertyFile("prod.properties", "email");
     }
-    medmenHomePageOverlay.enterEmailAddress(email);
+    if (newsletterKey.contains("Age Gate Newsletter")){
+      ageGatePage.enterEmailAddress(email);
+    } else if (newsletterKey.contains("Get 10% Off Your First Purchase.")){
+      //todo exit pop flow
+
+
+    } else if (newsletterKey.contains("Keep in Touch")){
+      //todo footer sign flow
+    }
+    ageGatePage.enterEmailAddress(email);
+  }
+
+
+  public static String getEmail() {
+    return email;
+  }
+
+  public static String getEnvironment() {
+    return environment;
+  }
+
+  public static void setEmail(String email) {
+    EmailSignUpStepDefs.email = email;
+  }
+
+  public static void setEnvironment(String environment) {
+    EmailSignUpStepDefs.environment = environment;
   }
 }
