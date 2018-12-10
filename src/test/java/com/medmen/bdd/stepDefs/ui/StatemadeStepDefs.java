@@ -1,11 +1,11 @@
-package com.medmen.bdd.stepDefs;
+package com.medmen.bdd.stepDefs.ui;
 
 import com.medmen.bdd.configs.DriverConfig;
 import com.medmen.bdd.helperMethods.BaseTest;
 import com.medmen.bdd.pages.statemade.EffectsPage;
 import com.medmen.bdd.pages.statemade.ProductsPage;
 import com.medmen.bdd.pages.statemade.StateMadeLandingPage;
-import cucumber.api.java.After;
+import com.medmen.bdd.stepDefs.ui.CommonStepDefs;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;

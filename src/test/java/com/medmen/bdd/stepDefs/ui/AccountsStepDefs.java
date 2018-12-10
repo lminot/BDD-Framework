@@ -1,4 +1,4 @@
-package com.medmen.bdd.stepDefs;
+package com.medmen.bdd.stepDefs.ui;
 
 import com.medmen.bdd.configs.DriverConfig;
 import com.medmen.bdd.helperMethods.BaseTest;

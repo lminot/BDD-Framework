@@ -45,7 +45,7 @@ jobs:
     - checkout
     - run:
         name: Execute Chrome UI test
-        command: mvn install test -B -Denv=prod -Dbrowser=chrome -Dcucumber.options="--tags @activeMonitor"
+        command: mvn install test -B -Denv=prod -Dbrowser=chrome -Dheadless=false -Dcucumber.options="--tags @activeMonitorUi"
 
   firefox-ui-tests:
     <<: *container_config
@@ -53,7 +53,7 @@ jobs:
     - checkout
     - run:
         name: Execute Firefox UI test
-        command: mvn install test -B -Denv=prod -Dbrowser=firefox -Dcucumber.options="--tags @activeMonitor"
+        command: mvn install test -B -Denv=prod -Dbrowser=firefox -Dheadless=false -Dcucumber.options="--tags @activeMonitorUi"
 
 #cron job for every 2 hours
 workflows:

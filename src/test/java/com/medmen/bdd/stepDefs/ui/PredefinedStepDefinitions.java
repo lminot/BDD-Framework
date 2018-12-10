@@ -1,8 +1,7 @@
-package com.medmen.bdd.stepDefs;
+package com.medmen.bdd.stepDefs.ui;
 
 import com.medmen.bdd.configs.DriverConfig;
 import com.medmen.bdd.helperMethods.TestCaseFailed;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import com.medmen.bdd.helperMethods.BaseTest;
 import org.junit.BeforeClass;
@@ -138,7 +137,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I zoom out page till I see element having (.+) \"(.*?)\"$")
 	public void zoom_till_element_display(String type, String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		navigationObj.zoomInOutTillElementDisplay(type,"substract", accessName);
 	}
 	
@@ -164,7 +163,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I scroll to element having (.+) \"(.*?)\"$")
 	public void scroll_to_element(String type, String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		navigationObj.scrollToElement(type, accessName);
 	}
 	
@@ -174,7 +173,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I hover over element having (.+) \"(.*?)\"$")
 	public void hover_over_element(String type, String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		navigationObj.hoverOverElement(type, accessName);
 	}
 
@@ -203,7 +202,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^element having (.+) \"([^\"]*)\" should\\s*((?:not)?)\\s+have text as \"(.*?)\"$")
 	public void check_element_text(String type, String accessName,String present,String value) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		assertionObj.checkElementText(type, value, accessName,present.isEmpty());
 	}
 	
@@ -211,7 +210,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^element having (.+) \"([^\"]*)\" should\\s*((?:not)?)\\s+have partial text as \"(.*?)\"$")
 	public void check_element_partial_text(String type,String accessName,String present,String value) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		assertionObj.checkElementPartialText(type, value, accessName, present.isEmpty());
 	}
 	
@@ -219,7 +218,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^element having (.+) \"([^\"]*)\" should\\s*((?:not)?)\\s+have attribute \"(.*?)\" with value \"(.*?)\"$")
 	public void check_element_attribute(String type,String accessName,String present,String attrb,String value) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		assertionObj.checkElementAttribute(type, attrb, value, accessName, present.isEmpty());
 	}
 	
@@ -227,7 +226,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^element having (.+) \"([^\"]*)\" should\\s*((?:not)?)\\s+be (enabled|disabled)$")
 	public void check_element_enable(String type, String accessName,String present,String state) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		boolean flag = state.equals("enabled");
 		if(!present.isEmpty())
 		{
@@ -240,7 +239,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^element having (.+) \"(.*?)\" should\\s*((?:not)?)\\s+be present$")
 	public void check_element_presence(String type,String accessName,String present) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		assertionObj.checkElementPresence(type, accessName, present.isEmpty());
 	}
 	
@@ -248,7 +247,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^checkbox having (.+) \"(.*?)\" should be (checked|unchecked)$")
 	public void is_checkbox_checked(String type, String accessName,String state) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		boolean flag = state.equals("checked");
 		assertionObj.isCheckboxChecked(type, accessName, flag);
 	}
@@ -257,7 +256,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^radio button having (.+) \"(.*?)\" should be (selected|unselected)$")
 	public void is_radio_button_selected(String type,String accessName,String state) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		boolean flag = state.equals("selected");
 		assertionObj.isRadioButtonSelected(type, accessName, flag);
 	}
@@ -266,7 +265,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^option \"(.*?)\" by (.+) from radio button group having (.+) \"(.*?)\" should be (selected|unselected)$")
 	public void is_option_from_radio_button_group_selected(String option,String attrb,String type,String accessName,String state) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		boolean flag = state.equals("selected");
 		assertionObj.isOptionFromRadioButtonGroupSelected(type,attrb,option,accessName,flag);
 	}
@@ -296,7 +295,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^option \"(.*?)\" by (.+) from dropdown having (.+) \"(.*?)\" should be (selected|unselected)$")
 	public void is_option_from_dropdown_selected(String option,String by,String type,String accessName,String state) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		boolean flag = state.equals("selected");
 		assertionObj.isOptionFromDropdownSelected(type,by,option,accessName,flag);
 	}
@@ -307,7 +306,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I enter \"([^\"]*)\" into input field having (.+) \"([^\"]*)\"$")
 	public void enter_text(String text, String type,String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		inputObj.enterText(type, text, accessName);
 	}
 	
@@ -315,7 +314,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I clear input field having (.+) \"([^\"]*)\"$")
 	public void clear_text(String type, String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		inputObj.clearText(type, accessName);
 	}
 	
@@ -323,8 +322,8 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I select \"(.*?)\" option by (.+) from dropdown having (.+) \"(.*?)\"$")
 	public void select_option_from_dropdown(String option,String optionBy,String type,String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
-		miscmethodObj.validateOptionBy(optionBy);
+		miscMethodObj.validateLocator(type);
+		miscMethodObj.validateOptionBy(optionBy);
 		inputObj.selectOptionFromDropdown(type,optionBy, option, accessName);
 	}
 	
@@ -332,7 +331,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I select (\\d+) option by index from dropdown having (.+) \"(.*?)\"$")
 	public void select_option_from_dropdown_by_index(String option, String type, String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		inputObj.selectOptionFromDropdown(type,"selectByIndex", option, accessName);
 	}
 	
@@ -340,8 +339,8 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I select \"(.*?)\" option by (.+) from multiselect dropdown having (.+) \"(.*?)\"$")
 	public void select_option_from_multiselect_dropdown(String option,String optionBy, String type,String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
-		miscmethodObj.validateOptionBy(optionBy);
+		miscMethodObj.validateLocator(type);
+		miscMethodObj.validateOptionBy(optionBy);
 		inputObj.selectOptionFromDropdown(type,optionBy, option, accessName);
 	}
 	
@@ -349,7 +348,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I select (\\d+) option by index from multiselect dropdown having (.+) \"(.*?)\"$")
 	public void select_option_from_multiselect_dropdown_by_index(String option, String type, String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		inputObj.selectOptionFromDropdown(type,"selectByIndex", option, accessName);
 	}
 	
@@ -357,8 +356,8 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I deselect \"(.*?)\" option by (.+) from multiselect dropdown having (.+) \"(.*?)\"$")
 	public void deselect_option_from_multiselect_dropdown(String option,String optionBy, String type,String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
-		miscmethodObj.validateOptionBy(optionBy);
+		miscMethodObj.validateLocator(type);
+		miscMethodObj.validateOptionBy(optionBy);
 		inputObj.deselectOptionFromDropdown(type, optionBy, option, accessName);
 	}
 	
@@ -366,7 +365,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I deselect (\\d+) option by index from multiselect dropdown having (.+) \"(.*?)\"$")
 	public void deselect_option_from_multiselect_dropdown_by_index(String option, String type, String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		inputObj.deselectOptionFromDropdown(type, "selectByIndex", option, accessName);
 	}
 	
@@ -383,7 +382,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I deselect all options from multiselect dropdown having (.+) \"(.*?)\"$")
 	public void unselect_all_option_from_multiselect_dropdown(String type, String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		inputObj.unselectAllOptionFromMultiselectDropdown(type, accessName);
 	}
 	
@@ -391,7 +390,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I check the checkbox having (.+) \"(.*?)\"$")
 	public void check_checkbox(String type, String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		inputObj.checkCheckbox(type, accessName);
 	}
 	
@@ -399,7 +398,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I uncheck the checkbox having (.+) \"(.*?)\"$")
 	public void uncheck_checkbox(String type,String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		inputObj.uncheckCheckbox(type, accessName);
 	}
 	
@@ -407,7 +406,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I toggle checkbox having (.+) \"(.*?)\"$")
 	public void toggle_checkbox(String type,String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		inputObj.toggleCheckbox(type, accessName);
 	}
 	
@@ -415,7 +414,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I select radio button having (.+) \"(.*?)\"$")
 	public void select_radio_button(String type, String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		inputObj.selectRadioButton(type, accessName);
 	}
 	
@@ -423,8 +422,8 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I select \"(.*?)\" option by (.+) from radio button group having (.+) \"(.*?)\"$")
 	public void select_option_from_radio_btn_group(String option,String by, String type, String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
-		//miscmethodObj.validateOptionBy(optionBy);
+		miscMethodObj.validateLocator(type);
+		//miscMethodObj.validateOptionBy(optionBy);
 		inputObj.selectOptionFromRadioButtonGroup(type, option, by, accessName);
 	}
 	
@@ -434,7 +433,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I click on element having (.+) \"(.*?)\"$")
 	public void click(String type,String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		clickObj.click(type, accessName);
 	}
 	
@@ -442,7 +441,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I forcefully click on element having (.+) \"(.*?)\"$")
 	public void click_forcefully(String type,String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		clickObj.clickForcefully(type,accessName);
 	}
 	
@@ -450,7 +449,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I double click on element having (.+) \"(.*?)\"$")
 	public void double_click(String type, String accessValue) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		clickObj.doubleClick(type, accessValue);
 	}
 	
@@ -481,7 +480,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I wait (\\d+) seconds for element having (.+) \"(.*?)\" to display$")
 	public void wait_for_ele_to_display(String duration, String type, String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		progressObj.waitForElementToDisplay(type, accessName, duration);
 	}
 	
@@ -489,7 +488,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	@Then("^I wait (\\d+) seconds for element having (.+) \"(.*?)\" to be enabled$")
 	public void wait_for_ele_to_click(String duration, String type, String accessName) throws Exception
 	{
-		miscmethodObj.validateLocator(type);
+		miscMethodObj.validateLocator(type);
 		progressObj.waitForElementToClick(type, accessName, duration);
 	}
 	
