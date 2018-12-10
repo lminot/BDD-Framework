@@ -2,7 +2,7 @@ package com.medmen.bdd.helperMethods;
 
 public interface BaseTest 
 {
-	MiscMethods miscmethodObj = new MiscMethods();
+	MiscMethods miscMethodObj = new MiscMethods();
 	NavigateMethods navigationObj = new NavigateMethods();
 	AssertionMethods assertionObj = new AssertionMethods();
 	ClickElementsMethods clickObj = new ClickElementsMethods();

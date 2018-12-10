@@ -19,7 +19,8 @@ public class MiscMethods
 	}
 	
 	// method to validate dropdown selector
-	public boolean valid_option_by(String option_by)
+
+	public boolean validOptionBy(String option_by)
 	{
 		return Arrays.asList("text","value","index").contains(option_by);
 	}
@@ -29,7 +30,7 @@ public class MiscMethods
 	 */
 	public void validateOptionBy(String optionBy) throws Exception
 	{
-		if(!valid_option_by(optionBy))
+		if(!validOptionBy(optionBy))
 			throw new Exception("Invalid option by - "+optionBy);
 	}
 }

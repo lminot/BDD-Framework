@@ -127,18 +127,18 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
 	}
 	
 	/** Method to scroll page to top or end
-	 * @param to : String : Scroll page to Top or End
+	 * @param direction : String : Scroll page to Top or End
 	 * @throws Exception
 	 */
-	public void scrollPage(String to) throws Exception
+	public void scrollPage(String direction) throws Exception
 	{
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
-		if (to.equals("end"))
+		if (direction.equals("down"))
 			executor.executeScript("window.scrollTo(0,Math.max(document.documentElement.scrollHeight,document.body.scrollHeight,document.documentElement.clientHeight));");
-		else if (to.equals("top"))
+		else if (direction.equals("up"))
             executor.executeScript("window.scrollTo(Math.max(document.documentElement.scrollHeight,document.body.scrollHeight,document.documentElement.clientHeight),0);");
 		else
-			throw new Exception("Exception : Invalid Direction (only scroll \"top\" or \"end\")");
+			throw new Exception("Exception : Invalid Direction (only scroll \"up\" or \"down\")");
 	}
 	
 	/**Method to switch to new window */
