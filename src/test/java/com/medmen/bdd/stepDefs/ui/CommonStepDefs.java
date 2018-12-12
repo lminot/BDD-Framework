@@ -70,12 +70,10 @@ public class CommonStepDefs {
 
   @When("^I select the statemade option from the top nav$")
   public void i_select_the_statemade_option_from_the_top_nav() {
-    // todo fix me for teh basic auth
     driver = DriverConfig.getDriver();
     MedMenHomePage medMenHomePage = new MedMenHomePage(driver);
     assertTrue(medMenHomePage.isInitialized());
     medMenHomePage.selectStatemade();
-    // navigationObj.navigateTo("https://medmen:AXPqt3EURBVBGATb@staging.medmen.com/statemade/");
   }
 
   public static String getBaseUrl() {

@@ -1,6 +1,6 @@
 Feature: Verify medmen.com's newsletter email sign-up functionality
 
-  @activeMonitorUi
+  @activeMonitorUi @isHeadless
   Scenario: Validate the Age-gate Newsletter Email Sign-up functionality with a valid email
     Given I navigate to the Medmen homepage
     When I click "YES" on the age verification prompt
@@ -8,13 +8,16 @@ Feature: Verify medmen.com's newsletter email sign-up functionality
     Then I click the enter button
     And now my email is searchable in Clutch
 
+  @activeMonitorUi
   Scenario: Validate the "exit-pop" Newsletter Email Sign-up functionality with a valid email
     Given I navigate to the Medmen homepage
     And I click "YES" on the age verification prompt
     And I click the enter button
-    When I scroll down the page
+    And I select the Who We Are top nav link
+    When I trigger the exit pop overlay
     And I enter a valid email address into the "Get 10% Off Your First Purchase." sign up box
-    Then the "Thank you for signing up!" text is displayed
+    And I click the exit-pop email submit button
+    Then the exit-pop "Thank you for signing up." text is displayed
     And now my email is searchable in Clutch
 
   @activeMonitorUi
