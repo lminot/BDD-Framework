@@ -48,7 +48,10 @@ public class MedMenHomePage extends PageObject {
     @FindBy(xpath = "//p[@class='js-newsletter__success u-text-center']")
     private WebElement footerEmailSignUpSuccess;
 
-    private long timeoutInSeconds = 5000;
+    @FindBy(xpath = "//input[@placeholder='Email Address']")
+    private WebElement newsletterEmailTextBoxXpath;
+
+    private long timeoutInSeconds = 60;
     private WebDriverWait wait = new WebDriverWait(DriverConfig.getDriver(), timeoutInSeconds);
 
     public MedMenHomePage(WebDriver driver) {
@@ -61,27 +64,36 @@ public class MedMenHomePage extends PageObject {
 
     public void selectStatemade() {
         if (topNavStatemade.isDisplayed()) {
+            wait.until(ExpectedConditions.elementToBeClickable(topNavStatemade));
             topNavStatemade.click();
         }
     }
 
     public void selectWhoWeAre() {
-        String whoWeAreXpath = "//a[contains(text(),'Who We Are')]";
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(whoWeAreXpath)));
-        topNavWhoWeAre.click();
+        if (topNavWhoWeAre.isDisplayed()) {
+            wait.until(ExpectedConditions.elementToBeClickable(topNavWhoWeAre));
+            topNavWhoWeAre.click();
+        }
+    }
+
+    public void selectStores() {
+        if (topNavStores.isDisplayed()) {
+            wait.until(ExpectedConditions.elementToBeClickable(topNavStores));
+            topNavStores.click();
+        }
     }
 
     public void enterNewsletterEmail(String email) {
         if (footerEmailInput.isDisplayed()) {
+            wait.until(ExpectedConditions.elementToBeClickable(footerEmailInput));
             footerEmailInput.sendKeys(email);
         }
     }
 
     public void scrollToKeepInTouch() {
         String keepInTouchTitleXpath = "//h3[@class='c-heading-38 u-color-red']";
-        String newsletterEmailTextBoxXpath = "//input[@placeholder='Email Address']";
         navigationObj.scrollToElement("xpath", keepInTouchTitleXpath);
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(newsletterEmailTextBoxXpath)));
+        wait.until(ExpectedConditions.elementToBeClickable(newsletterEmailTextBoxXpath));
     }
 
     public void submitNewsletter() {

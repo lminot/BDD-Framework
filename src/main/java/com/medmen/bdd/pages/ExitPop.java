@@ -1,9 +1,12 @@
 package com.medmen.bdd.pages;
 
+import com.medmen.bdd.configs.DriverConfig;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ExitPop extends PageObject {
 
@@ -28,7 +31,8 @@ public class ExitPop extends PageObject {
     @FindBy(xpath = "//img[@src='/static/img/global/close-grey.svg']")
     private WebElement exitPopClose;
 
-    private long timeoutInSeconds = 5000;
+    private long timeoutInSeconds = 60;
+    private WebDriverWait wait = new WebDriverWait(DriverConfig.getDriver(), timeoutInSeconds);
     public static String jQueryGetText = "return jQuery(arguments[0]).text();";
 
     public ExitPop(WebDriver driver) {
@@ -41,12 +45,14 @@ public class ExitPop extends PageObject {
 
     public void enterEmailIntoExitPop(String email) {
         if (exitPopEmailField.isDisplayed()) {
+            wait.until(ExpectedConditions.elementToBeClickable(exitPopEmailField));
             exitPopEmailField.sendKeys(email);
         }
     }
 
     public void sumbitExitPop() {
         if (exitPopSubmit.isDisplayed()) {
+            wait.until(ExpectedConditions.elementToBeClickable(exitPopSubmit));
             exitPopSubmit.click();
         }
     }

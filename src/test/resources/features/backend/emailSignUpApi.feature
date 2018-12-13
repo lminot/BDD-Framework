@@ -1,4 +1,4 @@
-@activeMonitorApi
+@activeMonitorApi @CPR
 Feature: Medmen API testing
   As a user I should be able to execute API requests against the medmen services
 

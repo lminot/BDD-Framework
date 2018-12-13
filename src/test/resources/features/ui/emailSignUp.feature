@@ -1,3 +1,4 @@
+@CPR
 Feature: Verify medmen.com's newsletter email sign-up functionality
 
   @activeMonitorUi @isHeadless
@@ -30,6 +31,7 @@ Feature: Verify medmen.com's newsletter email sign-up functionality
     Then the "Thank you for signing up!" text is displayed
     And now my email is searchable in Clutch
 
+  @activeMonitorUi
   Scenario: Validate the [statemade] Newsletter Email Sign-up functionality with a valid email
     Given I navigate to the Medmen homepage
     And I click "YES" on the age verification prompt
@@ -38,7 +40,22 @@ Feature: Verify medmen.com's newsletter email sign-up functionality
     When I select a product
     And I select the "Find Your Store" link
     And I enter a valid email address into the "Coming soon to:" sign up box
-    Then the "Thank you for signing up!" text is displayed
+    And I click the statemade newsletter email submit button
+    Then the statemade "Thank you for signing up." text is displayed
+    And now my email is searchable in Clutch
+
+  @activeMonitorUi @isHeadless
+  Scenario: Validate the menu site Newsletter Email Sign-up functionality with a valid email
+    Given I navigate to the Medmen homepage
+    And I click "YES" on the age verification prompt
+    And I click the enter button
+    And I navigate to the stores page
+    And I select a store with a menu
+    And I select the "Shop Now" button
+    And I scroll down the page
+    When I enter a valid email address into the menu "Keep in Touch" sign up box
+    And I click the menu site newsletter email submit button
+    Then the menu site "Thank you for signing up!" text is displayed
     And now my email is searchable in Clutch
 
 
