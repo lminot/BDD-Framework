@@ -51,6 +51,10 @@ public class MedMenHomePage extends PageObject {
     @FindBy(xpath = "//input[@placeholder='Email Address']")
     private WebElement newsletterEmailTextBoxXpath;
 
+    private String ageGateXpath = "//body/div[2]";
+    private String newsletterSubmitXpath = "//h3[@class='c-heading-38 u-color-red']";
+    private String newsletterSignUpSuccessTextXpath = "//p[@class='js-newsletter__success u-text-center']";
+
     private long timeoutInSeconds = 60;
     private WebDriverWait wait = new WebDriverWait(DriverConfig.getDriver(), timeoutInSeconds);
 
@@ -63,46 +67,48 @@ public class MedMenHomePage extends PageObject {
     }
 
     public void selectStatemade() {
-        if (topNavStatemade.isDisplayed()) {
+        if (topNavStatemade.isEnabled()) {
             wait.until(ExpectedConditions.elementToBeClickable(topNavStatemade));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(ageGateXpath)));
             topNavStatemade.click();
         }
     }
 
     public void selectWhoWeAre() {
-        if (topNavWhoWeAre.isDisplayed()) {
+        if (topNavWhoWeAre.isEnabled()) {
             wait.until(ExpectedConditions.elementToBeClickable(topNavWhoWeAre));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(ageGateXpath)));
             topNavWhoWeAre.click();
         }
     }
 
     public void selectStores() {
-        if (topNavStores.isDisplayed()) {
+        if (topNavStores.isEnabled()) {
             wait.until(ExpectedConditions.elementToBeClickable(topNavStores));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(ageGateXpath)));
             topNavStores.click();
         }
     }
 
     public void enterNewsletterEmail(String email) {
-        if (footerEmailInput.isDisplayed()) {
+        if (footerEmailInput.isEnabled()) {
             wait.until(ExpectedConditions.elementToBeClickable(footerEmailInput));
             footerEmailInput.sendKeys(email);
         }
     }
 
     public void scrollToKeepInTouch() {
-        String keepInTouchTitleXpath = "//h3[@class='c-heading-38 u-color-red']";
-        navigationObj.scrollToElement("xpath", keepInTouchTitleXpath);
+        navigationObj.scrollToElement("xpath", newsletterSubmitXpath);
         wait.until(ExpectedConditions.elementToBeClickable(newsletterEmailTextBoxXpath));
     }
 
     public void submitNewsletter() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//h3[@class='c-heading-38 u-color-red']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(newsletterSubmitXpath)));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(newsletterSubmitXpath)));
         footerEmailSubmit.click();
     }
 
     public String getSuccessText() {
-        String newsletterSignUpSuccessTextXpath = "//p[@class='js-newsletter__success u-text-center']";
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(newsletterSignUpSuccessTextXpath)));
         return footerEmailSignUpSuccess.getText();
     }

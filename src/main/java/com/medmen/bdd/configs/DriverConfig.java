@@ -121,6 +121,7 @@ public class DriverConfig {
     public static void closeDriver() {
         if (!ObjectUtils.isEmpty(driver)) {
             try {
+                driver.manage().deleteAllCookies();
                 driver.quit();
             } catch (NoSuchMethodError nsme) {
                 // in case quit fails

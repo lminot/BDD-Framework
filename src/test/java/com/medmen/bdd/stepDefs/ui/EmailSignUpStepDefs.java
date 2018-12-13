@@ -51,9 +51,8 @@ public class EmailSignUpStepDefs {
     }
 
     @Given("^I select the Who We Are top nav link$")
-    public void i_select_the_Who_We_Are_top_nav_link() throws InterruptedException {
+    public void i_select_the_Who_We_Are_top_nav_link() {
         medMenHomePage = new MedMenHomePage(DriverConfig.getDriver());
-        Thread.sleep(100); //todo fix this sleep
         medMenHomePage.selectWhoWeAre();
     }
 
@@ -89,9 +88,8 @@ public class EmailSignUpStepDefs {
     }
 
     @Given("^I navigate to the statemade menu page$")
-    public void i_navigate_to_the_statemade_menu_page() throws InterruptedException {
+    public void i_navigate_to_the_statemade_menu_page() {
         medMenHomePage = new MedMenHomePage(DriverConfig.getDriver());
-        Thread.sleep(100); //todo fix this sleep
         medMenHomePage.selectStatemade();
     }
 
@@ -123,16 +121,14 @@ public class EmailSignUpStepDefs {
     }
 
     @Given("^I navigate to the stores page$")
-    public void i_navigate_to_the_stores_page() throws Throwable {
+    public void i_navigate_to_the_stores_page() {
         medMenHomePage = new MedMenHomePage(DriverConfig.getDriver());
-        Thread.sleep(200); //todo fix this sleep
         medMenHomePage.selectStores();
     }
 
     @Given("^I select a store with a menu$")
-    public void i_select_a_store_with_a_menu() throws InterruptedException {
+    public void i_select_a_store_with_a_menu() {
         storeListsPage = new StoreListsPage(DriverConfig.getDriver());
-        Thread.sleep(200); //todo fix this sleep
         storeListsPage.selectBeverlyHillsStore();
     }
 

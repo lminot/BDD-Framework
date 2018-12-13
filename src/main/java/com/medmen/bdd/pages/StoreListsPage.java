@@ -1,6 +1,7 @@
 package com.medmen.bdd.pages;
 
 import com.medmen.bdd.configs.DriverConfig;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,6 +25,8 @@ public class StoreListsPage extends PageObject {
     @FindBy(xpath = "//a[contains(text(),'Shop Now')]")
     private WebElement shopNowButton;
 
+    private String beverlyHillsStoreXpath = "//a[contains(text(),'Los Angeles - Beverly Hills')]";
+
     public StoreListsPage(WebDriver driver) {
         super(driver);
     }
@@ -33,6 +36,7 @@ public class StoreListsPage extends PageObject {
 
     public void selectBeverlyHillsStore() {
         if (beverlyHillsStore.isDisplayed()) {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(beverlyHillsStoreXpath)));
             wait.until(ExpectedConditions.elementToBeClickable(beverlyHillsStore));
             beverlyHillsStore.click();
         }
