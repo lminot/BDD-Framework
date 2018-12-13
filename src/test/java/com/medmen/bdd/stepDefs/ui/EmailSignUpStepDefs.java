@@ -125,14 +125,14 @@ public class EmailSignUpStepDefs {
     @Given("^I navigate to the stores page$")
     public void i_navigate_to_the_stores_page() throws Throwable {
         medMenHomePage = new MedMenHomePage(DriverConfig.getDriver());
-        Thread.sleep(100); //todo fix this sleep
+        Thread.sleep(200); //todo fix this sleep
         medMenHomePage.selectStores();
     }
 
     @Given("^I select a store with a menu$")
     public void i_select_a_store_with_a_menu() throws InterruptedException {
         storeListsPage = new StoreListsPage(DriverConfig.getDriver());
-        Thread.sleep(100); //todo fix this sleep
+        Thread.sleep(200); //todo fix this sleep
         storeListsPage.selectBeverlyHillsStore();
     }
 
