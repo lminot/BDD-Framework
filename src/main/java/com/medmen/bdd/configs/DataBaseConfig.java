@@ -1,23 +1,28 @@
 package com.medmen.bdd.configs;
 
+import com.medmen.bdd.utils.FileLoaderUtils;
+import org.apache.commons.codec.binary.Base64;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DataBaseConfig {
 
-    final static String CONNECTION_URL = "jdbc:mysql://medmen.cf4ubqfpjaby.us-west-2.rds.amazonaws.com?autoReconnect=true&useSSL=false";
-    final static String DB_USER = "medmen";
-    final static String DB_PASSWORD = "AnJXHCUDHqkL349Z";
-    final static String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
-    final static String STAGE_DB_CATALOG = "medmen_development";
+    private static String CONNECTION_URL;
+    private static String DB_USER;
+    private static String DB_PASSWORD;
+    private static String DB_DRIVER;
+    private static String STAGE_DB_CATALOG;
+
     public Connection connection = null;
 
     public void registerJdbcDriver() {
+        setDbConfigs();
         try {
             Class.forName(DB_DRIVER);
         } catch (ClassNotFoundException e) {
-            System.out.println("Where is the MySQL JDBC Driver?");
+            System.out.println("Error, MySQL JDBC Driver missing.");
             e.printStackTrace();
         }
     }
@@ -25,7 +30,7 @@ public class DataBaseConfig {
     public Connection getJdbcConnection() {
         try {
             connection = DriverManager
-                    .getConnection(CONNECTION_URL, DB_USER, DB_PASSWORD);
+                    .getConnection(CONNECTION_URL, DB_USER, new String(Base64.decodeBase64(DB_PASSWORD.getBytes())));
             //todo control db flow here
             connection.setCatalog(STAGE_DB_CATALOG);
 
@@ -44,5 +49,17 @@ public class DataBaseConfig {
 
     public void closeConnection() throws SQLException {
         connection.close();
+    }
+
+    private static void setDbConfigs() {
+        FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
+        EnvironmentConfig environmentConfig = new EnvironmentConfig();
+        String configFile = environmentConfig.getConfigFile();
+
+        CONNECTION_URL = fileLoaderUtils.getValueFromPropertyFile(configFile, "db.connection.url");
+        DB_USER = fileLoaderUtils.getValueFromPropertyFile(configFile, "db.user.name");
+        DB_PASSWORD = fileLoaderUtils.getValueFromPropertyFile(configFile, "db.password");
+        DB_DRIVER = fileLoaderUtils.getValueFromPropertyFile(configFile, "db.driver");
+        STAGE_DB_CATALOG = fileLoaderUtils.getValueFromPropertyFile(configFile, "db.catalog");
     }
 }
