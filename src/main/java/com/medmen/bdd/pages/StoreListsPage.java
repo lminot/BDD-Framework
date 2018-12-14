@@ -39,33 +39,23 @@ public class StoreListsPage extends PageObject {
     private WebDriverWait wait = new WebDriverWait(DriverConfig.getDriver(), timeoutInSeconds);
 
     public void selectBeverlyHillsStore() {
-        if (storesListCalifornia.isDisplayed()) {
-            //todo optimize this selection
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(homepageXpath)));
-            wait.until(ExpectedConditions.visibilityOf(storesListCalifornia));
-            wait.until(ExpectedConditions.textToBePresentInElement(beverlyHillsStore, "Los Angeles - Beverly Hills"));
-            wait.until(ExpectedConditions.elementToBeClickable(beverlyHillsStore));
-
-            beverlyHillsStore.click();
-        }
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(homepageXpath)));
+        wait.until(ExpectedConditions.visibilityOf(storesListCalifornia));
+        wait.until(ExpectedConditions.textToBePresentInElement(beverlyHillsStore, "Los Angeles - Beverly Hills"));
+        wait.until(ExpectedConditions.elementToBeClickable(beverlyHillsStore));
+        beverlyHillsStore.click();
     }
 
     public void selectKearnyMesaStore() {
-        if (storesListCalifornia.isDisplayed()) {
-            //todo optimize this selection
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(homepageXpath)));
-            wait.until(ExpectedConditions.visibilityOf(storesListCalifornia));
-            wait.until(ExpectedConditions.textToBePresentInElement(kearnyMesaStore, "San Diego - Kearny Mesa"));
-            wait.until(ExpectedConditions.elementToBeClickable(kearnyMesaStore));
-
-            kearnyMesaStore.click();
-        }
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(homepageXpath)));
+        wait.until(ExpectedConditions.visibilityOf(storesListCalifornia));
+        wait.until(ExpectedConditions.textToBePresentInElement(kearnyMesaStore, "San Diego - Kearny Mesa"));
+        wait.until(ExpectedConditions.elementToBeClickable(kearnyMesaStore));
+        kearnyMesaStore.click();
     }
 
     public void selectShopNow() {
-        if (shopNowButton.isDisplayed()) {
-            wait.until(ExpectedConditions.elementToBeClickable(shopNowButton));
-            shopNowButton.click();
-        }
+        wait.until(ExpectedConditions.elementToBeClickable(shopNowButton));
+        shopNowButton.click();
     }
 }
