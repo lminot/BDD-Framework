@@ -30,9 +30,9 @@ public class CommonStepDefs {
       port = fileLoaderUtils.getValueFromPropertyFile("local.properties", "host.port");
       baseUrl = "http://localhost:" + port;
     } else if (environment.toLowerCase().contains("stage")) {
-      baseUrl = "https://medmen:AXPqt3EURBVBGATb@staging.medmen.com";
+      baseUrl = "https://staging.medmen.com";
     } else if (environment.toLowerCase().contains("prod")) {
-      baseUrl = "https://prod.medmen.com";
+      baseUrl = "https://medmen.com";
     }
   }
 
