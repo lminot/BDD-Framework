@@ -16,6 +16,9 @@ public class StoreListsPage extends PageObject {
     @FindBy(xpath = "//a[contains(text(),'Los Angeles - Beverly Hills')]")
     private WebElement beverlyHillsStore;
 
+    @FindBy(xpath = "//a[contains(text(),'San Diego - Kearny Mesa')]")
+    private WebElement kearnyMesaStore;
+
     @FindBy(xpath = "//div[@class='c-stores-app__content']//li[2]//li[2]")
     private WebElement storesListNevada;
 
@@ -26,6 +29,7 @@ public class StoreListsPage extends PageObject {
     private WebElement shopNowButton;
 
     private String homepageXpath = "//div[@class='c-home-hero-wrap']";
+    private String californiaStoreListSelector = "#stores > div > div > div.c-stores-app__content > ul > li:nth-child(2)";
 
     public StoreListsPage(WebDriver driver) {
         super(driver);
@@ -35,10 +39,26 @@ public class StoreListsPage extends PageObject {
     private WebDriverWait wait = new WebDriverWait(DriverConfig.getDriver(), timeoutInSeconds);
 
     public void selectBeverlyHillsStore() {
-        if (beverlyHillsStore.isDisplayed()) {
-            wait.until(ExpectedConditions.elementToBeClickable(beverlyHillsStore));
+        if (storesListCalifornia.isDisplayed()) {
+            //todo optimize this selection
             wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(homepageXpath)));
+            wait.until(ExpectedConditions.visibilityOf(storesListCalifornia));
+            wait.until(ExpectedConditions.textToBePresentInElement(beverlyHillsStore, "Los Angeles - Beverly Hills"));
+            wait.until(ExpectedConditions.elementToBeClickable(beverlyHillsStore));
+
             beverlyHillsStore.click();
+        }
+    }
+
+    public void selectKearnyMesaStore() {
+        if (storesListCalifornia.isDisplayed()) {
+            //todo optimize this selection
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(homepageXpath)));
+            wait.until(ExpectedConditions.visibilityOf(storesListCalifornia));
+            wait.until(ExpectedConditions.textToBePresentInElement(kearnyMesaStore, "San Diego - Kearny Mesa"));
+            wait.until(ExpectedConditions.elementToBeClickable(kearnyMesaStore));
+
+            kearnyMesaStore.click();
         }
     }
 
