@@ -96,9 +96,11 @@ public class AccountApiStepDefs {
                         "SELECT * FROM users WHERE email = '" + emailWithTimeStamp + "'");
 
         while (resultSet.next()) {
-            System.out.println("********");
-            System.out.println(resultSet.getString("created_at"));
-            System.out.println("********");
+//            System.out.println("********");
+//            System.out.println(resultSet.getString("created_at"));
+            Assert.assertEquals(resultSet.getString("is_verified"), String.valueOf(0));
+//            System.out.println(resultSet.getString("is_verified"));
+//            System.out.println("********");
         }
         // todo if the account is "new" delete it from DB for clean up after test runs
     }
