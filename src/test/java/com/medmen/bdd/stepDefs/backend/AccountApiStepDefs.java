@@ -4,6 +4,7 @@ import com.jayway.jsonpath.JsonPath;
 import com.medmen.bdd.utils.FileLoaderUtils;
 import com.medmen.bdd.utils.JdbcUtils;
 import com.medmen.bdd.utils.RestClient;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -15,24 +16,28 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.medmen.bdd.runner.TestRunner.environmentConfig;
+
 public class AccountApiStepDefs {
     private RestClient restClient;
     private FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
     public Response requestResponse;
     private Map<String, String> reqHeaders;
     private Map<String, String> queryParams;
-    private String environment = System.getProperty("env", "stage");
     private String email;
     private String baseUrl;
     private String requestPayload;
     private String emailWithTimeStamp;
 
+    @Before
+    public void setUp() {
+        CommonApiStepDefs.setUserEmail(fileLoaderUtils.getValueFromPropertyFile(environmentConfig.getConfigFile(), "email"));
+        //accounts api requests only work against stage
+        CommonApiStepDefs.setMedmenApiBaseUrl("https://menu-api-staging.medmen.com/api/");
+    }
+
     @Given("^I have valid credentials$")
     public void i_have_valid_credentials() {
-//todo fix config injection
-//    environment = System.getProperty("env", "stage");
-//    CommonApiStepDefs.setBaseUrl(environment);
-        CommonApiStepDefs.setUserEmail(environment);
 
         requestPayload = fileLoaderUtils.getPayloadWrapper("createAccount.json");
 
@@ -74,7 +79,7 @@ public class AccountApiStepDefs {
         reqHeaders = new HashMap<>();
         reqHeaders.put("Content-Type", "application/json");
         reqHeaders.put("Accept", "application/json");
-        baseUrl = "http://medmen-api-staging.havenagencyapps.com/api/";
+        baseUrl = CommonApiStepDefs.getMedmenApiBaseUrl();
         requestResponse = restClient.executePost(baseUrl + "register", reqHeaders, requestPayload);
 
         CommonApiStepDefs.setStatusCode(requestResponse);
@@ -94,22 +99,14 @@ public class AccountApiStepDefs {
         ResultSet resultSet =
                 jdbcUtils.executeSelectQuery(
                         "SELECT * FROM users WHERE email = '" + emailWithTimeStamp + "'");
-
         while (resultSet.next()) {
-//            System.out.println("********");
-//            System.out.println(resultSet.getString("created_at"));
             Assert.assertEquals(resultSet.getString("is_verified"), String.valueOf(0));
-//            System.out.println(resultSet.getString("is_verified"));
-//            System.out.println("********");
         }
         // todo if the account is "new" delete it from DB for clean up after test runs
     }
 
     @Given("^I have a valid account$")
     public void i_have_a_valid_account() {
-        //todo fix config injection
-//    CommonApiStepDefs.setBaseUrl(environment);
-        CommonApiStepDefs.setUserEmail(environment);
 
         email = CommonApiStepDefs.getUserEmail();
 
@@ -124,7 +121,7 @@ public class AccountApiStepDefs {
         reqHeaders = new HashMap<>();
         reqHeaders.put("Content-Type", "application/json");
         reqHeaders.put("Accept", "application/json");
-        baseUrl = "http://medmen-api-staging.havenagencyapps.com/api/";
+        baseUrl = CommonApiStepDefs.getMedmenApiBaseUrl();
         requestResponse = restClient.executePost(baseUrl + "login", reqHeaders, requestPayload);
 
         CommonApiStepDefs.setStatusCode(requestResponse);
@@ -146,7 +143,7 @@ public class AccountApiStepDefs {
         reqHeaders.put("Content-Type", "application/json");
         reqHeaders.put("Accept", "application/json");
         email = CommonApiStepDefs.getUserEmail();
-        baseUrl = "http://medmen-api-staging.havenagencyapps.com/api/";
+        baseUrl = CommonApiStepDefs.getMedmenApiBaseUrl();
 
         requestPayload = fileLoaderUtils.getPayloadWrapper("forgetPassword.json");
         requestPayload = String.format(requestPayload, email);

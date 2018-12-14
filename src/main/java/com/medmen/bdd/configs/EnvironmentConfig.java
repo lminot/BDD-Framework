@@ -1,21 +1,50 @@
 package com.medmen.bdd.configs;
 
 public class EnvironmentConfig {
-    //todo control env setting here
+
+    public static String configFile;
+
     public static String getEnvironment() {
-        return System.getProperty("env", "stage");
+        String environment = (System.getProperty("env") == null ||
+                System.getProperty("env").isEmpty()) ? "stage" : System.getProperty("env");
+        return environment;
     }
 
     public static String getBrowser() {
-        return System.getProperty("browser", "firefox");
+        String browser = (System.getProperty("browser") == null ||
+                System.getProperty("browser").isEmpty()) ? "firefox" : System.getProperty("browser");
+        return browser;
     }
 
     public static String getHeadless() {
-        return System.getProperty("headless", "true");
+        String headless = (System.getProperty("headless") == null ||
+                System.getProperty("headless").isEmpty()) ? "true" : System.getProperty("headless");
+        return headless;
     }
 
     public static String getBrowserLocation() {
-        return System.getProperty("browserLocation", "local");
+        String browserLocation = (System.getProperty("browserLocation") == null ||
+                System.getProperty("browserLocation").isEmpty()) ? "local" : System.getProperty("browserLocation");
+        return browserLocation;
+    }
+
+    public static String getConfigFile() {
+        if (System.getProperty("env") == null || System.getProperty("env").isEmpty()) {
+            return "stage.properties";
+        }
+        switch (System.getProperty("env")) {
+            case "local":
+                configFile = "local.properties";
+            case "dev":
+                configFile = "local.properties";
+            case "stage":
+                configFile = "stage.properties";
+            case "prod":
+                configFile = "prod.properties";
+            default:
+                configFile = "stage.properties";
+        }
+        return configFile;
     }
 
 }

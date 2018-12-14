@@ -27,11 +27,9 @@ public class TestRunner {
     @BeforeClass
     public static void printRunSettings() {
         System.out.println("Test Environment: " + environmentConfig.getEnvironment());
-        if (System.getProperty("browser") != null) {
-            System.out.println("Browser: " + environmentConfig.getBrowser());
-            System.out.println("Browser Location: " + environmentConfig.getBrowserLocation());
-            System.out.println("Headless Browser: " + environmentConfig.getHeadless());
-        }
+        System.out.println("Browser: " + environmentConfig.getBrowser());
+        System.out.println("Browser Location: " + environmentConfig.getBrowserLocation());
+        System.out.println("Headless Browser: " + environmentConfig.getHeadless());
         System.out.println("\n");
     }
 
