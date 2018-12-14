@@ -123,12 +123,14 @@ public class EmailSignUpStepDefs {
     @Given("^I navigate to the stores page$")
     public void i_navigate_to_the_stores_page() {
         medMenHomePage = new MedMenHomePage(DriverConfig.getDriver());
+
         medMenHomePage.selectStores();
     }
 
     @Given("^I select a store with a menu$")
-    public void i_select_a_store_with_a_menu() {
+    public void i_select_a_store_with_a_menu() throws InterruptedException {
         storeListsPage = new StoreListsPage(DriverConfig.getDriver());
+        Thread.sleep(500); //todo fix this sleep; only breaks in chrome
         storeListsPage.selectBeverlyHillsStore();
     }
 

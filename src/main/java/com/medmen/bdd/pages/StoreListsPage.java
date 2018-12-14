@@ -25,7 +25,7 @@ public class StoreListsPage extends PageObject {
     @FindBy(xpath = "//a[contains(text(),'Shop Now')]")
     private WebElement shopNowButton;
 
-    private String beverlyHillsStoreXpath = "//a[contains(text(),'Los Angeles - Beverly Hills')]";
+    private String homepageXpath = "//div[@class='c-home-hero-wrap']";
 
     public StoreListsPage(WebDriver driver) {
         super(driver);
@@ -36,8 +36,8 @@ public class StoreListsPage extends PageObject {
 
     public void selectBeverlyHillsStore() {
         if (beverlyHillsStore.isDisplayed()) {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(beverlyHillsStoreXpath)));
             wait.until(ExpectedConditions.elementToBeClickable(beverlyHillsStore));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(homepageXpath)));
             beverlyHillsStore.click();
         }
     }
