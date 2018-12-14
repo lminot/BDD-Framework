@@ -44,7 +44,7 @@ Feature: Verify medmen.com's newsletter email sign-up functionality
     Then the statemade "Thank you for signing up." text is displayed
     And now my email is searchable in Clutch
 
-  @activeMonitorUi @isHeadless
+#  @activeMonitorUi @isHeadless
   Scenario: Validate the menu site Newsletter Email Sign-up functionality with a valid email
     Given I navigate to the Medmen homepage
     And I click "YES" on the age verification prompt
