@@ -82,10 +82,10 @@ public class CreateAccountPage extends PageObject {
   @FindBy(xpath = "//input[@id='phone_number']")
   private WebElement phoneNum;
 
-  @FindBy(xpath = "//form//div[12]//label[1]//span[1]")
+  @FindBy(xpath = "//form//div[3]//label[1]//span[1]")
   private WebElement smsCheckbox;
 
-  @FindBy(xpath = "//form//div[12]//label[1]//span[1]")
+  @FindBy(xpath = "//form//div[14]//label[1]//span[1]")
   private WebElement mmDataPolicyCheckbox;
 
   @FindBy(xpath = "//div[@class='o-form-field-flex']//div//span[@class='c-form-group__checkmark']")

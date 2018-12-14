@@ -42,6 +42,8 @@ public class CommonApiStepDefs {
       email = fileLoaderUtils.getValueFromPropertyFile("stage.properties", "email");
     } else if (environment.toLowerCase().contains("prod")) {
       email = fileLoaderUtils.getValueFromPropertyFile("prod.properties", "email");
+    } else {
+      email = fileLoaderUtils.getValueFromPropertyFile("stage.properties", "email");
     }
   }
 
@@ -52,6 +54,8 @@ public class CommonApiStepDefs {
       baseUrl = "http://medmen-api-staging.havenagencyapps.com/api/";
     } else if (environment.toLowerCase().contains("prod")) {
       baseUrl = "http://menu-api.medmen.com/api";
+    } else {
+      baseUrl = "http://medmen-api-staging.havenagencyapps.com/api/";
     }
   }
 }

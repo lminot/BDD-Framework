@@ -1,9 +1,5 @@
+@CPR
 Feature: Verify various aspects of the MedMen account functionality
-
-  Background: Click past 'Yes I'm 21'
-    Given I navigate to the Medmen homepage
-    And I click "YES" on the age verification prompt
-    And I click the enter button
 
   @test1
   Scenario: Create account - add new account via in-line credentials
@@ -14,13 +10,13 @@ Feature: Verify various aspects of the MedMen account functionality
 #    And I have a logged in account
 
   Scenario: Create account - add new account via social auth Facebook
-    When I navigate to the "Stage" sign in page
+    When I navigate to the create account page
     And I select the Facebook sign in button
     And sign in via Facebook credentials
     Then I am directed to the complete profile page
 
   Scenario: Create account - add new account via social auth Google
-    When I navigate to the "Stage" sign in page
+    When I navigate to the create account page
     And I select the Google sign in button
     And sign in via Google credentials
     Then I am directed to the complete profile page

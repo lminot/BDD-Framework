@@ -33,9 +33,9 @@ public class AccountsStepDefs implements BaseTest {
   public void i_enter_valid_information_in_all_required_fields() {
 
     FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
-    String email = fileLoaderUtils.getValueFromPropertyFile("stage.properties", "user.password");
+    String email = fileLoaderUtils.getValueFromPropertyFile("stage.properties", "email.dynamic");
 
-    createAccountPage.enterEmailAddress(email);
+    createAccountPage.enterEmailAddress(String.format(email, String.valueOf(System.currentTimeMillis())));
     createAccountPage.enterPassword("popeye123");
     createAccountPage.genderSet("male");
     createAccountPage.enterFirstName("Testing");
