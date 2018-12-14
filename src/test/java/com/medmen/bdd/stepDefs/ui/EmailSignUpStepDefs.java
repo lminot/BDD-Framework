@@ -5,7 +5,7 @@ import com.medmen.bdd.pages.AgeGatePage;
 import com.medmen.bdd.pages.ExitPop;
 import com.medmen.bdd.pages.MedMenHomePage;
 import com.medmen.bdd.pages.StoreListsPage;
-import com.medmen.bdd.pages.menuSite.BeverlyHillsStorePage;
+import com.medmen.bdd.pages.menuSite.MenuStorePage;
 import com.medmen.bdd.pages.statemade.ProductsPage;
 import com.medmen.bdd.pages.statemade.StateMadeLandingPage;
 import com.medmen.bdd.utils.FileLoaderUtils;
@@ -25,7 +25,7 @@ public class EmailSignUpStepDefs {
     private StateMadeLandingPage stateMadeLandingPage;
     private ProductsPage productsPage;
     private StoreListsPage storeListsPage;
-    private BeverlyHillsStorePage beverlyHillsStorePage;
+    private MenuStorePage selectedStorePage;
     private WebDriver driver;
     private static String email;
     private static String environment;
@@ -95,8 +95,9 @@ public class EmailSignUpStepDefs {
 
     @When("^I select a product$")
     public void i_select_a_product() {
-        stateMadeLandingPage = new StateMadeLandingPage(DriverConfig.getDriver());
-        productsPage = new ProductsPage(DriverConfig.getDriver());
+        driver = DriverConfig.getDriver();
+        stateMadeLandingPage = new StateMadeLandingPage(driver);
+        productsPage = new ProductsPage(driver);
 
         stateMadeLandingPage.clickProductTypeButton();
         productsPage.selectPens();
@@ -123,15 +124,13 @@ public class EmailSignUpStepDefs {
     @Given("^I navigate to the stores page$")
     public void i_navigate_to_the_stores_page() {
         medMenHomePage = new MedMenHomePage(DriverConfig.getDriver());
-
         medMenHomePage.selectStores();
     }
 
     @Given("^I select a store with a menu$")
     public void i_select_a_store_with_a_menu() throws InterruptedException {
         storeListsPage = new StoreListsPage(DriverConfig.getDriver());
-        Thread.sleep(500); //todo fix this sleep; only breaks in chrome
-        storeListsPage.selectBeverlyHillsStore();
+        storeListsPage.selectKearnyMesaStore();
     }
 
     @Given("^I select the \"([^\"]*)\" button$")
@@ -148,22 +147,21 @@ public class EmailSignUpStepDefs {
 
     @When("^I enter a valid email address into the menu \"([^\"]*)\" sign up box$")
     public void i_enter_a_valid_email_address_into_the_menu_sign_up_box(String keepInTouchTitleText) {
-        beverlyHillsStorePage = new BeverlyHillsStorePage(DriverConfig.getDriver());
-        beverlyHillsStorePage.enterFooterEmail(getEmailAddress());
+        selectedStorePage = new MenuStorePage(DriverConfig.getDriver());
+        selectedStorePage.enterFooterEmail(getEmailAddress());
     }
 
     @When("^I click the menu site newsletter email submit button$")
     public void i_click_the_menu_site_newsletter_email_submit_button() {
-        beverlyHillsStorePage = new BeverlyHillsStorePage(DriverConfig.getDriver());
-        beverlyHillsStorePage.submitFooterNewsletter();
+        selectedStorePage = new MenuStorePage(DriverConfig.getDriver());
+        selectedStorePage.submitFooterNewsletter();
     }
 
     @Then("^the menu site \"([^\"]*)\" text is displayed$")
     public void the_menu_site_text_is_displayed(String expectedSuccessText) {
-        beverlyHillsStorePage = new BeverlyHillsStorePage(DriverConfig.getDriver());
-        assertEquals(expectedSuccessText, beverlyHillsStorePage.getSuccessText());
+        selectedStorePage = new MenuStorePage(DriverConfig.getDriver());
+        assertEquals(expectedSuccessText, selectedStorePage.getSuccessText());
     }
-
 
     private void triggerExitPop() throws Exception {
         Thread.sleep(1750);
@@ -180,6 +178,7 @@ public class EmailSignUpStepDefs {
                 "up");
     }
 
+    //todo have the environmentConfig class handle this... eventually
     private String getEmailAddress() {
         FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
         environment = System.getProperty("env", "stage");

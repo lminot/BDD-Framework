@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class BeverlyHillsStorePage extends PageObject  {
+public class MenuStorePage extends PageObject {
 
     @FindBy(xpath = "//h1[@class='c-store-info-desktop u-spacing-none u-spacing-20-less-than-sm']//div[@class='u-font-bold'][contains(text(),'Beverly Hills')]")
     private WebElement storeName;
@@ -29,15 +29,18 @@ public class BeverlyHillsStorePage extends PageObject  {
     @FindBy(xpath = "//p[@class='u-text-center']")
     private WebElement footerEmailSubmitThankYouText;
 
+    private String menuSiteNewsletterSubmitXpath = "//h3[@class='c-heading-30 u-color-red']";
+    private String newsletterSignUpSuccessTextXpath = "//p[@class='u-text-center']";
+
 
     private long timeoutInSeconds = 60;
     private WebDriverWait wait = new WebDriverWait(DriverConfig.getDriver(), timeoutInSeconds);
 
-    public BeverlyHillsStorePage(WebDriver driver) {
+    public MenuStorePage(WebDriver driver) {
         super(driver);
     }
 
-    public void enterFooterEmail(String email){
+    public void enterFooterEmail(String email) {
         if (footerEmailTextBox.isDisplayed()) {
             wait.until(ExpectedConditions.elementToBeClickable(footerEmailTextBox));
             footerEmailTextBox.sendKeys(email);
@@ -45,12 +48,11 @@ public class BeverlyHillsStorePage extends PageObject  {
     }
 
     public void submitFooterNewsletter() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//h3[@class='c-heading-30 u-color-red']")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(menuSiteNewsletterSubmitXpath)));
         footerEmailSubmit.click();
     }
 
     public String getSuccessText() {
-        String newsletterSignUpSuccessTextXpath = "//p[@class='u-text-center']";
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(newsletterSignUpSuccessTextXpath)));
         return footerEmailSubmitThankYouText.getText();
     }
