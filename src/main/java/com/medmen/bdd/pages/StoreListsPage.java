@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class StoreListsPage extends PageObject {
 
-    @FindBy(xpath = "//div[@class='c-stores-app__content']//li[1]//li[1]")
+    @FindBy(xpath = "//div[@class='c-stores-app__content']//li[2]//li[2]")
     private WebElement storesListCalifornia;
 
     @FindBy(xpath = "//a[contains(text(),'Los Angeles - Beverly Hills')]")
@@ -19,17 +19,13 @@ public class StoreListsPage extends PageObject {
     @FindBy(xpath = "//a[contains(text(),'San Diego - Kearny Mesa')]")
     private WebElement kearnyMesaStore;
 
-    @FindBy(xpath = "//div[@class='c-stores-app__content']//li[2]//li[2]")
+    @FindBy(xpath = "//div[@class='c-stores-app__content']//li[4]//li[4]")
     private WebElement storesListNevada;
-
-    @FindBy(xpath = "//div[@class='c-stores-app__content']//li[3]//li[3]")
-    private WebElement storesListNewYork;
 
     @FindBy(xpath = "//a[contains(text(),'Shop Now')]")
     private WebElement shopNowButton;
 
     private String homepageXpath = "//div[@class='c-home-hero-wrap']";
-    private String californiaStoreListSelector = "#stores > div > div > div.c-stores-app__content > ul > li:nth-child(2)";
 
     public StoreListsPage(WebDriver driver) {
         super(driver);
@@ -39,7 +35,6 @@ public class StoreListsPage extends PageObject {
     private WebDriverWait wait = new WebDriverWait(DriverConfig.getDriver(), timeoutInSeconds);
 
     public void selectBeverlyHillsStore() {
-        //todo optimize this selection
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(homepageXpath)));
         wait.until(ExpectedConditions.visibilityOf(storesListCalifornia));
         wait.until(ExpectedConditions.textToBePresentInElement(beverlyHillsStore, "Los Angeles - Beverly Hills"));
@@ -48,7 +43,6 @@ public class StoreListsPage extends PageObject {
     }
 
     public void selectKearnyMesaStore() {
-        //todo optimize this selection
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(homepageXpath)));
         wait.until(ExpectedConditions.visibilityOf(storesListCalifornia));
         wait.until(ExpectedConditions.textToBePresentInElement(kearnyMesaStore, "San Diego - Kearny Mesa"));
