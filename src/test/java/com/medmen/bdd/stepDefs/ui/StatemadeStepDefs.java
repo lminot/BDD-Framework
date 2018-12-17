@@ -1,15 +1,14 @@
 package com.medmen.bdd.stepDefs.ui;
 
 import com.medmen.bdd.configs.DriverConfig;
+import com.medmen.bdd.configs.EnvironmentConfig;
 import com.medmen.bdd.helperMethods.BaseTest;
 import com.medmen.bdd.pages.statemade.EffectsPage;
 import com.medmen.bdd.pages.statemade.ProductsPage;
 import com.medmen.bdd.pages.statemade.StateMadeLandingPage;
-import com.medmen.bdd.stepDefs.ui.CommonStepDefs;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-
 import org.openqa.selenium.WebDriver;
 
 import java.util.Arrays;
@@ -21,11 +20,15 @@ import static org.junit.Assert.assertTrue;
 public class StatemadeStepDefs implements BaseTest {
 
   private WebDriver driver = DriverConfig.getDriver();
+  EnvironmentConfig environmentConfig = new EnvironmentConfig();
+
   private StateMadeLandingPage stateMadePage = new StateMadeLandingPage(driver);
   private EffectsPage effectsPage = new EffectsPage(driver);
   private ProductsPage productsPage = new ProductsPage(driver);
   private List<String> effectsList = Arrays.asList("max", "joy", "zen", "ebb", "zzz", "one", "cbd");
   private List<String> productsList = Arrays.asList("all", "pens", "drops", "flower", "prerolls");
+
+  //TODO refactor this whole class to better use the page objects
 
   @Then("^I am taken to the statemade landing page$")
   public void i_am_taken_to_the_statemade_landing_page() {
@@ -45,7 +48,7 @@ public class StatemadeStepDefs implements BaseTest {
 
   @When("^I am on the statemade page$")
   public void i_am_on_the_statemade_page() {
-    navigationObj.navigateTo(CommonStepDefs.getBaseUrl() + "/statemade/");
+    navigationObj.navigateTo(environmentConfig.getStaticBaseUrl() + "/statemade/");
   }
 
   @When("^I select the effect button$")
@@ -90,7 +93,7 @@ public class StatemadeStepDefs implements BaseTest {
 
   @When("^I am on the statemade menu page$")
   public void i_am_on_the_statemade_menu_page() {
-    navigationObj.navigateTo(CommonStepDefs.getBaseUrl() + "/statemade/menu/");
+    navigationObj.navigateTo(environmentConfig.getStaticBaseUrl() + "/statemade/menu/");
   }
 
   @Then("^the bottom nav is fully functional$")

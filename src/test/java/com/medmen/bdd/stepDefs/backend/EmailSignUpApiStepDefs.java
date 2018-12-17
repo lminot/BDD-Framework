@@ -1,8 +1,8 @@
 package com.medmen.bdd.stepDefs.backend;
 
+import com.medmen.bdd.configs.EnvironmentConfig;
 import com.medmen.bdd.utils.FileLoaderUtils;
 import com.medmen.bdd.utils.RestClient;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -19,10 +19,8 @@ public class EmailSignUpApiStepDefs {
     public Response requestResponse;
     private Map<String, String> reqHeaders;
     private Map<String, String> queryParams;
-    private String environment;
-    private String email;
+    private String usersEmail;
     private String requestPayload;
-    private String medmenApiBaseUrl;
     private String clutchBaseUrl;
     private String clutchBrand;
     private String clutchLocation;
@@ -31,16 +29,13 @@ public class EmailSignUpApiStepDefs {
     private String clutchApiKey;
     private String clutchApiSecret;
     private FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
+    private EnvironmentConfig environmentConfig = new EnvironmentConfig();
+
 
     @Given("^I have a valid email$")
     public void i_have_a_valid_email() {
-        if (System.getProperty("env") == null || System.getProperty("env").isEmpty()) {
-            environment = "stage";
-        } else {
-            environment = System.getProperty("env");
-        }
-
-        setEnvVariables(environment);
+        usersEmail = environmentConfig.getEmailAddress();
+        setClutchVariables();
     }
 
     @When("^I execute a POST to the sign up endpoint$")
@@ -49,11 +44,11 @@ public class EmailSignUpApiStepDefs {
         reqHeaders = new HashMap<>();
         reqHeaders.put("Content-Type", "application/x-www-form-urlencoded");
         queryParams = new HashMap<>();
-        queryParams.put("email", email);
+        queryParams.put("email", usersEmail);
         String endpoint = "signup";
 
         requestResponse =
-                restClient.executePostWithParams(medmenApiBaseUrl + endpoint, queryParams, reqHeaders, "");
+                restClient.executePostWithParams(environmentConfig.getMedmenApiBaseUrl() + endpoint, queryParams, reqHeaders, "");
         CommonApiStepDefs.setStatusCode(requestResponse);
     }
 
@@ -63,12 +58,12 @@ public class EmailSignUpApiStepDefs {
         reqHeaders = new HashMap<>();
         reqHeaders.put("Content-Type", "application/x-www-form-urlencoded");
         queryParams = new HashMap<>();
-        queryParams.put("email", email);
+        queryParams.put("email", usersEmail);
         queryParams.put("event", "statemadeEmailOptIn");
         String endpoint = "signup";
 
         requestResponse =
-                restClient.executePostWithParams(medmenApiBaseUrl + endpoint, queryParams, reqHeaders, "");
+                restClient.executePostWithParams(environmentConfig.getMedmenApiBaseUrl() + endpoint, queryParams, reqHeaders, "");
         CommonApiStepDefs.setStatusCode(requestResponse);
     }
 
@@ -80,8 +75,7 @@ public class EmailSignUpApiStepDefs {
 
     @Given("^I have a invalid email$")
     public void i_have_a_invalid_email() {
-        email = "badString";
-        medmenApiBaseUrl = "https://menu-api.medmen.com/api/";
+        usersEmail = "badString";
     }
 
     @Then("^an invalid response payload$")
@@ -92,13 +86,7 @@ public class EmailSignUpApiStepDefs {
 
     @Then("^now my email is searchable in Clutch$")
     public void now_my_email_is_searchable_in_Clutch() {
-
-        if (System.getProperty("env") == null || System.getProperty("env").isEmpty()) {
-            environment = "stage";
-        } else {
-            environment = System.getProperty("env");
-        }
-        setEnvVariables(environment);
+        setClutchVariables();
 
         restClient = new RestClient();
         reqHeaders = new HashMap<>();
@@ -112,25 +100,13 @@ public class EmailSignUpApiStepDefs {
         reqHeaders.put("Authorization", "Basic " + Base64.getEncoder().encodeToString((clutchApiKey + ":" + clutchApiSecret).getBytes()));
 
         requestPayload = fileLoaderUtils.getPayloadWrapper("clutchEmailSearch.json");
-        requestPayload = String.format(requestPayload, email);
+        requestPayload = String.format(requestPayload, usersEmail);
         requestResponse = restClient.executePost(clutchBaseUrl + clutchSearchEndpoint, reqHeaders, requestPayload);
         Assert.assertEquals(200, requestResponse.getStatus());
     }
 
-    private void setEnvVariables(String environment) {
-        String configFile = "local.properties";
-        if (environment.toLowerCase().contains("localhost")) {
-            configFile = "local.properties";
-
-        } else if (environment.toLowerCase().contains("stage")) {
-            configFile = "stage.properties";
-
-        } else if (environment.toLowerCase().contains("prod")) {
-            configFile = "prod.properties";
-        }
-
-        medmenApiBaseUrl = fileLoaderUtils.getValueFromPropertyFile(configFile, "medmen.api.base.url");
-        email = fileLoaderUtils.getValueFromPropertyFile(configFile, "email");
+    private void setClutchVariables() {
+        String configFile = environmentConfig.getConfigFile();
         clutchBaseUrl = fileLoaderUtils.getValueFromPropertyFile(configFile, "clutch.base.url");
         clutchBrand = fileLoaderUtils.getValueFromPropertyFile(configFile, "clutch.brand");
         clutchLocation = fileLoaderUtils.getValueFromPropertyFile(configFile, "clutch.location");
