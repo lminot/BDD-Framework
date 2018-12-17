@@ -8,7 +8,7 @@ Feature: Medmen Account API testing
     When I execute a POST to the register endpoint
     Then I will expect a 200 response
     And a valid response payload for create account
-    And the new account will be present in the database
+#    And the new account will be present in the database
 
   @stageOnlyTest
   Scenario: Validate account login API functionality
