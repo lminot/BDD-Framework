@@ -1,9 +1,9 @@
 package com.medmen.bdd.stepDefs.backend;
 
 import com.jayway.jsonpath.JsonPath;
+import com.medmen.bdd.configs.EnvironmentConfig;
 import com.medmen.bdd.utils.FileLoaderUtils;
 import com.medmen.bdd.utils.RestClient;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -14,20 +14,13 @@ import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.medmen.bdd.runner.TestRunner.environmentConfig;
-
 public class DeliveryApiStepDefs {
 
     public String requestPayload;
     public String baseUrl;
     public Response requestResponse;
     private FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
-
-    @Before
-    public void setUp() {
-        CommonApiStepDefs.setUserEmail(fileLoaderUtils.getValueFromPropertyFile(environmentConfig.getConfigFile(), "email"));
-        CommonApiStepDefs.setMedmenApiBaseUrl(fileLoaderUtils.getValueFromPropertyFile(environmentConfig.getConfigFile(), "medmen.api.base.url"));
-    }
+    private EnvironmentConfig environmentConfig = new EnvironmentConfig();
 
     @Given("^I have a valid getNearbyPickupStores payload$")
     public void i_have_a_valid_getNearbyPickupStores_payload() {
@@ -75,7 +68,7 @@ public class DeliveryApiStepDefs {
 
         reqHeaders.put("Content-Type", "application/json");
         reqHeaders.put("Accept", "application/json");
-        baseUrl = CommonApiStepDefs.getMedmenApiBaseUrl();
+        baseUrl = environmentConfig.getMedmenApiBaseUrl();
         String endPoint = "stores/getNearbyPickupStores";
 
         requestResponse = restClient.executePost(baseUrl + endPoint, reqHeaders, getRequestPayload());
@@ -134,7 +127,7 @@ public class DeliveryApiStepDefs {
         Map<String, String> reqHeaders = new HashMap<>();
         reqHeaders.put("Content-Type", "application/json");
         reqHeaders.put("Accept", "application/json");
-        baseUrl = CommonApiStepDefs.getMedmenApiBaseUrl();
+        baseUrl = environmentConfig.getMedmenApiBaseUrl();
         String endPoint = "stores/getNearestDeliveryStore";
 
         requestResponse = restClient.executePost(baseUrl + endPoint, reqHeaders, getRequestPayload());

@@ -22,14 +22,15 @@ import cucumber.api.junit.Cucumber;
         tags = {"@activeMonitorApi"})
 public class TestRunner {
 
-    public static EnvironmentConfig environmentConfig = new EnvironmentConfig();
+    private static EnvironmentConfig ec;
 
     @BeforeClass
     public static void printRunSettings() {
-        System.out.println("Test Environment: " + environmentConfig.getEnvironment());
-        System.out.println("Browser: " + environmentConfig.getBrowser());
-        System.out.println("Browser Location: " + environmentConfig.getBrowserLocation());
-        System.out.println("Headless Browser: " + environmentConfig.getHeadless());
+        ec = new EnvironmentConfig();
+        System.out.println("Test Environment: " + ec.getEnvironment());
+        System.out.println("Browser: " + ec.getBrowser());
+        System.out.println("Browser Location: " + ec.getBrowserLocation());
+        System.out.println("Headless Browser: " + ec.getHeadless());
         System.out.println("\n");
     }
 

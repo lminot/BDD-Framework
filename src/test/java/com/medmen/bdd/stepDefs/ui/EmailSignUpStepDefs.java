@@ -1,6 +1,7 @@
 package com.medmen.bdd.stepDefs.ui;
 
 import com.medmen.bdd.configs.DriverConfig;
+import com.medmen.bdd.configs.EnvironmentConfig;
 import com.medmen.bdd.pages.AgeGatePage;
 import com.medmen.bdd.pages.ExitPop;
 import com.medmen.bdd.pages.MedMenHomePage;
@@ -8,7 +9,6 @@ import com.medmen.bdd.pages.StoreListsPage;
 import com.medmen.bdd.pages.menuSite.MenuStorePage;
 import com.medmen.bdd.pages.statemade.ProductsPage;
 import com.medmen.bdd.pages.statemade.StateMadeLandingPage;
-import com.medmen.bdd.utils.FileLoaderUtils;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -27,8 +27,8 @@ public class EmailSignUpStepDefs {
     private StoreListsPage storeListsPage;
     private MenuStorePage selectedStorePage;
     private WebDriver driver;
-    private static String email;
-    private static String environment;
+
+    EnvironmentConfig environmentConfig;
 
     @When("^I enter a valid email address into the \"([^\"]*)\" sign up box$")
     public void i_enter_a_valid_email_address_into_the_sign_up_box(String newsletterKey) {
@@ -37,16 +37,17 @@ public class EmailSignUpStepDefs {
         exitPop = new ExitPop(driver);
         medMenHomePage = new MedMenHomePage(driver);
         productsPage = new ProductsPage(driver);
+        environmentConfig = new EnvironmentConfig();
 
         if (newsletterKey.contains("Age Gate Newsletter")) {
-            ageGatePage.enterEmailAddress(getEmailAddress());
+            ageGatePage.enterEmailAddress(environmentConfig.getEmailAddress());
         } else if (newsletterKey.contains("Keep in Touch")) {
             medMenHomePage.scrollToKeepInTouch();
-            medMenHomePage.enterNewsletterEmail(getEmailAddress());
+            medMenHomePage.enterNewsletterEmail(environmentConfig.getEmailAddress());
         } else if (newsletterKey.contains("Get 10% Off Your First Purchase.")) {
-            exitPop.enterEmailIntoExitPop(getEmailAddress());
+            exitPop.enterEmailIntoExitPop(environmentConfig.getEmailAddress());
         } else if (newsletterKey.contains("Coming soon to:")) {
-            productsPage.enterStatemadeEmailSignUp(getEmailAddress());
+            productsPage.enterStatemadeEmailSignUp(environmentConfig.getEmailAddress());
         }
     }
 
@@ -128,7 +129,7 @@ public class EmailSignUpStepDefs {
     }
 
     @Given("^I select a store with a menu$")
-    public void i_select_a_store_with_a_menu() throws InterruptedException {
+    public void i_select_a_store_with_a_menu() {
         storeListsPage = new StoreListsPage(DriverConfig.getDriver());
         storeListsPage.selectKearnyMesaStore();
     }
@@ -148,7 +149,8 @@ public class EmailSignUpStepDefs {
     @When("^I enter a valid email address into the menu \"([^\"]*)\" sign up box$")
     public void i_enter_a_valid_email_address_into_the_menu_sign_up_box(String keepInTouchTitleText) {
         selectedStorePage = new MenuStorePage(DriverConfig.getDriver());
-        selectedStorePage.enterFooterEmail(getEmailAddress());
+        environmentConfig = new EnvironmentConfig();
+        selectedStorePage.enterFooterEmail(environmentConfig.getEmailAddress());
     }
 
     @When("^I click the menu site newsletter email submit button$")
@@ -176,37 +178,5 @@ public class EmailSignUpStepDefs {
         Thread.sleep(1750);
         navigationObj.scrollPage(
                 "up");
-    }
-
-    //todo have the environmentConfig class handle this... eventually
-    private String getEmailAddress() {
-        FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
-        environment = System.getProperty("env", "stage");
-        email = "medmentest420@gmail.com";
-        if (environment.toLowerCase().contains("localhost")) {
-            return email = fileLoaderUtils.getValueFromPropertyFile("local.properties", "email");
-        } else if (environment.toLowerCase().contains("stage")) {
-            return email = fileLoaderUtils.getValueFromPropertyFile("stage.properties", "email");
-        } else if (environment.toLowerCase().contains("prod")) {
-            return email = fileLoaderUtils.getValueFromPropertyFile("prod.properties", "email");
-        } else {
-            return email;
-        }
-    }
-
-    public static String getEmail() {
-        return email;
-    }
-
-    public static String getEnvironment() {
-        return environment;
-    }
-
-    public static void setEmail(String email) {
-        EmailSignUpStepDefs.email = email;
-    }
-
-    public static void setEnvironment(String environment) {
-        EmailSignUpStepDefs.environment = environment;
     }
 }

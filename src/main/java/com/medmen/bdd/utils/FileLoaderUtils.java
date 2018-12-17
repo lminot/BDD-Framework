@@ -8,10 +8,10 @@ public class FileLoaderUtils {
   private static InputStream input = null;
   private static Properties prop = new Properties();
 
-  public String getValueFromPropertyFile(String propertyFilePath, String key) {
+  public String getValueFromPropertyFile(String propertyFileName, String key) {
 
     String value = null;
-    input = FileLoaderUtils.class.getClassLoader().getResourceAsStream(propertyFilePath);
+    input = FileLoaderUtils.class.getClassLoader().getResourceAsStream(propertyFileName);
     try {
       prop.load(input);
       value = prop.getProperty(key);
@@ -29,10 +29,10 @@ public class FileLoaderUtils {
     }
   }
 
-  public String getPayloadWrapper(String propertyFilePath) {
+  public String getPayloadWrapper(String payloadFileName) {
     StringBuilder resultStringBuilder = new StringBuilder();
     String payloadLocation = "requestPayloads/";
-    input = FileLoaderUtils.class.getClassLoader().getResourceAsStream(payloadLocation + propertyFilePath);
+    input = FileLoaderUtils.class.getClassLoader().getResourceAsStream(payloadLocation + payloadFileName);
 
     try (BufferedReader br = new BufferedReader(new InputStreamReader(input))) {
       String line;

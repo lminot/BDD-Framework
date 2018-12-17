@@ -26,12 +26,14 @@ public class AccountsStepDefs implements BaseTest {
     private StorePage storePage;
     private Cart cart;
 
-    ArrayList<String> storeList = new ArrayList<>();
+    private FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
+    private ArrayList<String> storeList = new ArrayList<>();
 
-    public String menuBaseUrl = "https://menu-staging.medmen.com";
+    private String menuBaseUrl;
 
     @Given("^I navigate to the create account page$")
     public void i_navigate_to_the_create_account_page() {
+        menuBaseUrl = fileLoaderUtils.getValueFromPropertyFile("stage.properties", "medmen.menu.ui.url");
         navigationObj.navigateTo(menuBaseUrl + "/register");
     }
 
@@ -39,7 +41,6 @@ public class AccountsStepDefs implements BaseTest {
     public void i_enter_valid_information_in_all_required_fields() {
         createAccountPage = new CreateAccountPage(DriverConfig.getDriver());
 
-        FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
         String email = fileLoaderUtils.getValueFromPropertyFile("stage.properties", "email.dynamic");
 
         int storeIndex = 1;
@@ -66,7 +67,6 @@ public class AccountsStepDefs implements BaseTest {
     public void i_click_the_create_account_button() throws InterruptedException {
         createAccountPage = new CreateAccountPage(DriverConfig.getDriver());
         createAccountPage.clickCreateAccount();
-        //Thread.sleep(15000);
     }
 
     @When("^leave all required fields empty$")

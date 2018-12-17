@@ -1,10 +1,10 @@
 package com.medmen.bdd.stepDefs.backend;
 
 import com.jayway.jsonpath.JsonPath;
+import com.medmen.bdd.configs.EnvironmentConfig;
 import com.medmen.bdd.utils.FileLoaderUtils;
 import com.medmen.bdd.utils.JdbcUtils;
 import com.medmen.bdd.utils.RestClient;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -16,8 +16,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.medmen.bdd.runner.TestRunner.environmentConfig;
-
 public class AccountApiStepDefs {
     private RestClient restClient;
     private FileLoaderUtils fileLoaderUtils = new FileLoaderUtils();
@@ -28,13 +26,7 @@ public class AccountApiStepDefs {
     private String baseUrl;
     private String requestPayload;
     private String emailWithTimeStamp;
-
-    @Before
-    public void setUp() {
-        CommonApiStepDefs.setUserEmail(fileLoaderUtils.getValueFromPropertyFile(environmentConfig.getConfigFile(), "email"));
-        //accounts api requests only work against stage
-        CommonApiStepDefs.setMedmenApiBaseUrl("https://menu-api-staging.medmen.com/api/");
-    }
+    private EnvironmentConfig environmentConfig = new EnvironmentConfig();
 
     @Given("^I have valid credentials$")
     public void i_have_valid_credentials() {
@@ -79,7 +71,7 @@ public class AccountApiStepDefs {
         reqHeaders = new HashMap<>();
         reqHeaders.put("Content-Type", "application/json");
         reqHeaders.put("Accept", "application/json");
-        baseUrl = CommonApiStepDefs.getMedmenApiBaseUrl();
+        baseUrl = "https://menu-api-staging.medmen.com/api/";
         requestResponse = restClient.executePost(baseUrl + "register", reqHeaders, requestPayload);
 
         CommonApiStepDefs.setStatusCode(requestResponse);
@@ -108,7 +100,7 @@ public class AccountApiStepDefs {
     @Given("^I have a valid account$")
     public void i_have_a_valid_account() {
 
-        email = CommonApiStepDefs.getUserEmail();
+        email = environmentConfig.getEmailAddress();
 
         requestPayload = fileLoaderUtils.getPayloadWrapper("signIn.json");
         String password = "foo99bar";
@@ -121,7 +113,7 @@ public class AccountApiStepDefs {
         reqHeaders = new HashMap<>();
         reqHeaders.put("Content-Type", "application/json");
         reqHeaders.put("Accept", "application/json");
-        baseUrl = CommonApiStepDefs.getMedmenApiBaseUrl();
+        baseUrl = "https://menu-api-staging.medmen.com/api/";
         requestResponse = restClient.executePost(baseUrl + "login", reqHeaders, requestPayload);
 
         CommonApiStepDefs.setStatusCode(requestResponse);
@@ -142,8 +134,8 @@ public class AccountApiStepDefs {
         reqHeaders = new HashMap<>();
         reqHeaders.put("Content-Type", "application/json");
         reqHeaders.put("Accept", "application/json");
-        email = CommonApiStepDefs.getUserEmail();
-        baseUrl = CommonApiStepDefs.getMedmenApiBaseUrl();
+        email = environmentConfig.getEmailAddress();
+        baseUrl = "https://menu-api-staging.medmen.com/api/";
 
         requestPayload = fileLoaderUtils.getPayloadWrapper("forgetPassword.json");
         requestPayload = String.format(requestPayload, email);
