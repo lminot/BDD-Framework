@@ -25,10 +25,12 @@ public class DriverConfig {
     static final Logger logger = LogManager.getLogger(DriverConfig.class);
 
     private static long DEFAULT_WAIT = 20;
+    private static EnvironmentConfig environmentConfig = new EnvironmentConfig();
+
     private static String GRID_URL = "http://localhost:4444/wd/hub";
-    private static String driverName = System.getProperty("browser", "firefox");
-    private static String browserLocation = System.getProperty("browserLocation", "local");
-    private static String isHeadless = System.getProperty("headless", "true");
+    private static String driverName = environmentConfig.getBrowser();
+    private static String browserLocation = environmentConfig.getBrowserLocation();
+    private static String isHeadless = environmentConfig.getHeadless();
 
     private static WebDriver driver;
 
@@ -51,7 +53,8 @@ public class DriverConfig {
                 break;
 
             default:
-                logger.error("Exception: Invalid environment " + browserLocation);
+                logger.error("Exception: Invalid environment configuration: " + browserLocation);
+                break;
         }
         return manageDriver(driver);
     }
@@ -65,6 +68,7 @@ public class DriverConfig {
     }
 
     private static WebDriver chooseDriver(DesiredCapabilities capabilities) {
+        WebDriver driver = null;
         switch (driverName.toLowerCase()) {
             case "phantomjs":
                 try {
@@ -72,10 +76,12 @@ public class DriverConfig {
                 } catch (Exception e) {
                     logger.error(e.getMessage());
                 }
-                return driver;
+                break;
             case "chrome":
                 ChromeOptions chromeOptions = new ChromeOptions();
                 if (Boolean.valueOf(isHeadless)) {
+                    chromeOptions.addArguments("--window-size=1920,1080");
+                    chromeOptions.addArguments("--start-maximized");
                     chromeOptions.addArguments("--headless");
                 }
                 try {
@@ -83,7 +89,7 @@ public class DriverConfig {
                 } catch (Exception e) {
                     logger.error(e.getMessage());
                 }
-                return driver;
+                break;
             default:
                 FirefoxOptions options = new FirefoxOptions();
                 if (Boolean.valueOf(isHeadless)) {
@@ -96,8 +102,9 @@ public class DriverConfig {
                 } catch (Exception e) {
                     logger.error(e.getMessage());
                 }
-                return driver;
+                break;
         }
+        return driver;
     }
 
     private static void disableFireFoxLogging() {
@@ -109,6 +116,7 @@ public class DriverConfig {
         DesiredCapabilities capabilities;
         if (driverName.toLowerCase().contains("chrome")) {
             capabilities = DesiredCapabilities.chrome();
+            capabilities.setJavascriptEnabled(true);
         } else {
             capabilities = DesiredCapabilities.firefox();
         }
@@ -123,20 +131,14 @@ public class DriverConfig {
             try {
                 driver.manage().deleteAllCookies();
                 driver.quit();
-            } catch (NoSuchMethodError nsme) {
+            } catch (Exception ex) {
                 // in case quit fails
-                logger.error("DriverConfigs.closeDriver: NoSuchMethodError", nsme);
-                nsme.printStackTrace();
-            } catch (NoSuchSessionException nsse) { // in case close fails
-                logger.error("DriverConfigs.closeDriver: NoSuchSessionException", nsse);
-                nsse.printStackTrace();
-            } catch (SessionNotCreatedException snce) {
-                logger.error("DriverConfigs.closeDriver: SessionNotCreatedException", snce);
-                snce.printStackTrace();
-            } // in case close fails
+                logger.error("Error quitting driver :", ex);
+                ex.printStackTrace();
+            }
             driver = null;
         } else {
-            logger.warn("DriverConfigs.closeDriver Driver already closed...");
+            logger.warn("Driver already quit...");
         }
     }
 }
