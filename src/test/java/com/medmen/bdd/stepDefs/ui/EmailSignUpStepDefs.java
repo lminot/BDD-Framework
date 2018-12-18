@@ -137,7 +137,12 @@ public class EmailSignUpStepDefs {
     @Given("^I select the \"([^\"]*)\" button$")
     public void i_select_the_button(String shopNowButtonText) {
         storeListsPage = new StoreListsPage(DriverConfig.getDriver());
-        storeListsPage.selectShopNow();
+        String kearnyMesaStoreEndpoint = "/12/san-diego/";
+        if (environmentConfig.getEnvironment().equals("stage")) {
+            navigationObj.navigateTo(environmentConfig.getMenuBaseUrl() + kearnyMesaStoreEndpoint);
+        } else {
+            storeListsPage.selectShopNow();
+        }
     }
 
     @Given("^I scroll down the page$")
